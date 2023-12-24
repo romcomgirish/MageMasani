@@ -1,0 +1,68 @@
+# MageINIC
+# Copyright (C) 2023 MageINIC <support@mageinic.com>
+#
+# NOTICE OF LICENSE
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see http://opensource.org/licenses/gpl-3.0.html.
+#
+# Do not edit or add to this file if you wish to upgrade this extension to newer
+# version in the future.
+#
+# @category MageINIC
+# @package MageINIC_CityRegionPostcodeGraphQl
+# @copyright Copyright (c) 2023 MageINIC (https://www.mageinic.com/)
+# @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+# @author MageINIC <support@mageinic.com>
+
+type Query {
+    BannerSliderInfo(
+        filter: BannerSliderFilterInput @doc(description: "Apply filters by filed.")
+        pageSize: Int = 5 @doc(description: "The maximum number of banner to return at once. The attribute is optional.")
+        currentPage: Int = 1 @doc(description: "Specifies which page of results to return. The default value is 1.")
+        sort: BannerSliderSortInput @doc(description: "Specifies which filed to sort on, and whether to return the results in ascending or descending order.")
+    ):BannerSliderOutput @resolver( class: "MageMasani\\BannerSliderGraphQl\\Model\\Resolver\\BannerSlider")
+    @doc(description: "Get list of banner filter based of parameter's")
+}
+input BannerSliderFilterInput {
+    entity_id: FilterTypeInput   @doc(description: "Filter By unique ID of Entity Id.")
+    slider_id: FilterTypeInput   @doc(description: "Filter By unique ID of Slider Id.")
+    title: FilterTypeInput  @doc(description: "Filter banner by title.")
+    resource_type: FilterTypeInput  @doc(description: "Filter banner based on resource type.")
+}
+input BannerSliderSortInput @doc(description: "BannerSliderSortInput specifies the attribute to use for sorting search results and indicates whether the results are sorted in ascending or descending order.") {
+    entity_id: SortEnum @doc(description: "Sort By Brand Id")
+    slider_id: SortEnum @doc(description: "Sort By Brand Id")
+    resource_type: SortEnum @doc(description: "Sort By Brand Name.")
+    title: SortEnum @doc(description: "Sort By Brand Name.")
+    sort_order: SortEnum @doc(description: "Sort By Brand Position.")
+}
+type BannerSliderInfo {
+    entity_id: Int @doc(description: "The unique ID Entity Id.")
+    slider_id: Int @doc(description: "Slider Id.")
+    title: String @doc(description: "Banner Name.")
+    resource_type: String @doc(description: "Resource Type(local_image,youtube_video,external_image,content).")
+    resource_path: String @doc(description: "Resource Path based on Resource Type.")
+    alt_text: String @doc(description: "Alt Text for Seo.")
+    link_type: String @doc(description: "Brand Name")
+    link_type_resource: String @doc(description: "Brand Name")
+    is_enabled: String @doc(description: "Banner Status.")
+    sort_order: Int @doc(description: "Sort Order of banner.")
+    start_date: String @doc(description: "Start Date of banner.")
+    end_date: String @doc(description: "End date of banner.")
+    created_at: String @doc(description: "Banner created date.")
+    updated_at: String @doc(description: "Banner updated date.")
+}
+type BannerSliderOutput {
+    total_count:  Int @doc(description: "Total Number of record")
+    items: [BannerSliderInfo] @doc(description: "The number of records returned.")
+}
+
+type StoreConfig {
+    banner_slider_module_status : Int @doc(description: "Module Enable. 0 (No) or 1 (Yes).")
+}

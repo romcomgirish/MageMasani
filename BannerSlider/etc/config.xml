@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <magenasani_bannerslider>
+            <general>
+                <break_points>
+                    <item1>
+                        <break_point>2560</break_point>
+                        <slide_to_show>1</slide_to_show>
+                        <slide_to_scroll>1</slide_to_scroll>
+                    </item1>
+                    <item2>
+                        <break_point>1920</break_point>
+                        <slide_to_show>1</slide_to_show>
+                        <slide_to_scroll>1</slide_to_scroll>
+                    </item2>
+                </break_points>
+            </general>
+        </magenasani_bannerslider>
+    </default>
+</config>

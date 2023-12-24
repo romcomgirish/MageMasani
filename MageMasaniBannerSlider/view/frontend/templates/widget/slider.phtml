@@ -1,0 +1,174 @@
+<?php
+
+use Hyva\Theme\Model\ViewModelRegistry;
+use Hyva\Theme\ViewModel\HeroiconsOutline;
+use MageMasani\BannerSlider\Block\Widget\Slider;
+use Magento\Framework\Escaper;
+
+/** @var Escaper $escaper */
+/** @var ViewModelRegistry $viewModels */
+/** @var HeroiconsOutline $heroicons */
+/** @var Slider $block */
+$banners['banners'] = $block->getBannerCollection();
+/*print_r($banners);exit;*/
+$sliderSpecificClassName = 'magemasani' . "-" . $block->getData('slider_id');
+$widgetSpecificClassName = $sliderSpecificClassName . '-' . $block->getWidgetUniqId();
+$heroicons = $viewModels->require(HeroiconsOutline::class);
+?>
+<div x-cloak x-data="<?= htmlspecialchars(json_encode($banners)); ?>" class="container relative">
+    <section class="section slider-section">
+        <button
+            aria-label="<?= $escaper->escapeHtml(__('Previous')) ?>"
+            class="glider-prev absolute left-[-20px] top-[46%]">
+            <?= $heroicons->chevronLeftHtml('w-12 h-12', null, null); ?>
+        </button>
+        <div class="container slider-column">
+            <div class="slider-inner" id="slider">
+                <template x-for="(banner, index) in banners" :key="index">
+                    <div class="parent-class">
+                    <template x-if="banner.resource_type == 'local_image'">
+                        <div :class="banner.resource_type" class="bannerslider" :id="banner.resource_type">
+                            <a :href="banner.link_type">
+                                <img :src="banner.resource_path" :alt="banner.alt_text" :name="banner.title"/>
+                            </a>
+                        </div>
+                    </template>
+                    <template x-if="banner.resource_type == 'external_image'">
+                        <div :class="banner.resource_type" class="bannerslider" :id="banner.resource_type">
+                            <a :href="banner.link_type">
+                                <img :src="banner.resource_path" :alt="banner.alt_text" :name="banner.title"/>
+                            </a>
+                        </div>
+                    </template>
+                    <template x-if="banner.resource_type == 'youtube_video'">
+                        <div :class="banner.resource_type" class="bannerslider" :id="banner.resource_type">
+                            <iframe :src=banner.resource_path frameborder="0" allowfullscreen></iframe>
+                        </div>
+                    </template>
+                    <template x-if="banner.resource_type == 'custom_html'">
+                        <div :class="banner.resource_type" class="bannerslider" :id="banner.resource_type">
+                            <div x-html="banner.resource_path"></div>
+                        </div>
+                    </template>
+                    </div>
+                </template>
+            </div>
+        </div>
+        <button
+            aria-label="<?= $escaper->escapeHtml(__('Next')) ?>"
+            class="glider-next absolute right-[-20px] top-[46%]">
+            <?= $heroicons->chevronRightHtml('w-12 h-12', null, null); ?>
+        </button>
+    </section>
+    <div class="carousel-nav flex items-center justify-center flex-1 p-4">
+        <div role="tablist" class="glider-dots select-none flex flex-wrap mx-1 justify-center p-0 focus:outline-none">
+        </div>
+    </div>
+</div>
+
+<script>
+    'use strict';
+    (() => {
+        window.addEventListener('DOMContentLoaded', () => {
+            function initGlider() {
+                var gliderElement = document.getElementById('slider');
+                var gliderDots = document.querySelector('.glider-dots');
+                var gliderPrev = document.querySelector('.glider-prev');
+                var gliderNext = document.querySelector('.glider-next');
+                if (gliderElement) {
+                    const glider = new Glider(gliderElement, {
+                        slidesToShow: <?= $escaper->escapeJs($block->getData('items_to_show')); ?>,
+                        slidesToScroll: 2,
+                        autoplay: 200,
+                        scrollLock: true,
+                        scrollLockDelay: 250,
+                        draggable: false,
+                        dragVelocity: 2.5,
+                        <?php if ($block->getData('show_dots')): ?>
+                        dots: gliderDots,
+                        <?php endif; ?>
+                        <?php if ($block->getData('show_nav')): ?>
+                        arrows: {
+                            prev: gliderPrev,
+                            next: gliderNext,
+                        },
+                        <?php endif; ?>
+                        responsive: <?= $block->getConditionsSerialize(); ?>,
+                    });
+                    <?php if ($block->getData('show_nav')): ?>
+                    gliderPrev.classList.remove('hidden');
+                    gliderNext.classList.remove('hidden');
+                    <?php endif; ?>
+
+                    <?php if ($block->getData('autoplay')): ?>
+                    gliderAutoplay(glider,
+                        <?= $escaper->escapeJs((int)$block->getData('autoplay_speed')); ?>,
+                        <?= $escaper->escapeJs(var_export((bool)$block->getData('autoplay')));?>
+                    );
+                    <?php endif; ?>
+                }
+            }
+            const gliderAutoplay = (glider, milliseconds, loop) => {
+                const pagesCount = glider.track.childElementCount;
+                let slideTimeout = null;
+                let nextIndex = 1;
+                let paused = false;
+
+                const slide = () => {
+                    slideTimeout = setTimeout(
+                        () => {
+                            if (loop && nextIndex >= pagesCount) {
+                                nextIndex = 0;
+                            }
+                            glider.scrollItem(nextIndex);
+                        },
+                        parseInt(milliseconds)
+                    );
+                };
+
+                glider.ele.addEventListener('glider-animated', () => {
+                    nextIndex = glider.slide + glider.opt.slidesToScroll;
+                    window.clearInterval(slideTimeout);
+                    if (!paused && (loop || nextIndex < pagesCount)) {
+                        slide();
+                    }
+                });
+
+                const pause = () => {
+                    if (!paused) {
+                        clearInterval(slideTimeout);
+                        paused = true;
+                    }
+                };
+
+                const unpause = () => {
+                    if (paused) {
+                        slide();
+                        paused = false;
+                    }
+                };
+                glider.ele.parentElement.addEventListener('mouseover', pause, {passive: true});
+                glider.ele.parentElement.addEventListener('touchstart', pause, {passive: true});
+                glider.ele.parentElement.addEventListener('mouseout', unpause, {passive: true});
+                glider.ele.parentElement.addEventListener('touchend', unpause, {passive: true});
+                slide();
+            };
+            if (typeof window.Glider === 'function') {
+                initGlider();
+            } else {
+                <?php $gliderJsUrl = $block->getViewFileUrl('Magento_PageBuilder::js/glider.min.js'); ?>
+                const scriptSource = '<?= $escaper->escapeJs($escaper->escapeUrl($gliderJsUrl)) ?>';
+                const pendingLoadScript = Array.from(document.scripts).find(script => script.src === scriptSource);
+                if (pendingLoadScript) {
+                    pendingLoadScript.addEventListener('load', () => initGlider());
+                    return;
+                }
+                const script = document.createElement('script')
+                script.src = scriptSource;
+                script.async = true;
+                script.addEventListener('load', () => initGlider());
+                document.head.append(script);
+            }
+        });
+    })();
+</script>
