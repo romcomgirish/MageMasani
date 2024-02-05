@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">bannerslider_banner_form.bannerslider_banner_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Banner Information</item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="back" class="MageMasani\BannerSlider\Block\Adminhtml\Banner\Edit\BackButton"/>
+            <button name="delete" class="MageMasani\BannerSlider\Block\Adminhtml\Banner\Edit\DeleteButton"/>
+            <button name="reset" class="MageMasani\BannerSlider\Block\Adminhtml\Banner\Edit\ResetButton"/>
+            <button name="save" class="MageMasani\BannerSlider\Block\Adminhtml\Banner\Edit\SaveButton"/>
+            <button name="save_and_continue"
+                    class="MageMasani\BannerSlider\Block\Adminhtml\Slider\Edit\SaveAndContinueButton"/>
+        </buttons>
+        <namespace>bannerslider_banner_form</namespace>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>bannerslider_banner_form.bannerslider_banner_form_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="bannerslider_banner_form_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="*/*/save"/>
+        </settings>
+        <dataProvider class="MageMasani\BannerSlider\Model\Banner\DataProvider"
+                      name="bannerslider_banner_form_data_source">
+            <settings>
+                <requestFieldName>entity_id</requestFieldName>
+                <primaryFieldName>entity_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <fieldset name="general">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true">General</item>
+            </item>
+        </argument>
+        <field name="entity_id" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">banner</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <visible>false</visible>
+                <dataScope>entity_id</dataScope>
+            </settings>
+        </field>
+        <field name="status" sortOrder="10" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <label translate="true">Status</label>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="string">0</map>
+                            <map name="true" xsi:type="string">1</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+        <field name="title" formElement="input">
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>string</dataType>
+                <label translate="true">Title</label>
+            </settings>
+        </field>
+        <field name="sort_order" formElement="input">
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>string</dataType>
+                <label translate="true">Sort Order</label>
+            </settings>
+        </field>
+        <field name="slider_id" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">banner</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>int</dataType>
+                <label translate="true">Slider</label>
+                <dataScope>slider_id</dataScope>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="MageMasani\BannerSlider\Model\Config\Source\Slider"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="resource_type" formElement="select" sortOrder="60">
+            <settings>
+                <label translate="true">Resource Type</label>
+                <dataType>text</dataType>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="MageMasani\BannerSlider\Model\Config\Source\ResourceType"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="resource_path_local_image" sortOrder="70" formElement="imageUploader">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">banner</item>
+                    <item name="dependValues" xsi:type="string">local_image</item>
+                </item>
+            </argument>
+            <settings>
+                <elementTmpl>ui/form/element/uploader/image</elementTmpl>
+                <dataType>string</dataType>
+                <label translate="true">Banner Resource</label>
+                <visible>false</visible>
+                <required>false</required>
+                <imports>
+                    <link name="setCustomVisibleProperty">ns = ${ $.ns }, index = resource_type:disabled</link>
+                    <link name="updateCustomProperty">ns = ${ $.ns }, index = resource_type:value</link>
+                </imports>
+            </settings>
+            <formElements>
+                <imageUploader>
+                    <settings>
+                        <required>false</required>
+                        <uploaderConfig>
+                            <param xsi:type="url" name="url" path="magemasanibs/banner_image/upload"/>
+                        </uploaderConfig>
+                        <previewTmpl>Magento_Catalog/image-preview</previewTmpl>
+                        <openDialogTitle>Resource</openDialogTitle>
+                        <initialMediaGalleryOpenSubpath>MageMasani/banner/images</initialMediaGalleryOpenSubpath>
+                        <allowedExtensions>jpg jpeg gif png</allowedExtensions>
+                        <maxFileSize>4194304</maxFileSize>
+                    </settings>
+                </imageUploader>
+            </formElements>
+        </field>
+        <field name="resource_path_external_image">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Resource Path</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">banner</item>
+                    <item name="dependValues" xsi:type="string">external_image</item>
+                </item>
+            </argument>
+            <settings>
+                <imports>
+                    <link name="setCustomVisibleProperty">ns = ${ $.ns }, index = resource_type:disabled</link>
+                    <link name="updateCustomProperty">ns = ${ $.ns }, index = resource_type:value</link>
+                </imports>
+                <visible>false</visible>
+            </settings>
+        </field>
+        <field name="resource_path_youtube_video">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Youtube Embed Link (only the URL)</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">banner</item>
+                    <item name="dependValues" xsi:type="string">youtube_video</item>
+                </item>
+            </argument>
+            <settings>
+                <imports>
+                    <link name="setCustomVisibleProperty">ns = ${ $.ns }, index = resource_type:disabled</link>
+                    <link name="updateCustomProperty">ns = ${ $.ns }, index = resource_type:value</link>
+                </imports>
+                <visible>false</visible>
+            </settings>
+        </field>
+        <field name="resource_path_custom_html" formElement="wysiwyg">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">banner</item>
+                    <item name="dependValues" xsi:type="string">custom_html</item>
+                </item>
+            </argument>
+            <settings>
+                <additionalClasses>
+                    <class name="admin__field-wide">false</class>
+                </additionalClasses>
+                <imports>
+                    <link name="setCustomVisibleProperty">ns = ${ $.ns }, index = resource_type:disabled</link>
+                    <link name="updateCustomProperty">ns = ${ $.ns }, index = resource_type:value</link>
+                </imports>
+                <label translate="true">Content</label>
+                <visible>false</visible>
+            </settings>
+            <formElements>
+                <wysiwyg>
+                    <settings>
+                        <wysiwyg>true</wysiwyg>
+                    </settings>
+                </wysiwyg>
+            </formElements>
+        </field>
+        <field name="alt_text" sortOrder="80" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">banner</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Alt Text</label>
+                <dataScope>alt</dataScope>
+            </settings>
+        </field>
+        <field name="link_type" formElement="select" sortOrder="90">
+            <settings>
+                <label translate="true">Link Type</label>
+                <dataType>text</dataType>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="MageMasani\BannerSlider\Model\Config\Source\LinkType"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="link_type_resource_product">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Product</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">banner</item>
+                    <item name="dependValues" xsi:type="string">link_type_product</item>
+                    <item name="notice" xsi:type="string" translate="true">Note: add custom link here
+                    </item>
+                    <item name="sortOrder" xsi:type="number">130</item>
+                </item>
+            </argument>
+            <settings>
+                <imports>
+                    <link name="setCustomVisibleProperty">ns = ${ $.ns }, index = link_type:disabled</link>
+                    <link name="updateCustomProperty">ns = ${ $.ns }, index = link_type:value</link>
+                </imports>
+                <visible>false</visible>
+            </settings>
+        </field>
+        <field name="link_type_resource_category">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">
+                    Magento\Catalog\Ui\Component\Product\Form\Categories\Options
+                </item>
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Select Category</item>
+                    <item name="componentType" xsi:type="string">field</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="component" xsi:type="string">Magento_Catalog/js/components/new-category</item>
+                    <item name="elementTmpl" xsi:type="string">ui/grid/filters/elements/ui-select</item>
+                    <item name="dataScope" xsi:type="string">link_type_resource_category</item>
+                    <item name="filterOptions" xsi:type="boolean">true</item>
+                    <item name="showCheckbox" xsi:type="boolean">true</item>
+                    <item name="disableLabel" xsi:type="boolean">true</item>
+                    <item name="multiple" xsi:type="boolean">false</item>
+                    <item name="levelsVisibility" xsi:type="number">1</item>
+                    <item name="sortOrder" xsi:type="number">120</item>
+                    <item name="required" xsi:type="boolean">true</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="additionalClasses" xsi:type="string">link_type_resource_category</item>
+                    <item name="listens" xsi:type="array">
+                        <item name="${ $.namespace }.${ $.namespace }:responseData" xsi:type="string">setParsed</item>
+                    </item>
+                    <item name="dependValues" xsi:type="string">link_type_category</item>
+                </item>
+            </argument>
+            <settings>
+                <imports>
+                    <link name="setCustomVisibleProperty">ns = ${ $.ns }, index = link_type:disabled</link>
+                    <link name="updateCustomProperty">ns = ${ $.ns }, index = link_type:value</link>
+                </imports>
+                <visible>false</visible>
+            </settings>
+        </field>
+        <field name="link_type_resource_custom">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Custom Link</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">banner</item>
+                    <item name="dependValues" xsi:type="string">link_type_custom</item>
+                    <item name="notice" xsi:type="string" translate="true">Note: add custom link here
+                    </item>
+                    <item name="sortOrder" xsi:type="number">130</item>
+                </item>
+            </argument>
+            <settings>
+                <imports>
+                    <link name="setCustomVisibleProperty">ns = ${ $.ns }, index = link_type:disabled</link>
+                    <link name="updateCustomProperty">ns = ${ $.ns }, index = link_type:value</link>
+                </imports>
+                <visible>false</visible>
+            </settings>
+        </field>
+        <field name="start_date">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Start Date</item>
+                    <item name="dataType" xsi:type="string">string</item>
+                    <item name="formElement" xsi:type="string">date</item>
+                    <item name="source" xsi:type="string">slider</item>
+                    <item name="dataScope" xsi:type="string">start_date</item>
+                    <item name="sortOrder" xsi:type="number">140</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="options" xsi:type="array">
+                        <item name="dateFormat" xsi:type="string">dd/mm/yyyy</item>
+                        <item name="timeFormat" xsi:type="string">HH:mm:ss</item>
+                        <item name="showsTime" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="end_date">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">End Date</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">date</item>
+                    <item name="source" xsi:type="string">slider</item>
+                    <item name="dataScope" xsi:type="string">end_date</item>
+                    <item name="sortOrder" xsi:type="number">150</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="options" xsi:type="array">
+                        <item name="dateFormat" xsi:type="string">dd/mm/yyyy</item>
+                        <item name="timeFormat" xsi:type="string">HH:mm:ss</item>
+                        <item name="showsTime" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+</form>

@@ -1,0 +1,146 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!--Slider Preference Start-->
+    <preference for="MageMasani\BannerSlider\Api\Data\SliderInterface" type="MageMasani\BannerSlider\Model\Slider"/>
+    <preference for="MageMasani\BannerSlider\Api\SliderRepositoryInterface"
+                type="MageMasani\BannerSlider\Model\SliderRepository"/>
+    <preference for="MageMasani\BannerSlider\Api\Data\SliderSearchResultInterface"
+                type="Magento\Framework\Api\SearchResults"/>
+    <!--Slider Preference End-->
+
+    <!--Banner Preference Start-->
+    <preference for="MageMasani\BannerSlider\Api\Data\BannerInterface" type="MageMasani\BannerSlider\Model\Banner"/>
+    <preference for="MageMasani\BannerSlider\Api\BannerRepositoryInterface"
+                type="MageMasani\BannerSlider\Model\BannerRepository"/>
+    <preference for="MageMasani\BannerSlider\Api\Data\BannerSearchResultInterface"
+                type="Magento\Framework\Api\SearchResults"/>
+    <!--Banner Preference End-->
+
+    <!--Slider Grid Start-->
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="bannerslider_slider_listing_data_source"
+                      xsi:type="string">MageMasani\BannerSlider\Model\ResourceModel\Slider\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="MageMasani\BannerSlider\Model\ResourceModel\Slider\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">magemasani_bannerslider_slider</argument>
+            <argument name="eventPrefix" xsi:type="string">magemasani_slider_collection</argument>
+            <argument name="eventObject" xsi:type="string">slider_collection</argument>
+            <argument name="resourceModel"
+                      xsi:type="string">MageMasani\BannerSlider\Model\ResourceModel\Slider</argument>
+        </arguments>
+    </type>
+    <!--Slider Grid End-->
+
+    <!--Banner Grid Start-->
+    <virtualType name="MageMasani\BannerSlider\Model\ResourceModel\Banner\Grid\Collection"
+                 type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">magemasani_bannerslider_banner</argument>
+            <argument name="resourceModel"
+                      xsi:type="string">MageMasani\BannerSlider\Model\ResourceModel\Banner\Collection
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="bannerslider_banner_listing_data_source"
+                      xsi:type="string">MageMasani\BannerSlider\Model\ResourceModel\Banner\Grid\Collection
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <!--Banner Grid End-->
+
+    <!--Banner uploader Start-->
+    <virtualType name="MageMasani\BannerSlider\BannerImageUploader"
+                 type="MageMasani\BannerSlider\Model\ImageUploader">
+        <arguments>
+            <argument name="baseTmpPath" xsi:type="string">MageMasani/tmp/banner</argument>
+            <argument name="basePath" xsi:type="string">MageMasani/banner</argument>
+            <argument name="allowedExtensions" xsi:type="array">
+                <item name="jpg" xsi:type="string">jpg</item>
+                <item name="jpeg" xsi:type="string">jpeg</item>
+                <item name="gif" xsi:type="string">gif</item>
+                <item name="png" xsi:type="string">png</item>
+            </argument>
+            <argument name="allowedMimeTypes" xsi:type="array">
+                <item name="jpg" xsi:type="string">image/jpg</item>
+                <item name="jpeg" xsi:type="string">image/jpeg</item>
+                <item name="gif" xsi:type="string">image/gif</item>
+                <item name="png" xsi:type="string">image/png</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="MageMasani\BannerSlider\Controller\Adminhtml\Banner\Image\Upload">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">MageMasani\BannerSlider\BannerImageUploader</argument>
+        </arguments>
+    </type>
+    <type name="MageMasani\BannerSlider\Controller\Adminhtml\Banner\Save">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">MageMasani\BannerSlider\BannerImageUploader</argument>
+        </arguments>
+    </type>
+    <!--Banner uploader End-->
+
+    <virtualType name="MageMasani\BannerSlider\Banner\DataProvider\Pool" type="Magento\Ui\DataProvider\Modifier\Pool">
+        <arguments>
+            <argument name="modifiers" xsi:type="array">
+                <item name="local_image" xsi:type="array">
+                    <item name="class" xsi:type="string">
+                        MageMasani\BannerSlider\Ui\DataProvider\Banner\Form\Modifier\LocalImage
+                    </item>
+                    <item name="sortOrder" xsi:type="number">10</item>
+                </item>
+                <item name="external_image" xsi:type="array">
+                    <item name="class" xsi:type="string">
+                        MageMasani\BannerSlider\Ui\DataProvider\Banner\Form\Modifier\ExternalImage
+                    </item>
+                    <item name="sortOrder" xsi:type="number">20</item>
+                </item>
+                <item name="youtube_video" xsi:type="array">
+                    <item name="class" xsi:type="string">
+                        MageMasani\BannerSlider\Ui\DataProvider\Banner\Form\Modifier\YoutubeVideo
+                    </item>
+                    <item name="sortOrder" xsi:type="number">30</item>
+                </item>
+                <item name="custom_html" xsi:type="array">
+                    <item name="class" xsi:type="string">
+                        MageMasani\BannerSlider\Ui\DataProvider\Banner\Form\Modifier\CustomHtml
+                    </item>
+                    <item name="sortOrder" xsi:type="number">40</item>
+                </item>
+                <item name="product" xsi:type="array">
+                    <item name="class" xsi:type="string">
+                        MageMasani\BannerSlider\Ui\DataProvider\Banner\Form\Modifier\Product
+                    </item>
+                    <item name="sortOrder" xsi:type="number">50</item>
+                </item>
+                <item name="category" xsi:type="array">
+                    <item name="class" xsi:type="string">
+                        MageMasani\BannerSlider\Ui\DataProvider\Banner\Form\Modifier\Category
+                    </item>
+                    <item name="sortOrder" xsi:type="number">60</item>
+                </item>
+                <item name="custom_url" xsi:type="array">
+                    <item name="class" xsi:type="string">
+                        MageMasani\BannerSlider\Ui\DataProvider\Banner\Form\Modifier\CustomUrl
+                    </item>
+                    <item name="sortOrder" xsi:type="number">70</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="MageMasani\BannerSlider\Model\Banner\DataProvider">
+        <arguments>
+            <argument name="pool" xsi:type="object">MageMasani\BannerSlider\Banner\DataProvider\Pool</argument>
+        </arguments>
+    </type>
+</config>

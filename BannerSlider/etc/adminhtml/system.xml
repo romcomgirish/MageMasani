@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <!-- for add new tab in Magento2 system configuration section -->
+        <tab id="magenasani" translate="label" sortOrder="10">
+            <label>MageMasani</label>
+        </tab>
+        <!-- for create section -->
+        <section id="magenasani_bannerslider" translate="label" type="text" sortOrder="130" showInDefault="1"
+                 showInWebsite="1"
+                 showInStore="1">
+            <label>BannerSlider</label>
+            <tab>magenasani</tab>
+            <resource>MageMasani_BannerSlider::config</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>General</label>
+                <field id="module_status" translate="label comment" type="select" sortOrder="0" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Enable Module</label>
+                    <comment>Enable at Frontend</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

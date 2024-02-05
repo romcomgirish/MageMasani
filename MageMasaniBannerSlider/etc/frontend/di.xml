@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Hyva\CompatModuleFallback\Model\CompatModuleRegistry">
+        <arguments>
+            <argument name="compatModules" xsi:type="array">
+                <item name="orig_module_map_magemasani_banner_slider" xsi:type="array">
+                    <item name="original_module" xsi:type="string">MageMasani_BannerSlider</item>
+                    <item name="compat_module" xsi:type="string">Hyva_MageMasaniBannerSlider</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+</config>

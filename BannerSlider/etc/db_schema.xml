@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="magemasani_bannerslider_slider" resource="default" engine="innodb"
+           comment="MageMasani Bannerslider Slider Table">
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true"
+                comment="Entity ID"/>
+        <column xsi:type="varchar" name="title" nullable="false" comment="Slider Title"/>
+        <column xsi:type="smallint" name="is_show_title" padding="2" unsigned="true" nullable="false"
+                default="0" comment="Show Title"/>
+        <column xsi:type="smallint" name="status" padding="2" unsigned="true" nullable="false"
+                default="0" comment="Status"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Creation Time"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Update Time"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+        <index referenceId="MAGEMASANI_BANNER_TITLE" indexType="fulltext">
+            <column name="title"/>
+        </index>
+    </table>
+    <table name="magemasani_bannerslider_banner" resource="default" engine="innodb"
+           comment="MageMasani Bannerslider Banner Table">
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="false" nullable="false" identity="false"
+                comment="Entity ID"/>
+        <column xsi:type="int" name="slider_id" padding="10" unsigned="true" nullable="false" identity="false"
+                comment="Slider ID"/>
+        <column xsi:type="varchar" name="title" nullable="false" comment="Slider Title"/>
+        <column xsi:type="varchar" name="resource_type" length="255" default="0" nullable="false"
+                comment="Resouce Type"/>
+        <column xsi:type="text" name="resource_path" nullable="false" comment="Resource Path"/>
+        <column xsi:type="varchar" name="alt_text" nullable="false" comment="Alt Text"/>
+        <column xsi:type="varchar" name="link_type" length="255" default="0" nullable="false"
+                comment="Link Type Resource"/>
+        <column xsi:type="varchar" name="link_type_resource" nullable="true" comment="Link URL"/>
+        <column xsi:type="smallint" name="status" padding="2" unsigned="true" nullable="false"
+                default="0" comment="Status"/>
+        <column xsi:type="int" name="sort_order" padding="10" unsigned="true" nullable="false" identity="false"
+                default="1" comment="Entity ID"/>
+        <column xsi:type="datetime" name="start_date" on_update="false" nullable="false" comment="Banner Start Date"/>
+        <column xsi:type="datetime" name="end_date" on_update="false" nullable="false" comment="Banner End Date"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Creation Time"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Update Time"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+        <index referenceId="MAGEMASANI_SLIDER_TITLE_ALT_TEXT" indexType="fulltext">
+            <column name="title"/>
+            <column name="alt_text"/>
+        </index>
+        <constraint xsi:type="foreign" referenceId="MAGEMASANI_BANNERSLIDER_BANNER_ID_MAGEMASANI_BANNERSLIDER_SLIDER_ID"
+                    table="magemasani_bannerslider_banner" column="slider_id"
+                    referenceTable="magemasani_bannerslider_slider"
+                    referenceColumn="entity_id" onDelete="CASCADE"/>
+    </table>
+    <table name="magemasani_bannerslider_customer_group" resource="default" engine="innodb"
+           comment="MageMasani BannerSlider Banner Customer Group Table">
+        <column xsi:type="int" name="entity_id" padding="11" nullable="false" unsigned="false" identity="false"
+                comment="Banner Id"/>
+        <column xsi:type="int" name="customer_group_id" padding="10" unsigned="true" nullable="false" identity="false"
+                comment="Customer Group ID"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+            <column name="customer_group_id"/>
+        </constraint>
+        <constraint xsi:type="foreign"
+                    referenceId="CSTR_MAGEMASANI_BANNERSLIDER_BANNER_CUSTOMER_GROUP_ENTITY_ID_TO_ENTITY_ID"
+                    table="magemasani_bannerslider_customer_group" column="entity_id"
+                    referenceTable="magemasani_bannerslider_banner"
+                    referenceColumn="entity_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign"
+                    referenceId="CSTR_MAGEMASANI_BANNERSLIDER_BANNER_CUSTOMER_GROUP_CUSTOMER_GROUP_TO_CUSTOMER_GROUP_ID"
+                    table="magemasani_bannerslider_customer_group" column="customer_group_id"
+                    referenceTable="customer_group"
+                    referenceColumn="customer_group_id" onDelete="CASCADE"/>
+    </table>
+</schema>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+    <widget id="magemasani_bannerslider" class="MageMasani\BannerSlider\Block\Widget\Slider" is_email_compatible="true"
+            placeholder_image="MageMasani_BannerSlider::images/slider_widget.png">
+        <label translate="true">MageMasani Banner Slider</label>
+        <description translate="true">Show a slider with assigned banners</description>
+        <parameters>
+            <parameter name="slider_id" xsi:type="select"
+                       source_model="MageMasani\BannerSlider\Model\Config\Source\Slider"
+                       visible="true" required="true" sort_order="10">
+                <label translate="true">Slider</label>
+            </parameter>
+            <parameter name="items_to_show" xsi:type="text" visible="true" required="true" sort_order="20">
+                <label translate="true">Items to show</label>
+                <value>1</value>
+            </parameter>
+            <parameter name="autoplay" xsi:type="select" source_model="Magento\Config\Model\Config\Source\Yesno"
+                       visible="true" required="true" sort_order="40">
+                <label translate="true">Autoplay</label>
+            </parameter>
+            <parameter name="autoplay_speed" xsi:type="text" visible="true" required="true" sort_order="50">
+                <label translate="true">Autoplay delay (in milliseconds)</label>
+                <value>2000</value>
+            </parameter>
+            <parameter name="show_nav" xsi:type="select" source_model="Magento\Config\Model\Config\Source\Yesno"
+                       visible="true" required="true" sort_order="70">
+                <label translate="true">Show navigation buttons</label>
+            </parameter>
+            <parameter name="show_dots" xsi:type="select" source_model="Magento\Config\Model\Config\Source\Yesno"
+                       visible="true" required="true" sort_order="80">
+                <label translate="true">Show dots</label>
+            </parameter>
+            <parameter name="conditions" xsi:type="block" visible="true" required="true" sort_order="90">
+                <label translate="true">Slider Break Point(s)</label>
+                <block class="MageMasani\BannerSlider\Block\Adminhtml\DynamicRows"/>
+            </parameter>
+        </parameters>
+    </widget>
+</widgets>

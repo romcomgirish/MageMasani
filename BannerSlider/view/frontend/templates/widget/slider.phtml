@@ -1,0 +1,71 @@
+<?php
+
+use MageMasani\BannerSlider\Block\Widget\Slider;
+use Magento\Framework\Escaper;
+
+/** @var Slider $block */
+/** @var Escaper $escaper */
+//$slider = $block->getSlider();
+$banners = $block->getBannerCollection();
+$sliderSpecificClassName = 'magemasani' . "-" . $block->getData('slider_id');
+?>
+<?php if ($banners && $block->getData('slider_id')): ?>
+    <div class="magemasani" id="magemasani" style="width: 100%">
+        <div class="masani">
+            <?php foreach ($banners as $banner): ?>
+                <?php if ($banner['status']): ?>
+                    <div class="slider-mage-masani">
+                        <?php if ($banner['resource_type'] =='local_image'): ?>
+                        <div class="<?= $escaper->escapeHtmlAttr($banner['resource_type']); ?>"
+                             id="<?= $escaper->escapeHtmlAttr($banner['resource_type']); ?>">
+                            <a href="<?= $escaper->escapeUrl($banner['link_type']); ?>">
+                                <img src="<?= $escaper->escapeUrl($banner['resource_path']); ?>">
+                            </a>
+                        </div>
+                        <?php elseif ($banner['resource_type'] =='external_image'): ?>
+                            <div class="<?= $escaper->escapeHtmlAttr($banner['resource_type']); ?>"
+                                 id="<?= $escaper->escapeHtmlAttr($banner['resource_type']); ?>">
+                                <a href="<?= $escaper->escapeUrl($banner['link_type']); ?>">
+                                    <img src="<?=  $escaper->escapeUrl($banner['resource_path']); ?>">
+                                </a>
+                            </div>
+                        <?php elseif ($banner['resource_type'] =='youtube_video'): ?>
+                            <div class="<?= $escaper->escapeHtmlAttr($banner['resource_type']); ?>"
+                                 id="<?= $escaper->escapeHtmlAttr($banner['resource_type']); ?>">
+                                <iframe src="<?=  $escaper->escapeUrl($banner['resource_path']); ?>"></iframe>
+                            </div>
+                        <?php elseif ($banner['resource_type'] =='custom_html'): ?>
+                            <div class="<?= $escaper->escapeHtmlAttr($banner['resource_type']); ?>"
+                                 id="<?= $escaper->escapeHtmlAttr($banner['resource_type']); ?>">
+                                <div class="content-main">
+                                    <?= /* @noEscape */ $banner['resource_path']; ?>
+                                </div>
+                            </div>
+                        <?php endif;?>
+                    </div>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </div>
+    </div>
+<?php endif; ?>
+<script>
+    require([
+        'jquery',
+        'slick'
+    ], function ($) {
+        var element = $('.magemasani').find('.masani');
+        element.on('init', function (event, slick) {
+            slick.$slides.each(function (key, slide) {
+                slide = $(slide);
+                var rmMinW = parseInt(slide.data('rm-minw'));
+                var rmMaxW = parseInt(slide.data('rm-maxw'));
+                var screenWidth = $(window).width();
+                if ((rmMinW && rmMinW > screenWidth) || (rmMaxW && rmMaxW < screenWidth)) {
+                    slide.remove();
+                    return;
+                }
+            });
+        });
+        element.slick(<?= /* @noEscape */ $block->getSliderOptions() ?>);
+    });
+</script>
