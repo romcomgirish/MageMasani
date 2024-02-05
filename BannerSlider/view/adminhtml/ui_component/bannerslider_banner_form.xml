@@ -46,18 +46,19 @@
                 <item name="label" xsi:type="string" translate="true">General</item>
             </item>
         </argument>
-        <field name="entity_id">
+        <field name="entity_id" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="visible" xsi:type="boolean">false</item>
-                    <item name="dataType" xsi:type="string">text</item>
-                    <item name="formElement" xsi:type="string">input</item>
                     <item name="source" xsi:type="string">banner</item>
-                    <item name="dataScope" xsi:type="string">entity_id</item>
                 </item>
             </argument>
+            <settings>
+                <dataType>text</dataType>
+                <visible>false</visible>
+                <dataScope>entity_id</dataScope>
+            </settings>
         </field>
-        <field name="is_enabled" sortOrder="10" formElement="checkbox">
+        <field name="status" sortOrder="10" formElement="checkbox">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="number">1</item>
@@ -162,7 +163,7 @@
                         </uploaderConfig>
                         <previewTmpl>Magento_Catalog/image-preview</previewTmpl>
                         <openDialogTitle>Resource</openDialogTitle>
-                        <initialMediaGalleryOpenSubpath>codilar/banner/images</initialMediaGalleryOpenSubpath>
+                        <initialMediaGalleryOpenSubpath>MageMasani/banner/images</initialMediaGalleryOpenSubpath>
                         <allowedExtensions>jpg jpeg gif png</allowedExtensions>
                         <maxFileSize>4194304</maxFileSize>
                     </settings>
@@ -282,7 +283,9 @@
         </field>
         <field name="link_type_resource_category">
             <argument name="data" xsi:type="array">
-                <item name="options" xsi:type="object">Magento\Catalog\Ui\Component\Product\Form\Categories\Options</item>
+                <item name="options" xsi:type="object">
+                    Magento\Catalog\Ui\Component\Product\Form\Categories\Options
+                </item>
                 <item name="config" xsi:type="array">
                     <item name="label" xsi:type="string" translate="true">Select Category</item>
                     <item name="componentType" xsi:type="string">field</item>

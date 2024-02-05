@@ -9,6 +9,9 @@ use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Exception\NotFoundException;
 
+/**
+ * Banner Index Class
+ */
 class Index extends Action implements HttpGetActionInterface
 {
     /**

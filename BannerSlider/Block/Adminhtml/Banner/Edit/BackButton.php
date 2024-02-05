@@ -5,6 +5,9 @@ namespace MageMasani\BannerSlider\Block\Adminhtml\Banner\Edit;
 
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
+/**
+ * Banner BackButton Class
+ */
 class BackButton extends GenericButton implements ButtonProviderInterface
 {
 

@@ -9,6 +9,9 @@ use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\NoSuchEntityException;
 
+/**
+ * Banner Delete Class
+ */
 class Delete extends Action implements HttpPostActionInterface
 {
     /**

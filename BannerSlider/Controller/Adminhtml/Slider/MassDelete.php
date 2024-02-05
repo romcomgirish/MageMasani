@@ -13,6 +13,9 @@ use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Ui\Component\MassAction\Filter;
 
+/**
+ * Slider MassDelete Class
+ */
 class MassDelete extends Action implements HttpPostActionInterface
 {
     /**

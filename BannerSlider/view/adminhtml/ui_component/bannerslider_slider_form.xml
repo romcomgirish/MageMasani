@@ -4,8 +4,6 @@
  *
  * @package     magento2
  * @author      Jayanka Ghosh (joy)
- * @license     https://opensource.org/licenses/OSL-3.0 Open Software License v. 3.0 (OSL-3.0)
- * @link        https://www.codilar.com/
  */
 -->
 <form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -65,7 +63,7 @@
                 <dataScope>entity_id</dataScope>
             </settings>
         </field>
-        <field name="is_enabled" sortOrder="10" formElement="checkbox">
+        <field name="status" sortOrder="10" formElement="checkbox">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">slider</item>
@@ -75,7 +73,7 @@
             <settings>
                 <dataType>boolean</dataType>
                 <label translate="true">Is Enabled</label>
-                <dataScope>is_enabled</dataScope>
+                <dataScope>status</dataScope>
             </settings>
             <formElements>
                 <checkbox>

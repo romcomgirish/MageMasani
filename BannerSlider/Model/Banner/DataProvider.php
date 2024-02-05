@@ -7,20 +7,26 @@ use Magento\Framework\App\Request\DataPersistorInterface;
 use Magento\Ui\DataProvider\Modifier\PoolInterface;
 use Magento\Ui\DataProvider\ModifierPoolDataProvider;
 
+/**
+ * Banner DataProvider Class
+ */
 class DataProvider extends ModifierPoolDataProvider
 {
     /**
      * @var DataPersistorInterface
      */
     private DataPersistorInterface $dataPersistor;
+
     /**
      * @var PoolInterface|null
      */
     private ?PoolInterface $pool;
+
     /**
-     * @var array
+     * @var array|null
      */
     protected ?array $loadedData = null;
+
     /**
      * @param string $name
      * @param string $primaryFieldName

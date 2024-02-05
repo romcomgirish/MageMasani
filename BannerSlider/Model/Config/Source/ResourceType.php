@@ -4,6 +4,9 @@ namespace MageMasani\BannerSlider\Model\Config\Source;
 
 use Magento\Framework\Data\OptionSourceInterface;
 
+/**
+ * Source Resource Class
+ */
 class ResourceType implements OptionSourceInterface
 {
     public const LOCAL_IMAGE = 'local_image';
@@ -25,7 +28,6 @@ class ResourceType implements OptionSourceInterface
                 'label' => $label
             ];
         }
-
         return $options;
     }
 

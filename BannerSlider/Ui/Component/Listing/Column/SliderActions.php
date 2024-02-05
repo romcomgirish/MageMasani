@@ -8,14 +8,19 @@ use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponentFactory;
 use Magento\Ui\Component\Listing\Columns\Column;
 
+/**
+ * Slider SliderActions Class
+ */
 class SliderActions extends Column
 {
 
     public const ENTITY_ID = 'entity_id';
+
     /**
      * @var Escaper
      */
     private Escaper $escaper;
+
     /**
      * @var UrlInterface
      */

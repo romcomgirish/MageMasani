@@ -4,9 +4,12 @@ namespace MageMasani\BannerSlider\Model\ResourceModel;
 
 use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 
+/**
+ * Banner ResourceModel Class
+ */
 class Banner extends AbstractDb
 {
-    public const MAIN_TABLE = 'codilar_bannerslider_banner';
+    public const MAIN_TABLE = 'magemasani_bannerslider_banner';
     public const ID_FIELD_NAME = 'entity_id';
 
     /**

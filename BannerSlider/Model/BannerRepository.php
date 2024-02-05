@@ -3,143 +3,104 @@
 namespace MageMasani\BannerSlider\Model;
 
 use MageMasani\BannerSlider\Api\BannerRepositoryInterface;
-use MageMasani\BannerSlider\Api\Data\BannerInterface;
-use MageMasani\BannerSlider\Api\Data\BannerInterfaceFactory as ModelFactory;
-use MageMasani\BannerSlider\Model\ResourceModel\Banner as ResourceModel;
-use MageMasani\BannerSlider\Model\ResourceModel\Banner\CollectionFactory;
+use MageMasani\BannerSlider\Api\Data;
+use MageMasani\BannerSlider\Model\ResourceModel\Banner as ResourceBanner;
+use MageMasani\BannerSlider\Model\ResourceModel\Banner\CollectionFactory as BannerCollectionFactory;
+use Magento\Framework\Api\DataObjectHelper;
+use Magento\Framework\Api\ExtensionAttribute\JoinProcessorInterface;
 use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
 use Magento\Framework\Api\SearchCriteriaInterface;
-use Magento\Framework\Exception\AlreadyExistsException;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
-use MageMasani\BannerSlider\Api\Data\BannerSearchResultInterfaceFactory;
-use Psr\Log\LoggerInterface;
+use Magento\Framework\Reflection\DataObjectProcessor;
 
+/**
+ * Banner BannerRepository Class
+ */
 class BannerRepository implements BannerRepositoryInterface
 {
+    /**
+     * @var ResourceBanner
+     */
+    protected ResourceBanner $resource;
 
     /**
-     * @var ModelFactory
+     * @var BannerFactory
      */
-    private ModelFactory $modelFactory;
+    protected BannerFactory $bannerFactory;
+
     /**
-     * @var ResourceModel
+     * @var BannerCollectionFactory
      */
-    private ResourceModel $resourceModel;
+    protected BannerCollectionFactory $bannerCollectionFactory;
+
     /**
-     * @var CollectionFactory
+     * @var Data\SliderSearchResultInterfaceFactory
      */
-    private CollectionFactory $collectionFactory;
+    protected Data\SliderSearchResultInterfaceFactory $searchResultsFactory;
+
+    /**
+     * @var DataObjectHelper
+     */
+    protected DataObjectHelper $dataObjectHelper;
+
+    /**
+     * @var DataObjectProcessor
+     */
+    protected DataObjectProcessor $dataObjectProcessor;
+
+    /**
+     * @var JoinProcessorInterface
+     */
+    private JoinProcessorInterface $extensionAttributesJoinProcessor;
+
     /**
      * @var CollectionProcessorInterface
      */
     private CollectionProcessorInterface $collectionProcessor;
-    /**
-     * @var BannerInterface[]
-     */
-    protected array $objectCache;
-    /**
-     * @var LoggerInterface
-     */
-    private LoggerInterface $logger;
-    /**
-     * @var BannerSearchResultInterfaceFactory
-     */
-    private BannerSearchResultInterfaceFactory $bannerSearchResultFactory;
 
     /**
-     * BannerRepository constructor.
-     * @param ModelFactory $modelFactory
-     * @param ResourceModel $resourceModel
-     * @param CollectionFactory $collectionFactory
+     * @param ResourceBanner $resource
+     * @param BannerFactory $bannerFactory
+     * @param BannerCollectionFactory $bannerCollectionFactory
+     * @param Data\SliderSearchResultInterfaceFactory $searchResultsFactory
+     * @param DataObjectHelper $dataObjectHelper
+     * @param DataObjectProcessor $dataObjectProcessor
+     * @param JoinProcessorInterface $extensionAttributesJoinProcessor
      * @param CollectionProcessorInterface $collectionProcessor
-     * @param BannerSearchResultInterfaceFactory $bannerSearchResultFactory
-     * @param LoggerInterface $logger
-     * @param array $objectCache
      */
     public function __construct(
-        ModelFactory $modelFactory,
-        ResourceModel $resourceModel,
-        CollectionFactory $collectionFactory,
-        CollectionProcessorInterface $collectionProcessor,
-        BannerSearchResultInterfaceFactory $bannerSearchResultFactory,
-        LoggerInterface $logger,
-        array $objectCache = []
+        ResourceBanner                           $resource,
+        BannerFactory                           $bannerFactory,
+        BannerCollectionFactory                 $bannerCollectionFactory,
+        Data\SliderSearchResultInterfaceFactory $searchResultsFactory,
+        DataObjectHelper                        $dataObjectHelper,
+        DataObjectProcessor                     $dataObjectProcessor,
+        JoinProcessorInterface                  $extensionAttributesJoinProcessor,
+        CollectionProcessorInterface            $collectionProcessor
     ) {
-        $this->modelFactory = $modelFactory;
-        $this->resourceModel = $resourceModel;
-        $this->collectionFactory = $collectionFactory;
+        $this->resource = $resource;
+        $this->bannerFactory = $bannerFactory;
+        $this->bannerCollectionFactory = $bannerCollectionFactory;
+        $this->searchResultsFactory = $searchResultsFactory;
+        $this->dataObjectHelper = $dataObjectHelper;
+        $this->dataObjectProcessor = $dataObjectProcessor;
+        $this->extensionAttributesJoinProcessor = $extensionAttributesJoinProcessor;
         $this->collectionProcessor = $collectionProcessor;
-        $this->bannerSearchResultFactory = $bannerSearchResultFactory;
-        $this->logger = $logger;
-        $this->objectCache = $objectCache;
     }
 
     /**
      * @inheritdoc
      */
-    public function loadById(int $id, bool $loadFromCache = true)
-    {
-        $cachedObject = $this->getCachedObject('id', $id);
-        if ($loadFromCache && $cachedObject) {
-            return $cachedObject;
-        } else {
-            $model = $this->create();
-            $this->resourceModel->load($model, $id);
-            if (!$model->getEntityId()) {
-                throw NoSuchEntityException::singleField('entity_id', $id);
-            }
-            $this->cacheObject('id', $id, $model);
-            return $model;
-        }
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function create()
-    {
-        return $this->modelFactory->create();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function save(BannerInterface $banner)
+    public function save(Data\BannerInterface $banner)
     {
         try {
-            $this->resourceModel->save($banner);
-            return $this->loadById($banner->getEntityId(), false);
-        } catch (AlreadyExistsException $e) {
-            throw new CouldNotSaveException(__($e->getMessage()));
-        } catch (\Exception $e) {
-            $this->logger->error($e->getMessage());
-            throw new CouldNotSaveException(__('There was some error saving the banner'));
+            $this->resource->save($banner);
+        } catch (\Exception $exception) {
+            throw new CouldNotSaveException(__($exception->getMessage()));
         }
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function delete(BannerInterface $banner): bool
-    {
-        try {
-            $this->resourceModel->delete($banner);
-            $this->cacheObject('id', $banner->getEntityId(), null);
-            return true;
-        } catch (\Exception $e) {
-            $this->logger->error($e->getMessage());
-            throw new CouldNotDeleteException(__('There was some eror deleting the banner'));
-        }
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function deleteById(int $id): bool
-    {
-        return $this->delete($this->loadById($id));
+        return $banner;
     }
 
     /**
@@ -147,49 +108,47 @@ class BannerRepository implements BannerRepositoryInterface
      */
     public function getList(SearchCriteriaInterface $searchCriteria)
     {
-        $collection = $this->collectionFactory->create();
+        $collection = $this->bannerCollectionFactory->create();
         $this->collectionProcessor->process($searchCriteria, $collection);
-        $searchResult = $this->bannerSearchResultFactory->create();
-        $searchResult->setSearchCriteria($searchCriteria)
-            ->setTotalCount($collection->getSize())
-            ->setItems($collection->getItems());
-        foreach ($searchResult->getItems() as $item) {
-            $this->cacheObject('id', $item->getEntityId(), $item);
+        $this->extensionAttributesJoinProcessor->process($collection);
+        $searchResults = $this->searchResultsFactory->create();
+        $searchResults->setSearchCriteria($searchCriteria);
+        $searchResults->setItems($collection->getItems());
+        $searchResults->setTotalCount($collection->getSize());
+        return $searchResults;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function deleteById($id)
+    {
+        return $this->delete($this->getById($id));
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function delete(Data\BannerInterface $banner)
+    {
+        try {
+            $this->resource->delete($banner);
+        } catch (\Exception $exception) {
+            throw new CouldNotDeleteException(__($exception->getMessage()));
         }
-        return $searchResult;
+        return true;
     }
 
     /**
      * @inheritdoc
      */
-    public function getCollection(): \MageMasani\BannerSlider\Model\ResourceModel\Banner\Collection
+    public function getById($Id)
     {
-        return $this->collectionFactory->create();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function cacheObject($type, $identifier, $object)
-    {
-        $cacheKey = $this->getCacheKey($type, $identifier);
-        $this->objectCache[$cacheKey] = $object;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function getCachedObject($type, $identifier)
-    {
-        $cacheKey = $this->getCacheKey($type, $identifier);
-        return $this->objectCache[$cacheKey] ?? false;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function getCacheKey($type, $identifier)
-    {
-        return $type . '_' . $identifier;
+        $slider = $this->bannerFactory->create();
+        $this->resource->load($slider, $Id);
+        if (!$slider->getId()) {
+            throw new NoSuchEntityException(__('The Slider with the "%1" ID doesn\'t exist.', $Id));
+        }
+        return $slider;
     }
 }

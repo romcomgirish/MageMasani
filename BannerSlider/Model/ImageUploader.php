@@ -13,6 +13,9 @@ use Magento\MediaStorage\Model\File\UploaderFactory;
 use Magento\Store\Model\StoreManagerInterface;
 use Psr\Log\LoggerInterface;
 
+/**
+ * Banner ImageUploader Class
+ */
 class ImageUploader
 {
     /**
@@ -43,22 +46,22 @@ class ImageUploader
     /**
      * @var string
      */
-    protected string $baseTmpPath;
+    protected $baseTmpPath;
 
     /**
      * @var string
      */
-    protected string $basePath;
+    protected $basePath;
 
     /**
      * @var string|array|string[]
      */
-    protected string|array $allowedExtensions;
+    protected $allowedExtensions;
 
     /**
      * @var string[]
      */
-    private array $allowedMimeTypes;
+    private $allowedMimeTypes;
 
     /**
      * @param Database $coreFileStorageDatabase

@@ -11,6 +11,9 @@ use Magento\Framework\App\Request\DataPersistorInterface;
 use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Exception\LocalizedException;
 
+/**
+ * Slider Save Class
+ */
 class Save extends Action
 {
     /**

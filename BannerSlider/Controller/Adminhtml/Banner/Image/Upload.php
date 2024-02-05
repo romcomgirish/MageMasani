@@ -9,6 +9,9 @@ use Magento\Framework\Controller\Result\Json;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Controller\ResultInterface;
 
+/**
+ * Banner Upload Class
+ */
 class Upload extends Action implements HttpPostActionInterface
 {
     /**
@@ -43,7 +46,6 @@ class Upload extends Action implements HttpPostActionInterface
     public function execute()
     {
         $imageId = $this->getRequest()->getParam('param_name', 'image');
-
         try {
             $result = $this->imageUploader->saveFileToTmpDir($imageId);
         } catch (\Exception $e) {

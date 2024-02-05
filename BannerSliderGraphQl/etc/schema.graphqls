@@ -51,7 +51,7 @@ type BannerSliderInfo {
     alt_text: String @doc(description: "Alt Text for Seo.")
     link_type: String @doc(description: "Brand Name")
     link_type_resource: String @doc(description: "Brand Name")
-    is_enabled: String @doc(description: "Banner Status.")
+    status: String @doc(description: "Banner Status.")
     sort_order: Int @doc(description: "Sort Order of banner.")
     start_date: String @doc(description: "Start Date of banner.")
     end_date: String @doc(description: "End date of banner.")

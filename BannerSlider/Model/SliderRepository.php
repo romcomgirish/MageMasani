@@ -16,8 +16,7 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Reflection\DataObjectProcessor;
 
 /**
- * Default block repo impl.
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ * Slider SliderRepository Class
  */
 class SliderRepository implements SliderRepositoryInterface
 {
@@ -25,30 +24,37 @@ class SliderRepository implements SliderRepositoryInterface
      * @var ResourceSlider
      */
     protected ResourceSlider $resource;
+
     /**
      * @var SliderFactory
      */
     protected SliderFactory $sliderFactory;
+
     /**
      * @var SliderCollectionFactory
      */
     protected SliderCollectionFactory $sliderCollectionFactory;
+
     /**
      * @var Data\SliderSearchResultInterfaceFactory
      */
     protected Data\SliderSearchResultInterfaceFactory $searchResultsFactory;
+
     /**
      * @var DataObjectHelper
      */
     protected DataObjectHelper $dataObjectHelper;
+
     /**
      * @var DataObjectProcessor
      */
     protected DataObjectProcessor $dataObjectProcessor;
+
     /**
      * @var JoinProcessorInterface
      */
     private JoinProcessorInterface $extensionAttributesJoinProcessor;
+
     /**
      * @var CollectionProcessorInterface
      */
@@ -89,9 +95,6 @@ class SliderRepository implements SliderRepositoryInterface
      */
     public function save(Data\SliderInterface $slider)
     {
-/*        echo "<pre>";
-        echo "rest";
-        print_r($slider->getData());exit;*/
         try {
             $this->resource->save($slider);
         } catch (\Exception $exception) {
@@ -144,7 +147,7 @@ class SliderRepository implements SliderRepositoryInterface
         $slider = $this->sliderFactory->create();
         $this->resource->load($slider, $Id);
         if (!$slider->getId()) {
-            throw new NoSuchEntityException(__('The BannerSlider slider with the "%1" ID doesn\'t exist.', $Id));
+            throw new NoSuchEntityException(__('The Slider with the "%1" ID doesn\'t exist.', $Id));
         }
         return $slider;
     }

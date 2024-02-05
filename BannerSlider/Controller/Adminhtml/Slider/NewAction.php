@@ -10,6 +10,9 @@ use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Exception\NotFoundException;
 
+/**
+ * Slider NewAction Class
+ */
 class NewAction extends Action implements HttpGetActionInterface
 {
     /**

@@ -26,7 +26,7 @@
 namespace MageMasani\BannerSlider\Model;
 
 /**
- * DiscountFilter module configuration
+ * System Configuration Interface
  */
 interface ConfigInterface
 {

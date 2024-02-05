@@ -10,6 +10,9 @@ use Magento\Backend\App\Action\Context;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\Controller\ResultInterface;
 
+/**
+ * Slider Inline Class
+ */
 class InlineEdit extends Action
 {
     /**

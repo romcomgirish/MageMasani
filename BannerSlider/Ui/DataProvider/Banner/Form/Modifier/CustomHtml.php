@@ -4,6 +4,9 @@ namespace MageMasani\BannerSlider\Ui\DataProvider\Banner\Form\Modifier;
 
 use Magento\Ui\DataProvider\Modifier\ModifierInterface;
 
+/**
+ * Banner CustomHtml Class
+ */
 class CustomHtml implements ModifierInterface
 {
     /**

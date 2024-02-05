@@ -15,13 +15,16 @@ use Magento\Framework\Model\Context;
 use Magento\Framework\Model\ResourceModel\AbstractResource;
 use Magento\Framework\Registry;
 
+/**
+ * Slider Model Class
+ */
 class Slider extends AbstractExtensibleModel implements SliderInterface
 {
 
     /**
      * @var string
      */
-    protected $_eventPrefix = 'codilar_bannerslider_slider';
+    protected $_eventPrefix = 'magemasani_bannerslider_slider';
 
     /**
      * @var string
@@ -31,7 +34,7 @@ class Slider extends AbstractExtensibleModel implements SliderInterface
     /**
      * @var string
      */
-    protected $_cacheTag = 'codilar_bannerslider_slider';
+    protected $_cacheTag = 'magemasani_bannerslider_slider';
 
     /**
      * @param Context $context
@@ -114,17 +117,17 @@ class Slider extends AbstractExtensibleModel implements SliderInterface
     /**
      * @inheritdoc
      */
-    public function getIsEnabled()
+    public function getStatus()
     {
-        return (int)$this->getData(self::IS_ENABLED);
+        return (int)$this->getData(self::STATUS);
     }
 
     /**
      * @inheritdoc
      */
-    public function setIsEnabled(int $isEnabled)
+    public function setStatus(int $status)
     {
-        return $this->setData(self::IS_ENABLED, 'is_enabled');
+        return $this->setData(self::STATUS, 'status');
     }
 
     /**

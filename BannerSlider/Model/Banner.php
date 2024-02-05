@@ -12,12 +12,15 @@ use Magento\Framework\Model\Context;
 use Magento\Framework\Model\ResourceModel\AbstractResource;
 use Magento\Framework\Registry;
 
+/**
+ * Banner Model Class
+ */
 class Banner extends AbstractExtensibleModel implements BannerInterface
 {
     /**
      * @var string
      */
-    protected $_eventPrefix = 'codilar_bannerslider_banner';
+    protected $_eventPrefix = 'magemasani_bannerslider_banner';
 
     /**
      * @var string
@@ -27,7 +30,7 @@ class Banner extends AbstractExtensibleModel implements BannerInterface
     /**
      * @var string
      */
-    protected $_cacheTag = 'codilar_bannerslider_banner';
+    protected $_cacheTag = 'magemasani_bannerslider_banner';
 
     /**
      * @param Context $context
@@ -110,17 +113,17 @@ class Banner extends AbstractExtensibleModel implements BannerInterface
     /**
      * @inheritdoc
      */
-    public function getIsEnabled()
+    public function getStatus()
     {
-        return (int)$this->getData(self::IS_ENABLED);
+        return (int)$this->getData(self::STATUS);
     }
 
     /**
      * @inheritdoc
      */
-    public function setIsEnabled(int $isEnabled)
+    public function setStatus(int $status)
     {
-        return $this->setData(self::IS_ENABLED, 'is_enabled');
+        return $this->setData(self::STATUS, 'status');
     }
 
     /**

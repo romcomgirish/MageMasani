@@ -5,6 +5,9 @@ namespace MageMasani\BannerSlider\Block\Adminhtml\Banner\Edit;
 
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
+/**
+ * Banner SaveAndContinueButton Class
+ */
 class SaveAndContinueButton extends GenericButton implements ButtonProviderInterface
 {
 

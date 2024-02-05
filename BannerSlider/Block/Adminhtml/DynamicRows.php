@@ -8,7 +8,7 @@ use Magento\Framework\Exception\LocalizedException;
 use MageMasani\BannerSlider\Block\Adminhtml\Widget\DynamicRows as CoreDynamicRows;
 
 /**
- * Class MageMasani DynamicRows
+ * BannerSlider DynamicRows Class
  */
 class DynamicRows extends Widget
 {

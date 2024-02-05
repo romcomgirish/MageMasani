@@ -15,6 +15,9 @@ use Magento\Framework\Exception\LocalizedException;
 use Magento\Ui\Component\MassAction\Filter;
 use MageMasani\BannerSlider\Model\ResourceModel\Banner\CollectionFactory;
 
+/**
+ * Banner MassEnable Class
+ */
 class MassEnable extends Action implements HttpPostActionInterface
 {
     /**

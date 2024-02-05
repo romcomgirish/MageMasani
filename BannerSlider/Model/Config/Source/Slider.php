@@ -6,6 +6,9 @@ use MageMasani\BannerSlider\Api\SliderRepositoryInterface;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Data\OptionSourceInterface;
 
+/**
+ * Source Slider Class
+ */
 class Slider implements OptionSourceInterface
 {
     /**
@@ -36,7 +39,7 @@ class Slider implements OptionSourceInterface
      */
     public function toOptionArray()
     {
-        $this->searchCriteriaBuilder->addFilter('is_enabled', '1', 'eq');
+        $this->searchCriteriaBuilder->addFilter('status', '1', 'eq');
         $searchCriteria = $this->searchCriteriaBuilder->create();
         $items = $this->sliderRepository->getList($searchCriteria)->getItems();
         $result = [];

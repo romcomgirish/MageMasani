@@ -9,9 +9,9 @@ define([
             bodyTmpl: 'MageMasani_BannerSlider/ui/grid/cells/text'
         },
         getStatusColor: function (row) {
-            if (row.is_enabled == '1') {
+            if (row.status == '1') {
                 return 'grid-severity-complete';
-            }else if(row.is_enabled == '0') {
+            }else if(row.status == '0') {
                 return 'grid-severity-closed';
             }
             return '#303030';

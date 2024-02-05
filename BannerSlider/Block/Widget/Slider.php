@@ -3,8 +3,11 @@
 namespace MageMasani\BannerSlider\Block\Widget;
 
 use MageMasani\BannerSlider\Api\BannerRepositoryInterface;
+use MageMasani\BannerSlider\BannerImageUploader;
 use MageMasani\BannerSlider\Model\Config;
+use MageMasani\BannerSlider\Model\ImageUploader;
 use Magento\Framework\Api\SearchCriteriaBuilderFactory;
+use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Serialize\SerializerInterface;
 use Magento\Framework\UrlInterface;
@@ -13,6 +16,9 @@ use Magento\Widget\Block\BlockInterface;
 use Magento\Widget\Helper\Conditions;
 use Magento\Widget\Model\Template\FilterEmulate;
 
+/**
+ * BannerSlider Class
+ */
 class Slider extends Template implements BlockInterface
 {
     /**
@@ -51,6 +57,11 @@ class Slider extends Template implements BlockInterface
     private FilterEmulate $filterEmulate;
 
     /**
+     * @var ImageUploader|BannerImageUploader|mixed
+     */
+    private ImageUploader $imageUploader;
+
+    /**
      * @param Template\Context $context
      * @param BannerRepositoryInterface $bannerRepository
      * @param SearchCriteriaBuilderFactory $searchCriteriaBuilderFactory
@@ -58,6 +69,7 @@ class Slider extends Template implements BlockInterface
      * @param Conditions $conditions
      * @param Config $config
      * @param FilterEmulate $filterEmulate
+     * @param ImageUploader|null $imageUploader
      * @param array $data
      */
     public function __construct(
@@ -68,6 +80,7 @@ class Slider extends Template implements BlockInterface
         Conditions                   $conditions,
         Config                       $config,
         FilterEmulate                $filterEmulate,
+        ImageUploader $imageUploader = null,
         array                        $data = []
     ) {
         parent::__construct($context, $data);
@@ -77,6 +90,7 @@ class Slider extends Template implements BlockInterface
         $this->serializer = $serializer;
         $this->config = $config;
         $this->filterEmulate = $filterEmulate;
+        $this->imageUploader = $imageUploader ?:  ObjectManager::getInstance()->get(BannerImageUploader::class);
     }
 
     /**
@@ -99,7 +113,7 @@ class Slider extends Template implements BlockInterface
                 'resource_type' => $banner['resource_type'],
                 'resource_path' => $this->checkResourceType($banner['resource_type'], $banner['resource_path']),
                 'alt_text' => $banner['alt_text'],
-                'is_enabled' => $banner['is_enabled'],
+                'status' => $banner['status'],
                 'sort_order' => $banner['sort_order'],
                 'created_at' => $banner['created_at'],
                 'updated_at' => $banner['updated_at'],
@@ -139,7 +153,7 @@ class Slider extends Template implements BlockInterface
     {
         try {
             $store = $this->_storeManager->getStore();
-            return $store->getBaseUrl(UrlInterface::URL_TYPE_MEDIA).$imageSource;
+            return $store->getBaseUrl(UrlInterface::URL_TYPE_MEDIA).$this->imageUploader->getBasePath().'/'.$imageSource;
         } catch (NoSuchEntityException $e) {
             return '';
         }

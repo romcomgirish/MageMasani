@@ -5,9 +5,9 @@ namespace MageMasani\BannerSlider\Ui\DataProvider\Banner\Form\Modifier;
 use Magento\Ui\DataProvider\Modifier\ModifierInterface;
 
 /**
- * Banner ExternalImage Class
+ * Banner Product Class
  */
-class ExternalImage implements ModifierInterface
+class Category implements ModifierInterface
 {
     /**
      * @inheritdoc
@@ -15,11 +15,11 @@ class ExternalImage implements ModifierInterface
     public function modifyData(array $data): array
     {
         foreach ($data as &$item) {
-            $resourcePath = $item['resource_path'] ?? null;
-            $resourceType = $item['resource_type'];
-            if ($resourcePath && $resourceType === 'external_image') {
-                unset($item['resource_path']);
-                $item['resource_path_external_image'] = $resourcePath;
+            $resourcePath = $item['link_type'] ?? null;
+            $resourceType = $item['link_type_resource'];
+            if ($resourcePath && $resourceType === 'link_type_resource_category') {
+                unset($item['link_type']);
+                $item['link_type_resource_category'] = $resourcePath;
             }
         }
         return $data;

@@ -9,6 +9,9 @@ use Magento\Framework\Controller\Result\Forward;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Controller\ResultInterface;
 
+/**
+ * Banner NewAction Class
+ */
 class NewAction extends Action implements HttpGetActionInterface
 {
     /**

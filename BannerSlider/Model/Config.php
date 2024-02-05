@@ -7,7 +7,7 @@ use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
 use Magento\Store\Model\ScopeInterface;
 
 /**
- * DiscountFilter module configuration
+ * System Configuration model Class
  */
 class Config implements ConfigInterface
 {

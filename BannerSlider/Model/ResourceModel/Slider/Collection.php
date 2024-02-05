@@ -6,6 +6,9 @@ use MageMasani\BannerSlider\Model\Slider as Model;
 use MageMasani\BannerSlider\Model\ResourceModel\Slider as ResourceModel;
 use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 
+/**
+ * Slider Collection Class
+ */
 class Collection extends AbstractCollection
 {
     /**
@@ -13,6 +16,15 @@ class Collection extends AbstractCollection
      */
     protected $_idFieldName = 'entity_id';
 
+    /**
+     * @var string
+     */
+    protected $_eventPrefix = 'magemasani_slider_collection';
+
+    /**
+     * @var string
+     */
+    protected $_eventObject = 'slider_collection';
     /**
      * Initialization here
      *

@@ -12,6 +12,9 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Exception\NotFoundException;
 use Magento\Framework\View\Result\Page;
 
+/**
+ * Slider Edit Class
+ */
 class Edit extends Action implements HttpGetActionInterface
 {
     /**
@@ -27,7 +30,6 @@ class Edit extends Action implements HttpGetActionInterface
     private SliderRepositoryInterface $sliderRepository;
 
     /**
-     * Edit constructor.
      * @param Action\Context $context
      * @param SliderRepositoryInterface $sliderRepository
      */
@@ -40,7 +42,7 @@ class Edit extends Action implements HttpGetActionInterface
     }
 
     /**
-     * Edit banner.
+     * Edit action.
      *
      * @return ResultInterface|ResponseInterface
      * @throws NotFoundException

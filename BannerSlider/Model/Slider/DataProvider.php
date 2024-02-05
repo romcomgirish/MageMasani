@@ -12,7 +12,7 @@ use Magento\Ui\DataProvider\Modifier\PoolInterface;
 use Magento\Ui\DataProvider\ModifierPoolDataProvider;
 
 /**
- * Class DataProvider
+ * Slider DataProvider class
  */
 class DataProvider extends ModifierPoolDataProvider
 {
@@ -27,7 +27,7 @@ class DataProvider extends ModifierPoolDataProvider
     protected DataPersistorInterface $dataPersistor;
 
     /**
-     * @var array
+     * @var array|null
      */
     protected ?array $loadedData = null;
 

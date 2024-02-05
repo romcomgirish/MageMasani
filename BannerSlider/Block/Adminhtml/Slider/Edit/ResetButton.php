@@ -5,6 +5,9 @@ namespace MageMasani\BannerSlider\Block\Adminhtml\Slider\Edit;
 
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
+/**
+ * Slider ResetButton Class
+ */
 class ResetButton extends GenericButton implements ButtonProviderInterface
 {
 
@@ -16,7 +19,7 @@ class ResetButton extends GenericButton implements ButtonProviderInterface
     public function getButtonData(): array
     {
         $data = [];
-        if (!$this->getModelId()) {
+        if (!$this->getSliderId()) {
             $data = [
                 'label' => __('Reset'),
                 'class' => 'reset',

@@ -3,6 +3,9 @@ namespace MageMasani\BannerSlider\Api\Data;
 
 use Magento\Framework\Api\SearchResultsInterface;
 
+/**
+ * mageMasani slider  interface
+ */
 interface SliderSearchResultInterface extends SearchResultsInterface
 {
     /**

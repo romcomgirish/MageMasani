@@ -13,7 +13,7 @@ $sliderSpecificClassName = 'magemasani' . "-" . $block->getData('slider_id');
     <div class="magemasani" id="magemasani" style="width: 100%">
         <div class="masani">
             <?php foreach ($banners as $banner): ?>
-                <?php if ($banner['is_enabled']): ?>
+                <?php if ($banner['status']): ?>
                     <div class="slider-mage-masani">
                         <?php if ($banner['resource_type'] =='local_image'): ?>
                         <div class="<?= $escaper->escapeHtmlAttr($banner['resource_type']); ?>"

@@ -18,22 +18,21 @@
     <!--Banner Preference End-->
 
     <!--Slider Grid Start-->
-    <virtualType name="MageMasani\BannerSlider\Model\ResourceModel\Slider\Grid\Collection"
-                 type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
-        <arguments>
-            <argument name="mainTable" xsi:type="string">codilar_bannerslider_slider</argument>
-            <argument name="resourceModel"
-                      xsi:type="string">MageMasani\BannerSlider\Model\ResourceModel\Slider\Collection
-            </argument>
-        </arguments>
-    </virtualType>
     <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
         <arguments>
             <argument name="collections" xsi:type="array">
                 <item name="bannerslider_slider_listing_data_source"
-                      xsi:type="string">MageMasani\BannerSlider\Model\ResourceModel\Slider\Grid\Collection
-                </item>
+                      xsi:type="string">MageMasani\BannerSlider\Model\ResourceModel\Slider\Grid\Collection</item>
             </argument>
+        </arguments>
+    </type>
+    <type name="MageMasani\BannerSlider\Model\ResourceModel\Slider\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">magemasani_bannerslider_slider</argument>
+            <argument name="eventPrefix" xsi:type="string">magemasani_slider_collection</argument>
+            <argument name="eventObject" xsi:type="string">slider_collection</argument>
+            <argument name="resourceModel"
+                      xsi:type="string">MageMasani\BannerSlider\Model\ResourceModel\Slider</argument>
         </arguments>
     </type>
     <!--Slider Grid End-->
@@ -42,7 +41,7 @@
     <virtualType name="MageMasani\BannerSlider\Model\ResourceModel\Banner\Grid\Collection"
                  type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
         <arguments>
-            <argument name="mainTable" xsi:type="string">codilar_bannerslider_banner</argument>
+            <argument name="mainTable" xsi:type="string">magemasani_bannerslider_banner</argument>
             <argument name="resourceModel"
                       xsi:type="string">MageMasani\BannerSlider\Model\ResourceModel\Banner\Collection
             </argument>
@@ -60,11 +59,11 @@
     <!--Banner Grid End-->
 
     <!--Banner uploader Start-->
-    <virtualType name="MageMasani\BannerSlider\Model\Banner\ImageUploader"
+    <virtualType name="MageMasani\BannerSlider\BannerImageUploader"
                  type="MageMasani\BannerSlider\Model\ImageUploader">
         <arguments>
-            <argument name="baseTmpPath" xsi:type="string">codilar/tmp/banner/images</argument>
-            <argument name="basePath" xsi:type="string">codilar/banner/images</argument>
+            <argument name="baseTmpPath" xsi:type="string">MageMasani/tmp/banner</argument>
+            <argument name="basePath" xsi:type="string">MageMasani/banner</argument>
             <argument name="allowedExtensions" xsi:type="array">
                 <item name="jpg" xsi:type="string">jpg</item>
                 <item name="jpeg" xsi:type="string">jpeg</item>
@@ -81,16 +80,12 @@
     </virtualType>
     <type name="MageMasani\BannerSlider\Controller\Adminhtml\Banner\Image\Upload">
         <arguments>
-            <argument name="imageUploader"
-                      xsi:type="object">MageMasani\BannerSlider\Model\Banner\ImageUploader
-            </argument>
+            <argument name="imageUploader" xsi:type="object">MageMasani\BannerSlider\BannerImageUploader</argument>
         </arguments>
     </type>
     <type name="MageMasani\BannerSlider\Controller\Adminhtml\Banner\Save">
         <arguments>
-            <argument name="imageUploader"
-                      xsi:type="object">MageMasani\BannerSlider\Model\Banner\ImageUploader
-            </argument>
+            <argument name="imageUploader" xsi:type="object">MageMasani\BannerSlider\BannerImageUploader</argument>
         </arguments>
     </type>
     <!--Banner uploader End-->
@@ -121,6 +116,24 @@
                         MageMasani\BannerSlider\Ui\DataProvider\Banner\Form\Modifier\CustomHtml
                     </item>
                     <item name="sortOrder" xsi:type="number">40</item>
+                </item>
+                <item name="product" xsi:type="array">
+                    <item name="class" xsi:type="string">
+                        MageMasani\BannerSlider\Ui\DataProvider\Banner\Form\Modifier\Product
+                    </item>
+                    <item name="sortOrder" xsi:type="number">50</item>
+                </item>
+                <item name="category" xsi:type="array">
+                    <item name="class" xsi:type="string">
+                        MageMasani\BannerSlider\Ui\DataProvider\Banner\Form\Modifier\Category
+                    </item>
+                    <item name="sortOrder" xsi:type="number">60</item>
+                </item>
+                <item name="custom_url" xsi:type="array">
+                    <item name="class" xsi:type="string">
+                        MageMasani\BannerSlider\Ui\DataProvider\Banner\Form\Modifier\CustomUrl
+                    </item>
+                    <item name="sortOrder" xsi:type="number">70</item>
                 </item>
             </argument>
         </arguments>

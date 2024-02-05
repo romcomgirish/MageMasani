@@ -5,13 +5,16 @@ namespace MageMasani\BannerSlider\Api\Data;
 
 use Magento\Framework\Api\ExtensibleDataInterface;
 
+/**
+ * mageMasani slider  interface
+ */
 interface SliderInterface extends ExtensibleDataInterface
 {
 
     public const ENTITY_ID     = 'entity_id';
     public const TITLE         = 'title';
     public const IS_SHOW_TITLE = 'is_show_title';
-    public const IS_ENABLED    = 'is_enabled';
+    public const STATUS = 'status';
     public const CREATED_AT    = 'created_at';
     public const UPDATED_AT    = 'updated_at';
 
@@ -65,15 +68,15 @@ interface SliderInterface extends ExtensibleDataInterface
      *
      * @return int
      */
-    public function getIsEnabled();
+    public function getStatus();
 
     /**
      * Set is enabled.
      *
-     * @param int $isEnabled
+     * @param int $status
      * @return $this
      */
-    public function setIsEnabled(int $isEnabled);
+    public function setStatus(int $status);
 
     /**
      * Get created at.

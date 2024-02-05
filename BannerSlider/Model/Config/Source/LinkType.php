@@ -4,6 +4,9 @@ namespace MageMasani\BannerSlider\Model\Config\Source;
 
 use Magento\Framework\Data\OptionSourceInterface;
 
+/**
+ * Source LinkType Class
+ */
 class LinkType implements OptionSourceInterface
 {
     public const LINK_TYPE_PRODUCT = 'link_type_product';

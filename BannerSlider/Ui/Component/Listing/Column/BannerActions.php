@@ -7,6 +7,9 @@ use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponentFactory;
 use Magento\Ui\Component\Listing\Columns\Column;
 
+/**
+ * Banner BannerActions Class
+ */
 class BannerActions extends Column
 {
 
@@ -15,6 +18,7 @@ class BannerActions extends Column
      * @var Escaper
      */
     private Escaper $escaper;
+
     /**
      * @var UrlInterface
      */

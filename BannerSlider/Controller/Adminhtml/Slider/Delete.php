@@ -9,6 +9,9 @@ use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\NoSuchEntityException;
 
+/**
+ * Slider Delete Class
+ */
 class Delete extends Action implements HttpPostActionInterface
 {
     public const ADMIN_RESOURCE = 'MageMasani_BannerSlider::slider';
@@ -19,7 +22,6 @@ class Delete extends Action implements HttpPostActionInterface
     private SliderRepositoryInterface $sliderRepository;
 
     /**
-     * Delete constructor.
      * @param Action\Context $context
      * @param SliderRepositoryInterface $sliderRepository
      */

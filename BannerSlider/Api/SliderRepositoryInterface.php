@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace MageMasani\BannerSlider\Api;
 
 /**
- * BannerSlider Slider CRUD interface.
+ * MageMasani slider CRUD interface.
  */
 interface SliderRepositoryInterface
 {

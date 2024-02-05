@@ -1,16 +1,10 @@
 <?xml version="1.0"?>
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
-    <route url="/V1/codilar/bannerslider/slider/loadById/:id" method="GET">
+    <route url="/V1/magemasani/bannerslider/slider/loadById/:id" method="GET">
         <service class="MageMasani\BannerSlider\Api\SliderRepositoryInterface" method="getById"/>
         <resources>
             <resource ref="anonymous"/>
         </resources>
     </route>
-<!--    <route url="/V1/codilar/bannerslider/banner/loadById/:id" method="GET">
-        <service class="Codilar\BannerSlider\Api\BannerRepositoryInterface" method="loadById"/>
-        <resources>
-            <resource ref="anonymous"/>
-        </resources>
-    </route>-->
 </routes>

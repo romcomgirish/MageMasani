@@ -5,6 +5,9 @@ namespace MageMasani\BannerSlider\Block\Adminhtml\Banner\Edit;
 
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
+/**
+ * Banner DeleteButton Class
+ */
 class DeleteButton extends GenericButton implements ButtonProviderInterface
 {
 
@@ -16,7 +19,7 @@ class DeleteButton extends GenericButton implements ButtonProviderInterface
     public function getButtonData(): array
     {
         $data = [];
-        if ($this->getModelId()) {
+        if ($this->getBannerId()) {
             $data = [
                 'label' => __('Delete'),
                 'class' => 'delete',
@@ -36,6 +39,6 @@ class DeleteButton extends GenericButton implements ButtonProviderInterface
      */
     public function getDeleteUrl(): string
     {
-        return $this->getUrl('*/*/delete', ['id' => $this->getModelId()]);
+        return $this->getUrl('*/*/delete', ['id' => $this->getBannerId()]);
     }
 }

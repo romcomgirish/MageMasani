@@ -12,6 +12,9 @@ use Magento\Framework\Exception\LocalizedException;
 use Magento\Ui\Component\MassAction\Filter;
 use MageMasani\BannerSlider\Model\ResourceModel\Slider\CollectionFactory;
 
+/**
+ * Slider MassEnable Class
+ */
 class MassEnable extends Action implements HttpPostActionInterface
 {
     /**

@@ -7,7 +7,7 @@ use Magento\Framework\DataObject;
 use Magento\Framework\Exception\LocalizedException;
 
 /**
- * MageMasani Class DynamicRows
+ * BannerSlider Widget DynamicRows Class
  */
 class DynamicRows extends AbstractFieldArray
 {

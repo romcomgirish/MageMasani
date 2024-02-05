@@ -3,65 +3,54 @@ declare(strict_types=1);
 
 namespace MageMasani\BannerSlider\Api;
 
+/**
+ * MageMasani Banner CRUD interface.
+ */
 interface BannerRepositoryInterface
 {
     /**
-     * Retrieve banner.
-     *
-     * @param int $id
-     * @param bool $loadFromCache
-     * @return \MageMasani\BannerSlider\Api\Data\BannerInterface
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
-     */
-    public function loadById(int $id, bool $loadFromCache = true);
-
-    /**
-     * Factory create.
-     *
-     * @return \MageMasani\BannerSlider\Api\Data\BannerInterface
-     */
-    public function create();
-
-    /**
-     * Save banner.
+     * Save slider.
      *
      * @param \MageMasani\BannerSlider\Api\Data\BannerInterface $banner
      * @return \MageMasani\BannerSlider\Api\Data\BannerInterface
-     * @throws \Magento\Framework\Exception\CouldNotSaveException
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function save(\MageMasani\BannerSlider\Api\Data\BannerInterface $banner);
+    public function save(Data\BannerInterface $banner);
 
     /**
-     * Delete banner.
+     * Retrieve slider.
      *
-     * @param \MageMasani\BannerSlider\Api\Data\BannerInterface $banner
-     * @return bool
-     * @throws \Magento\Framework\Exception\CouldNotDeleteException
+     * @param string $id
+     * @return \MageMasani\BannerSlider\Api\Data\BannerInterface
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function delete(\MageMasani\BannerSlider\Api\Data\BannerInterface $banner): bool;
+    public function getById($id);
 
     /**
-     * Delete banner by ID.
-     *
-     * @param int $id
-     * @return bool
-     * @throws \Magento\Framework\Exception\CouldNotDeleteException
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
-     */
-    public function deleteById(int $id): bool;
-
-    /**
-     * Retrieve banner matching the specified criteria.
+     * Retrieve slider matching the specified criteria.
      *
      * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
      * @return \MageMasani\BannerSlider\Api\Data\BannerSearchResultInterface
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function getList(\Magento\Framework\Api\SearchCriteriaInterface $searchCriteria);
 
     /**
-     * Get banner collection.
+     * Delete slider.
      *
-     * @return \MageMasani\BannerSlider\Model\ResourceModel\Banner\Collection
+     * @param \MageMasani\BannerSlider\Api\Data\BannerInterface $banner
+     * @return bool true on success
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function getCollection(): \MageMasani\BannerSlider\Model\ResourceModel\Banner\Collection;
+    public function delete(Data\BannerInterface $banner);
+
+    /**
+     * Delete slider by ID.
+     *
+     * @param string $id
+     * @return bool true on success
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    public function deleteById($id);
 }

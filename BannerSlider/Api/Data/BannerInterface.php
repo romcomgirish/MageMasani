@@ -5,8 +5,14 @@ namespace MageMasani\BannerSlider\Api\Data;
 
 use Magento\Framework\Api\ExtensibleDataInterface;
 
+/**
+ * mageMasani banner  interface
+ */
 interface BannerInterface extends ExtensibleDataInterface
 {
+    /**#@+
+     * Constants for keys of data array. Identical to the name of the getter in snake case
+     */
     public const ENTITY_ID = 'entity_id';
     public const SLIDER_ID = 'slider_id';
     public const TITLE     = 'title';
@@ -15,7 +21,7 @@ interface BannerInterface extends ExtensibleDataInterface
     public const ALT_TEXT = 'alt_text';
     public const LINK_TYPE = 'link_type';
     public const LINK_TYPE_RESOURCE = 'link_type_resource';
-    public const IS_ENABLED = 'is_enabled';
+    public const STATUS = 'status';
     public const SORT_ORDER = 'sort_order';
     public const START_DATE = 'start_date';
     public const END_DATE = 'end_date';
@@ -87,45 +93,15 @@ interface BannerInterface extends ExtensibleDataInterface
      *
      * @return int
      */
-    public function getIsEnabled();
+    public function getStatus();
 
     /**
      * Set is enabled.
      *
-     * @param int $isEnabled
+     * @param int $status
      * @return $this
      */
-    public function setIsEnabled(int $isEnabled);
-
-    /**
-     * Get created at.
-     *
-     * @return string
-     */
-    public function getCreatedAt();
-
-    /**
-     * Set created at.
-     *
-     * @param string $createdAt
-     * @return $this
-     */
-    public function setCreatedAt(string $createdAt);
-
-    /**
-     * Get updated at.
-     *
-     * @return string
-     */
-    public function getUpdatedAt();
-
-    /**
-     * Set updated at.
-     *
-     * @param string $updatedAt
-     * @return $this
-     */
-    public function setUpdatedAt(string $updatedAt);
+    public function setStatus(int $status);
 
     /**
      * Get title.
@@ -231,6 +207,36 @@ interface BannerInterface extends ExtensibleDataInterface
      * @return $this
      */
     public function setEndDate(string $endDate);
+
+    /**
+     * Get created at.
+     *
+     * @return string
+     */
+    public function getCreatedAt();
+
+    /**
+     * Set created at.
+     *
+     * @param string $createdAt
+     * @return $this
+     */
+    public function setCreatedAt(string $createdAt);
+
+    /**
+     * Get updated at.
+     *
+     * @return string
+     */
+    public function getUpdatedAt();
+
+    /**
+     * Set updated at.
+     *
+     * @param string $updatedAt
+     * @return $this
+     */
+    public function setUpdatedAt(string $updatedAt);
 
     /**
      * Retrieve existing extension attributes object or create a new one.

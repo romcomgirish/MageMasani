@@ -9,6 +9,9 @@ use Magento\Backend\App\Action;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\Controller\ResultInterface;
 
+/**
+ * Banner InlineEdit Class
+ */
 class InlineEdit extends Action
 {
     /**
@@ -44,7 +47,7 @@ class InlineEdit extends Action
     }
 
     /**
-     * Inline edit action
+     * InlineEdit action
      *
      * @return ResultInterface
      */
@@ -53,7 +56,6 @@ class InlineEdit extends Action
         $resultJson = $this->jsonFactory->create();
         $error = false;
         $messages = [];
-
         if ($this->getRequest()->getParam('isAjax')) {
             $postItems = $this->getRequest()->getParam('items', []);
             if (!count($postItems)) {
@@ -61,7 +63,7 @@ class InlineEdit extends Action
                 $error = true;
             } else {
                 foreach (array_keys($postItems) as $EntityId) {
-                    $model = $this->bannerRepository->loadById($EntityId);
+                    $model = $this->bannerRepository->getById($EntityId);
                     try {
                         $formData = $postItems[$EntityId];
                         $model->setData($formData);
@@ -72,7 +74,7 @@ class InlineEdit extends Action
                     } catch (\Exception $e) {
                         $messages[] = $this->getErrorWithBannersId(
                             $model,
-                            (string)__('Something went wrong while saving the CustomForm.')
+                            (string)__('Something went wrong while saving the Banner.')
                         );
                         $error = true;
                     }

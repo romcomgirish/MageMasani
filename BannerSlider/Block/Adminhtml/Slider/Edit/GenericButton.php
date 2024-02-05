@@ -5,6 +5,9 @@ namespace MageMasani\BannerSlider\Block\Adminhtml\Slider\Edit;
 
 use Magento\Backend\Block\Widget\Context;
 
+/**
+ * Slider GenericButton Class
+ */
 abstract class GenericButton
 {
     /**
@@ -26,7 +29,7 @@ abstract class GenericButton
      *
      * @return mixed
      */
-    public function getModelId(): mixed
+    public function getSliderId(): mixed
     {
         return $this->context->getRequest()->getParam('entity_id');
     }

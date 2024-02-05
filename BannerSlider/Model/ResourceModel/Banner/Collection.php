@@ -6,6 +6,9 @@ use MageMasani\BannerSlider\Model\Banner as Model;
 use MageMasani\BannerSlider\Model\ResourceModel\Banner as ResourceModel;
 use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 
+/**
+ * Banner Collection Class
+ */
 class Collection extends AbstractCollection
 {
     /**
