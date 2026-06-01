@@ -1,0 +1,36 @@
+<?php
+/** @var \Magento\Backend\Block\Template $block */
+$postUrl = $block->getUrl('magemasani_webpush/send/post');
+?>
+<form action="<?= $block->escapeUrl($postUrl) ?>" method="post" enctype="multipart/form-data" class="form-inline" style="max-width:600px;">
+    <?= $block->getBlockHtml('formkey') ?>
+    <fieldset class="admin__fieldset">
+        <legend class="admin__legend"><span><?= $block->escapeHtml(__('Send Test Push')) ?></span></legend>
+        <div class="admin__field">
+            <label class="admin__field-label"><?= $block->escapeHtml(__('Title')) ?></label>
+            <div class="admin__field-control">
+                <input type="text" name="title" class="admin__control-text" required="required"/>
+            </div>
+        </div>
+        <div class="admin__field">
+            <label class="admin__field-label"><?= $block->escapeHtml(__('Body')) ?></label>
+            <div class="admin__field-control">
+                <textarea name="body" class="admin__control-textarea" required="required"></textarea>
+            </div>
+        </div>
+        <div class="admin__field">
+            <label class="admin__field-label"><?= $block->escapeHtml(__('Image')) ?></label>
+            <div class="admin__field-control">
+                <input type="file" name="image" class="admin__control-file" accept="image/png,image/jpeg,image/gif,image/webp"/>
+                <div class="admin__field-note"><?= $block->escapeHtml(__('Optional. PNG, JPG, GIF or WebP.')) ?></div>
+            </div>
+        </div>
+        <div class="admin__field">
+            <div class="admin__field-control">
+                <button type="submit" class="action-default scalable">
+                    <span><?= $block->escapeHtml(__('Send Notification')) ?></span>
+                </button>
+            </div>
+        </div>
+    </fieldset>
+</form>
