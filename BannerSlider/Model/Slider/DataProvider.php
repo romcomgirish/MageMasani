@@ -51,7 +51,7 @@ class DataProvider extends ModifierPoolDataProvider
         DataPersistorInterface $dataPersistor,
         array $meta = [],
         array $data = [],
-        PoolInterface $pool = null
+        ?PoolInterface $pool = null
     ) {
         $this->collection = $sliderCollectionFactory->create();
         $this->dataPersistor = $dataPersistor;
@@ -70,13 +70,13 @@ class DataProvider extends ModifierPoolDataProvider
         }
         $items = $this->collection->getItems();
         foreach ($items as $block) {
-            $this->loadedData[$block->getId()] = $block->getData();
+            $this->loadedData[$block->getId() ?? ''] = $block->getData();
         }
         $data = $this->dataPersistor->get('bannerslider_slider');
         if (!empty($data)) {
             $block = $this->collection->getNewEmptyItem();
             $block->setData($data);
-            $this->loadedData[$block->getId()] = $block->getData();
+            $this->loadedData[$block->getId() ?? ''] = $block->getData();
             $this->dataPersistor->clear('bannerslider_slider');
         }
         return $this->loadedData;

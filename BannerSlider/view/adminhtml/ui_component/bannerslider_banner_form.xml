@@ -15,7 +15,7 @@
             <button name="reset" class="MageMasani\BannerSlider\Block\Adminhtml\Banner\Edit\ResetButton"/>
             <button name="save" class="MageMasani\BannerSlider\Block\Adminhtml\Banner\Edit\SaveButton"/>
             <button name="save_and_continue"
-                    class="MageMasani\BannerSlider\Block\Adminhtml\Slider\Edit\SaveAndContinueButton"/>
+                    class="MageMasani\BannerSlider\Block\Adminhtml\Banner\Edit\SaveAndContinueButton"/>
         </buttons>
         <namespace>bannerslider_banner_form</namespace>
         <dataScope>data</dataScope>
@@ -241,7 +241,6 @@
             <settings>
                 <dataType>text</dataType>
                 <label translate="true">Alt Text</label>
-                <dataScope>alt</dataScope>
             </settings>
         </field>
         <field name="link_type" formElement="select" sortOrder="90">
@@ -268,9 +267,8 @@
                     <item name="formElement" xsi:type="string">input</item>
                     <item name="source" xsi:type="string">banner</item>
                     <item name="dependValues" xsi:type="string">link_type_product</item>
-                    <item name="notice" xsi:type="string" translate="true">Note: add custom link here
-                    </item>
-                    <item name="sortOrder" xsi:type="number">130</item>
+                    <item name="notice" xsi:type="string" translate="true">Enter the product URL key (e.g. joust-duffle-bag.html). Find it in Catalog > Products > URL Key column.</item>
+                    <item name="sortOrder" xsi:type="number">100</item>
                 </item>
             </argument>
             <settings>
@@ -326,8 +324,7 @@
                     <item name="formElement" xsi:type="string">input</item>
                     <item name="source" xsi:type="string">banner</item>
                     <item name="dependValues" xsi:type="string">link_type_custom</item>
-                    <item name="notice" xsi:type="string" translate="true">Note: add custom link here
-                    </item>
+                    <item name="notice" xsi:type="string" translate="true">Note: Enter a valid URL (e.g. https://example.com)</item>
                     <item name="sortOrder" xsi:type="number">130</item>
                 </item>
             </argument>
@@ -337,6 +334,10 @@
                     <link name="updateCustomProperty">ns = ${ $.ns }, index = link_type:value</link>
                 </imports>
                 <visible>false</visible>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                    <rule name="validate-url" xsi:type="boolean">true</rule>
+                </validation>
             </settings>
         </field>
         <field name="start_date">

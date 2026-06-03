@@ -15,11 +15,10 @@ class Product implements ModifierInterface
     public function modifyData(array $data): array
     {
         foreach ($data as &$item) {
-            $resourcePath = $item['link_type_resource'] ?? null;
-            $resourceType = $item['link_type'];
-            if ($resourcePath && $resourceType === 'product') {
-                unset($item['link_type']);
-                $item['link_type_resource_product'] = $resourcePath;
+            $linkTypeResource = $item['link_type_resource'] ?? null;
+            $linkType = $item['link_type'] ?? null;
+            if ($linkTypeResource && $linkType === 'link_type_product') {
+                $item['link_type_resource_product'] = $linkTypeResource;
             }
         }
         return $data;

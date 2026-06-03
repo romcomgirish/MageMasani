@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace MageMasani\BannerSliderGraphQl\Model\Resolver\BannerSliderFilter;
@@ -51,12 +52,12 @@ class FilterArgument implements FieldEntityAttributesInterface
      *
      * @return array
      */
-    public function getEntityAttributes() : array
+    public function getEntityAttributes(): array
     {
         $FilterType = $this->config->getConfigElement('BannerSliderInfo');
 
         if (!$FilterType) {
-            throw new LogicException((string)__("BannerSlider type not defined in schema."));
+            throw new LogicException((string) __("BannerSlider type not defined in schema."));
         }
         $fields = [];
         foreach ($FilterType->getFields() as $field) {

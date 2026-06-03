@@ -1,24 +1,23 @@
 {
-    "name": "mageinic/module-shopbybrandgraphql",
-    "description": "ShopByBrandGraphQL by MageINIC Team",
+    "name": "magemasani/module-bannerslidergraphql",
+    "description": "BannerSliderGraphQl by MageMasani",
     "require": {
         "php": "^8.0",
         "magento/module-catalog": "104.0.*",
         "magento/framework": "103.0.*",
         "magento/module-catalog-graph-ql": "100.4.6",
-        "magento/module-graph-ql": "100.4.*",
-        "mageinic/module-shopbybrand": "1.0.0"
+        "magento/module-graph-ql": "100.4.*"
     },
     "type": "magento2-module",
     "version": "1.0.0",
     "license": [
-        "Commercial"
+        "GPL-3.0-or-later"
     ],
     "authors": [
         {
-            "name": "MageINIC",
-            "email": "support@mageinic.com",
-            "homepage": "https://www.mageinic.com"
+            "name": "MageMasani",
+            "email": "support@magemasani.com",
+            "homepage": "https://www.magemasani.com/"
         }
     ],
     "autoload": {
@@ -26,7 +25,7 @@
             "registration.php"
         ],
         "psr-4": {
-            "MageINIC\\ShopByBrandGraphQl\\": ""
+            "MageMasani\\BannerSliderGraphQl\\": ""
         }
     }
 }

@@ -12,11 +12,14 @@ use Magento\Framework\Model\Context;
 use Magento\Framework\Model\ResourceModel\AbstractResource;
 use Magento\Framework\Registry;
 
+use Magento\Framework\DataObject\IdentityInterface;
+
 /**
  * Banner Model Class
  */
-class Banner extends AbstractExtensibleModel implements BannerInterface
+class Banner extends AbstractExtensibleModel implements BannerInterface, IdentityInterface
 {
+    public const CACHE_TAG = 'magemasani_bannerslider_banner';
     /**
      * @var string
      */
@@ -46,8 +49,8 @@ class Banner extends AbstractExtensibleModel implements BannerInterface
         Registry $registry,
         ExtensionAttributesFactory $extensionFactory,
         AttributeValueFactory $customAttributeFactory,
-        AbstractResource $resource = null,
-        AbstractDb $resourceCollection = null,
+        ?AbstractResource $resource = null,
+        ?AbstractDb $resourceCollection = null,
         array $data = []
     ) {
         parent::__construct(
@@ -67,7 +70,7 @@ class Banner extends AbstractExtensibleModel implements BannerInterface
      */
     public function getSliderId()
     {
-        return (int)$this->getData(self::SLIDER_ID);
+        return (int) $this->getData(self::SLIDER_ID);
     }
 
     /**
@@ -75,7 +78,7 @@ class Banner extends AbstractExtensibleModel implements BannerInterface
      */
     public function setSliderId(int $sliderId)
     {
-        return $this->setData(self::SLIDER_ID, 'slider_id');
+        return $this->setData(self::SLIDER_ID, $sliderId);
     }
 
     /**
@@ -91,7 +94,7 @@ class Banner extends AbstractExtensibleModel implements BannerInterface
      */
     public function setResourceType(?string $resourceType)
     {
-        return $this->setData(self::RESOURCE_TYPE, 'resource_type');
+        return $this->setData(self::RESOURCE_TYPE, $resourceType);
     }
 
     /**
@@ -107,7 +110,7 @@ class Banner extends AbstractExtensibleModel implements BannerInterface
      */
     public function setResourcePath(?string $resourcePath)
     {
-        return $this->setData(self::RESOURCE_PATH, 'resource_path');
+        return $this->setData(self::RESOURCE_PATH, $resourcePath);
     }
 
     /**
@@ -115,7 +118,7 @@ class Banner extends AbstractExtensibleModel implements BannerInterface
      */
     public function getStatus()
     {
-        return (int)$this->getData(self::STATUS);
+        return (int) $this->getData(self::STATUS);
     }
 
     /**
@@ -123,7 +126,7 @@ class Banner extends AbstractExtensibleModel implements BannerInterface
      */
     public function setStatus(int $status)
     {
-        return $this->setData(self::STATUS, 'status');
+        return $this->setData(self::STATUS, $status);
     }
 
     /**
@@ -139,7 +142,7 @@ class Banner extends AbstractExtensibleModel implements BannerInterface
      */
     public function setCreatedAt(string $createdAt)
     {
-        return $this->setData(self::CREATED_AT, 'created_at');
+        return $this->setData(self::CREATED_AT, $createdAt);
     }
 
     /**
@@ -155,7 +158,7 @@ class Banner extends AbstractExtensibleModel implements BannerInterface
      */
     public function setUpdatedAt(string $updatedAt)
     {
-        return $this->setData(self::UPDATED_AT, 'updated_at');
+        return $this->setData(self::UPDATED_AT, $updatedAt);
     }
 
     /**
@@ -171,7 +174,7 @@ class Banner extends AbstractExtensibleModel implements BannerInterface
      */
     public function setTitle(string $title)
     {
-        return $this->setData(self::TITLE, 'title');
+        return $this->setData(self::TITLE, $title);
     }
 
     /**
@@ -187,7 +190,7 @@ class Banner extends AbstractExtensibleModel implements BannerInterface
      */
     public function setAltText(string $altText)
     {
-        return $this->setData(self::ALT_TEXT, 'alt_text');
+        return $this->setData(self::ALT_TEXT, $altText);
     }
 
     /**
@@ -203,7 +206,7 @@ class Banner extends AbstractExtensibleModel implements BannerInterface
      */
     public function setLinkType(string $link_type)
     {
-        return $this->setData(self::LINK_TYPE, 'link_type');
+        return $this->setData(self::LINK_TYPE, $link_type);
     }
 
     /**
@@ -219,7 +222,7 @@ class Banner extends AbstractExtensibleModel implements BannerInterface
      */
     public function setLinkTypeResource(string $link_type_resource)
     {
-        return $this->setData(self::LINK_TYPE_RESOURCE, 'link_type_resource');
+        return $this->setData(self::LINK_TYPE_RESOURCE, $link_type_resource);
     }
 
     /**
@@ -227,7 +230,7 @@ class Banner extends AbstractExtensibleModel implements BannerInterface
      */
     public function getSortOrder()
     {
-        return (int)$this->getData(self::SORT_ORDER);
+        return (int) $this->getData(self::SORT_ORDER);
     }
 
     /**
@@ -235,7 +238,7 @@ class Banner extends AbstractExtensibleModel implements BannerInterface
      */
     public function setSortOrder(int $sortOrder)
     {
-        return $this->setData(self::SORT_ORDER, 'sort_order');
+        return $this->setData(self::SORT_ORDER, $sortOrder);
     }
 
     /**
@@ -251,7 +254,7 @@ class Banner extends AbstractExtensibleModel implements BannerInterface
      */
     public function setStartDate(string $startDate)
     {
-        return $this->setData(self::START_DATE, 'sort_order');
+        return $this->setData(self::START_DATE, $startDate);
     }
 
     /**
@@ -267,7 +270,7 @@ class Banner extends AbstractExtensibleModel implements BannerInterface
      */
     public function setEndDate(string $endData)
     {
-        return $this->setData(self::END_DATE, 'sort_order');
+        return $this->setData(self::END_DATE, $endData);
     }
 
     /**
@@ -290,5 +293,15 @@ class Banner extends AbstractExtensibleModel implements BannerInterface
         \MageMasani\BannerSlider\Api\Data\BannerExtensionInterface $extensionAttributes
     ) {
         return $this->_setExtensionAttributes($extensionAttributes);
+    }
+
+    /**
+     * Get identities
+     *
+     * @return array
+     */
+    public function getIdentities(): array
+    {
+        return [self::CACHE_TAG, self::CACHE_TAG . '_' . $this->getEntityId()];
     }
 }

@@ -15,11 +15,10 @@ class Category implements ModifierInterface
     public function modifyData(array $data): array
     {
         foreach ($data as &$item) {
-            $resourcePath = $item['link_type'] ?? null;
-            $resourceType = $item['link_type_resource'];
-            if ($resourcePath && $resourceType === 'link_type_resource_category') {
-                unset($item['link_type']);
-                $item['link_type_resource_category'] = $resourcePath;
+            $linkTypeResource = $item['link_type_resource'] ?? null;
+            $linkType = $item['link_type'] ?? null;
+            if ($linkTypeResource && $linkType === 'link_type_category') {
+                $item['link_type_resource_category'] = $linkTypeResource;
             }
         }
         return $data;

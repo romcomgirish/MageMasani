@@ -6,7 +6,7 @@
         <arguments>
             <argument name="extendedConfigData" xsi:type="array">
                 <item name="banner_slider_module_status"
-                      xsi:type="string">magenasani_bannerslider/general/enabled</item>
+                      xsi:type="string">magenasani_bannerslider/general/module_status</item>
             </argument>
         </arguments>
     </type>

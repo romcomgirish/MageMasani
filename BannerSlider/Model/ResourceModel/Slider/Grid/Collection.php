@@ -55,17 +55,17 @@ class Collection extends SliderCollection implements SearchResultInterface
      */
     public function __construct(
         EntityFactoryInterface $entityFactory,
-        LoggerInterface        $logger,
+        LoggerInterface $logger,
         FetchStrategyInterface $fetchStrategy,
-        ManagerInterface       $eventManager,
-        string                 $mainTable,
-        string                 $eventPrefix,
-        string                 $eventObject,
-        string                 $resourceModel,
-        string                 $model = \Magento\Framework\View\Element\UiComponent\DataProvider\Document::class,
-        AdapterInterface       $connection = null,
-        AbstractDb             $resource = null,
-        TimezoneInterface      $timeZone = null
+        ManagerInterface $eventManager,
+        string $mainTable,
+        string $eventPrefix,
+        string $eventObject,
+        string $resourceModel,
+        string $model = \Magento\Framework\View\Element\UiComponent\DataProvider\Document::class,
+        ?AdapterInterface $connection = null,
+        ?AbstractDb $resource = null,
+        ?TimezoneInterface $timeZone = null
     ) {
         $this->resourceModel = $resourceModel;
         $this->model = $model;
@@ -141,7 +141,7 @@ class Collection extends SliderCollection implements SearchResultInterface
      * @return $this
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function setSearchCriteria(\Magento\Framework\Api\SearchCriteriaInterface $searchCriteria = null)
+    public function setSearchCriteria(?\Magento\Framework\Api\SearchCriteriaInterface $searchCriteria = null)
     {
         return $this;
     }
@@ -175,7 +175,7 @@ class Collection extends SliderCollection implements SearchResultInterface
      * @return $this
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function setItems(array $items = null)
+    public function setItems(?array $items = null)
     {
         return $this;
     }

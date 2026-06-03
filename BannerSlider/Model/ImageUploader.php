@@ -200,6 +200,13 @@ class ImageUploader
         );
         $baseTmpImagePath = $this->getFilePath($baseTmpPath, $imageName);
 
+        if (!$this->mediaDirectory->isExist($baseTmpImagePath)) {
+            $baseOriginalImagePath = $this->getFilePath($basePath, $imageName);
+            if ($this->mediaDirectory->isExist($baseOriginalImagePath)) {
+                return $imageName;
+            }
+        }
+
         try {
             $this->coreFileStorageDatabase->copyFile(
                 $baseTmpImagePath,
@@ -211,7 +218,8 @@ class ImageUploader
             );
         } catch (\Exception $e) {
             throw new LocalizedException(
-                __('Something went wrong while saving the file(s).')
+                __('Something went wrong while saving the file(s): %1', $e->getMessage()),
+                $e
             );
         }
 
@@ -251,10 +259,10 @@ class ImageUploader
          */
         $result['tmp_name'] = str_replace('\\', '/', $result['tmp_name']);
         $result['url'] = $this->storeManager
-                ->getStore()
-                ->getBaseUrl(
-                    \Magento\Framework\UrlInterface::URL_TYPE_MEDIA
-                ) . $this->getFilePath($baseTmpPath, $result['file']);
+            ->getStore()
+            ->getBaseUrl(
+                \Magento\Framework\UrlInterface::URL_TYPE_MEDIA
+            ) . $this->getFilePath($baseTmpPath, $result['file']);
         $result['name'] = $result['file'];
 
         if (isset($result['file'])) {
@@ -264,7 +272,8 @@ class ImageUploader
             } catch (\Exception $e) {
                 $this->logger->critical($e);
                 throw new LocalizedException(
-                    __('Something went wrong while saving the file(s).')
+                    __('Something went wrong while saving the file(s): %1', $e->getMessage()),
+                    $e
                 );
             }
         }

@@ -55,13 +55,13 @@ class LocalImage implements ModifierInterface
         StoreManagerInterface $storeManager,
         Mime $mime,
         File $file,
-        ImageUploader $imageUploader = null
+        ?ImageUploader $imageUploader = null
     ) {
         $this->filesystem = $filesystem;
         $this->storeManager = $storeManager;
         $this->mime = $mime;
         $this->file = $file;
-        $this->imageUploader = $imageUploader ?:  ObjectManager::getInstance()->get(BannerImageUploader::class);
+        $this->imageUploader = $imageUploader ?: ObjectManager::getInstance()->get(BannerImageUploader::class);
     }
 
     /**
@@ -86,8 +86,8 @@ class LocalImage implements ModifierInterface
             $store = $this->storeManager->getStore();
             $mediaPath = $store->getBaseUrl(UrlInterface::URL_TYPE_MEDIA);
             $folderPath = $this->imageUploader->getBasePath();
-            $imageWithFolder = $folderPath.'/'.$resourcePath;
-            $fullImagePath = $mediaPath.$imageWithFolder;
+            $imageWithFolder = $folderPath . '/' . $resourcePath;
+            $fullImagePath = $mediaPath . $imageWithFolder;
             $fileName = $this->filesystem->getDirectoryRead(
                 DirectoryList::MEDIA
             )->getAbsolutePath($imageWithFolder);
@@ -96,7 +96,8 @@ class LocalImage implements ModifierInterface
                     'name' => basename($fileName),
                     'url' => $fullImagePath,
                     'size' => filesize($fileName),
-                    'type' => $this->mime->getMimeType($fileName)
+                    'type' => $this->mime->getMimeType($fileName),
+                    'is_saved' => true
                 ];
                 unset($data['resource_path']);
                 $data['resource_path_local_image'][0] = $resourcePathData;

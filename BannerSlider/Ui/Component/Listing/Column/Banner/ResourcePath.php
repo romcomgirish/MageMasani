@@ -43,18 +43,18 @@ class ResourcePath extends Column
      * @param array $data
      */
     public function __construct(
-        ContextInterface      $context,
-        UiComponentFactory    $uiComponentFactory,
+        ContextInterface $context,
+        UiComponentFactory $uiComponentFactory,
         StoreManagerInterface $storeManager,
         Repository $assetRepository,
-        ImageUploader $imageUploader = null,
-        array                 $components = [],
-        array                 $data = []
+        ?ImageUploader $imageUploader = null,
+        ?array $components = [],
+        ?array $data = []
     ) {
         parent::__construct($context, $uiComponentFactory, $components, $data);
         $this->storeManager = $storeManager;
         $this->assetRepository = $assetRepository;
-        $this->imageUploader = $imageUploader ?:  ObjectManager::getInstance()->get(BannerImageUploader::class);
+        $this->imageUploader = $imageUploader ?: ObjectManager::getInstance()->get(BannerImageUploader::class);
     }
 
     /**
@@ -89,7 +89,7 @@ class ResourcePath extends Column
     {
         $resourcePath = $item['resource_path'];
         if ($resourcePath) {
-            $path = $this->imageUploader->getBasePath().'/'.$resourcePath;
+            $path = $this->imageUploader->getBasePath() . '/' . $resourcePath;
             $imageUrl = $this->storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA) . $path;
             return sprintf(
                 '<img style="width: 100px; height: auto;" src="%s" alt="%s" />',

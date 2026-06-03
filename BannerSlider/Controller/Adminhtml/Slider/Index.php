@@ -14,12 +14,13 @@ use Magento\Framework\Exception\NotFoundException;
  */
 class Index extends Action implements HttpGetActionInterface
 {
+
     /**
      * Authorization level of a basic admin session
      *
      * @see _isAllowed()
      */
-    public const ADMIN_RESOURCE = 'MageMasani_BannerSlider::page';
+    public const ADMIN_RESOURCE = 'MageMasani_BannerSlider::slider';
 
     /**
      * Index action

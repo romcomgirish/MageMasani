@@ -32,8 +32,8 @@ class SavePushNotificationToken implements ResolverInterface
         Field $field,
         $context,
         ResolveInfo $info,
-        array $value = null,
-        array $args = null
+        ?array $value = null,
+        ?array $args = null
     ) {
         $input = $args['input'] ?? [];
 
@@ -42,21 +42,21 @@ class SavePushNotificationToken implements ResolverInterface
         if ($context instanceof ContextInterface) {
             $extension = $context->getExtensionAttributes();
             if ($extension->getIsCustomer()) {
-                $customerId = (int)$context->getUserId();
+                $customerId = (int) $context->getUserId();
             }
             $store = $extension->getStore();
             if ($store !== null) {
-                $storeId = (int)$store->getId();
+                $storeId = (int) $store->getId();
             }
         }
 
         try {
             $this->tokenRegistrar->register(
-                (string)($input['token'] ?? ''),
-                (string)($input['device_type'] ?? ''),
+                (string) ($input['token'] ?? ''),
+                (string) ($input['device_type'] ?? ''),
                 $customerId,
                 $storeId,
-                (string)$this->request->getServer('HTTP_USER_AGENT', '')
+                (string) $this->request->getServer('HTTP_USER_AGENT', '')
             );
             return ['success' => true, 'message' => null];
         } catch (\InvalidArgumentException $e) {

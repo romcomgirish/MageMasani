@@ -73,15 +73,15 @@ class Slider extends Template implements BlockInterface
      * @param array $data
      */
     public function __construct(
-        Template\Context             $context,
-        BannerRepositoryInterface    $bannerRepository,
+        Template\Context $context,
+        BannerRepositoryInterface $bannerRepository,
         SearchCriteriaBuilderFactory $searchCriteriaBuilderFactory,
-        SerializerInterface          $serializer,
-        Conditions                   $conditions,
-        Config                       $config,
-        FilterEmulate                $filterEmulate,
-        ImageUploader $imageUploader = null,
-        array                        $data = []
+        SerializerInterface $serializer,
+        Conditions $conditions,
+        Config $config,
+        FilterEmulate $filterEmulate,
+        ?ImageUploader $imageUploader = null,
+        array $data = []
     ) {
         parent::__construct($context, $data);
         $this->bannerRepository = $bannerRepository;
@@ -90,7 +90,7 @@ class Slider extends Template implements BlockInterface
         $this->serializer = $serializer;
         $this->config = $config;
         $this->filterEmulate = $filterEmulate;
-        $this->imageUploader = $imageUploader ?:  ObjectManager::getInstance()->get(BannerImageUploader::class);
+        $this->imageUploader = $imageUploader ?: ObjectManager::getInstance()->get(BannerImageUploader::class);
     }
 
     /**
@@ -102,7 +102,7 @@ class Slider extends Template implements BlockInterface
     {
         $data = [];
         $searchCriteria = $this->searchCriteriaBuilderFactory->create()
-            ->addFilter('slider_id', (int)$this->getData('slider_id'), 'eq')
+            ->addFilter('slider_id', (int) $this->getData('slider_id'), 'eq')
             ->create();
         $banners = $this->bannerRepository->getList($searchCriteria)->getItems();
         foreach ($banners as $banner) {
@@ -153,7 +153,7 @@ class Slider extends Template implements BlockInterface
     {
         try {
             $store = $this->_storeManager->getStore();
-            return $store->getBaseUrl(UrlInterface::URL_TYPE_MEDIA).$this->imageUploader->getBasePath().'/'.$imageSource;
+            return $store->getBaseUrl(UrlInterface::URL_TYPE_MEDIA) . $this->imageUploader->getBasePath() . '/' . $imageSource;
         } catch (NoSuchEntityException $e) {
             return '';
         }
@@ -195,11 +195,13 @@ class Slider extends Template implements BlockInterface
         $condition = array_filter($condition);
         $data = [];
         foreach ($condition as $content) {
-            $data[] = ['breakpoint' => $content['break_point'],
+            $data[] = [
+                'breakpoint' => $content['break_point'],
                 'settings' => [
                     'slidesToShow' => $content['slide_to_show'],
                     'slidesToScroll' => $content['slide_to_scroll']
-                ]];
+                ]
+            ];
         }
         return $this->serializer->serialize($data);
     }

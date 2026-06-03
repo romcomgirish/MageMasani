@@ -23,7 +23,7 @@
     </table>
     <table name="magemasani_bannerslider_banner" resource="default" engine="innodb"
            comment="MageMasani Bannerslider Banner Table">
-        <column xsi:type="int" name="entity_id" padding="10" unsigned="false" nullable="false" identity="false"
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="false" nullable="false" identity="true"
                 comment="Entity ID"/>
         <column xsi:type="int" name="slider_id" padding="10" unsigned="true" nullable="false" identity="false"
                 comment="Slider ID"/>

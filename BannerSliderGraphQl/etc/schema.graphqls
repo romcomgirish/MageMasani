@@ -1,25 +1,3 @@
-# MageINIC
-# Copyright (C) 2023 MageINIC <support@mageinic.com>
-#
-# NOTICE OF LICENSE
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program. If not, see http://opensource.org/licenses/gpl-3.0.html.
-#
-# Do not edit or add to this file if you wish to upgrade this extension to newer
-# version in the future.
-#
-# @category MageINIC
-# @package MageINIC_CityRegionPostcodeGraphQl
-# @copyright Copyright (c) 2023 MageINIC (https://www.mageinic.com/)
-# @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
-# @author MageINIC <support@mageinic.com>
-
 type Query {
     BannerSliderInfo(
         filter: BannerSliderFilterInput @doc(description: "Apply filters by filed.")
@@ -28,6 +6,7 @@ type Query {
         sort: BannerSliderSortInput @doc(description: "Specifies which filed to sort on, and whether to return the results in ascending or descending order.")
     ):BannerSliderOutput @resolver( class: "MageMasani\\BannerSliderGraphQl\\Model\\Resolver\\BannerSlider")
     @doc(description: "Get list of banner filter based of parameter's")
+    @cache(cacheIdentity: "MageMasani\\BannerSliderGraphQl\\Model\\Resolver\\BannerSlider\\Identity")
 }
 input BannerSliderFilterInput {
     entity_id: FilterTypeInput   @doc(description: "Filter By unique ID of Entity Id.")
@@ -51,6 +30,7 @@ type BannerSliderInfo {
     alt_text: String @doc(description: "Alt Text for Seo.")
     link_type: String @doc(description: "Brand Name")
     link_type_resource: String @doc(description: "Brand Name")
+    sku: String @doc(description: "if type is Product then you will get the sku")
     status: String @doc(description: "Banner Status.")
     sort_order: Int @doc(description: "Sort Order of banner.")
     start_date: String @doc(description: "Start Date of banner.")

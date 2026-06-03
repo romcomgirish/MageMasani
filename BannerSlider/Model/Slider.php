@@ -50,8 +50,8 @@ class Slider extends AbstractExtensibleModel implements SliderInterface
         Registry $registry,
         ExtensionAttributesFactory $extensionFactory,
         AttributeValueFactory $customAttributeFactory,
-        AbstractResource $resource = null,
-        AbstractDb $resourceCollection = null,
+        ?AbstractResource $resource = null,
+        ?AbstractDb $resourceCollection = null,
         array $data = []
     ) {
         parent::__construct(
@@ -103,7 +103,7 @@ class Slider extends AbstractExtensibleModel implements SliderInterface
      */
     public function getIsShowTitle()
     {
-        return (int)$this->getData(self::IS_SHOW_TITLE);
+        return (int) $this->getData(self::IS_SHOW_TITLE);
     }
 
     /**
@@ -119,7 +119,7 @@ class Slider extends AbstractExtensibleModel implements SliderInterface
      */
     public function getStatus()
     {
-        return (int)$this->getData(self::STATUS);
+        return (int) $this->getData(self::STATUS);
     }
 
     /**

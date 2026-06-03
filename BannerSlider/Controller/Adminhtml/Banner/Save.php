@@ -79,14 +79,14 @@ class Save extends Action implements HttpPostActionInterface
      * @param BannerFactory $bannerFactory
      */
     public function __construct(
-        Action\Context            $context,
+        Action\Context $context,
         BannerRepositoryInterface $bannerRepository,
-        DataPersistorInterface    $dataPersistor,
-        ImageUploader             $imageUploader,
-        WysiwygImageHelper        $wysiwygImageHelper,
-        Filesystem                $filesystem,
-        StoreManagerInterface     $storeManager,
-        BannerFactory             $bannerFactory
+        DataPersistorInterface $dataPersistor,
+        ImageUploader $imageUploader,
+        WysiwygImageHelper $wysiwygImageHelper,
+        Filesystem $filesystem,
+        StoreManagerInterface $storeManager,
+        BannerFactory $bannerFactory
     ) {
         parent::__construct($context);
         $this->dataPersistor = $dataPersistor;
@@ -113,7 +113,7 @@ class Save extends Action implements HttpPostActionInterface
             } else {
                 $model = $this->bannerFactory->create();
             }
-            $data = array_filter($this->getRequest()->getParams());
+            $data = $this->getRequest()->getParams();
             $model->setData($data);
             if ($model->getResourceType() == 'external_image') {
                 if (!empty($externalImage = $this->getRequest()->getParam('resource_path_external_image'))) {
@@ -152,6 +152,7 @@ class Save extends Action implements HttpPostActionInterface
             $this->messageManager->addSuccessMessage(__('Banner %1 saved successfully', $model->getEntityId()));
             switch ($this->getRequest()->getParam('back')) {
                 case 'continue':
+                case 'edit':
                     $url = $this->getUrl('*/*/edit', ['entity_id' => $model->getEntityId()]);
                     break;
                 case 'close':

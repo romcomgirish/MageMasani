@@ -15,7 +15,7 @@ interface BannerInterface extends ExtensibleDataInterface
      */
     public const ENTITY_ID = 'entity_id';
     public const SLIDER_ID = 'slider_id';
-    public const TITLE     = 'title';
+    public const TITLE = 'title';
     public const RESOURCE_TYPE = 'resource_type';
     public const RESOURCE_PATH = 'resource_path';
     public const ALT_TEXT = 'alt_text';

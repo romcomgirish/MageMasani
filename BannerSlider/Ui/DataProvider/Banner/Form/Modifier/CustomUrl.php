@@ -15,11 +15,10 @@ class CustomUrl implements ModifierInterface
     public function modifyData(array $data): array
     {
         foreach ($data as &$item) {
-            $resourcePath = $item['link_type'] ?? null;
-            $resourceType = $item['link_type_resource'];
-            if ($resourcePath && $resourceType === 'link_type_custom') {
-                unset($item['link_type']);
-                $item['link_type_resource_custom'] = $resourcePath;
+            $linkTypeResource = $item['link_type_resource'] ?? null;
+            $linkType = $item['link_type'] ?? null;
+            if ($linkTypeResource && $linkType === 'link_type_custom') {
+                $item['link_type_resource_custom'] = $linkTypeResource;
             }
         }
         return $data;

@@ -48,12 +48,12 @@ class TokenRegistrar
         $connection->insertOnDuplicate(
             $this->tokenResource->getMainTable(),
             [
-                'token'       => $token,
+                'token' => $token,
                 'customer_id' => $customerId,
-                'user_agent'  => substr($userAgent, 0, self::MAX_USER_AGENT_LENGTH),
-                'store_id'    => $storeId,
+                'user_agent' => substr($userAgent, 0, self::MAX_USER_AGENT_LENGTH),
+                'store_id' => $storeId,
                 'device_type' => $deviceType,
-                'is_active'   => 1
+                'is_active' => 1
             ],
             ['customer_id', 'user_agent', 'store_id', 'device_type', 'is_active']
         );
