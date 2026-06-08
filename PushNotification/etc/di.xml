@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- Campaign Preferences -->
+    <preference for="MageMasani\PushNotification\Model\ConfigInterface"
+                type="MageMasani\PushNotification\Model\Config"/>
+    <preference for="MageMasani\PushNotification\Api\Data\CampaignInterface"
+                type="MageMasani\PushNotification\Model\Campaign"/>
+    <preference for="MageMasani\PushNotification\Api\CampaignRepositoryInterface"
+                type="MageMasani\PushNotification\Model\CampaignRepository"/>
+    <preference for="MageMasani\PushNotification\Api\Data\CampaignSearchResultInterface"
+                type="Magento\Framework\Api\SearchResults"/>
+
+    <!-- Campaign Grid Collection -->
+    <virtualType name="MageMasani\PushNotification\Model\ResourceModel\Campaign\Grid\Collection"
+                 type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">magemasani_pushnotification_campaign</argument>
+            <argument name="resourceModel"
+                      xsi:type="string">MageMasani\PushNotification\Model\ResourceModel\Campaign\Collection</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Token Grid Collection -->
+    <virtualType name="MageMasani\PushNotification\Model\ResourceModel\Token\Grid\Collection"
+                 type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">magemasani_webpush_token</argument>
+            <argument name="resourceModel"
+                      xsi:type="string">MageMasani\PushNotification\Model\ResourceModel\Token\Collection</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- History Grid Collection -->
+    <virtualType name="MageMasani\PushNotification\Model\ResourceModel\NotificationHistory\Grid\Collection"
+                 type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">magemasani_pushnotification_history</argument>
+            <argument name="resourceModel"
+                      xsi:type="string">MageMasani\PushNotification\Model\ResourceModel\NotificationHistory\Collection</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="pushnotification_campaign_listing_data_source"
+                      xsi:type="string">MageMasani\PushNotification\Model\ResourceModel\Campaign\Grid\Collection</item>
+                <item name="pushnotification_token_listing_data_source"
+                      xsi:type="string">MageMasani\PushNotification\Model\ResourceModel\Token\Grid\Collection</item>
+                <item name="pushnotification_history_listing_data_source"
+                      xsi:type="string">MageMasani\PushNotification\Model\ResourceModel\NotificationHistory\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <!-- Campaign image uploader configuration -->
+    <virtualType name="MageMasani\PushNotification\CampaignImageUploader"
+                 type="MageMasani\PushNotification\Model\ImageUploader">
+        <arguments>
+            <argument name="baseTmpPath" xsi:type="string">MageMasani/tmp/pushnotification</argument>
+            <argument name="basePath" xsi:type="string">MageMasani/pushnotification</argument>
+            <argument name="allowedExtensions" xsi:type="array">
+                <item name="jpg" xsi:type="string">jpg</item>
+                <item name="jpeg" xsi:type="string">jpeg</item>
+                <item name="gif" xsi:type="string">gif</item>
+                <item name="png" xsi:type="string">png</item>
+            </argument>
+            <argument name="allowedMimeTypes" xsi:type="array">
+                <item name="jpg" xsi:type="string">image/jpg</item>
+                <item name="jpeg" xsi:type="string">image/jpeg</item>
+                <item name="gif" xsi:type="string">image/gif</item>
+                <item name="png" xsi:type="string">image/png</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="MageMasani\PushNotification\Controller\Adminhtml\Campaign\Image\Upload">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">MageMasani\PushNotification\CampaignImageUploader</argument>
+        </arguments>
+    </type>
+
+    <type name="MageMasani\PushNotification\Controller\Adminhtml\Campaign\Save">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">MageMasani\PushNotification\CampaignImageUploader</argument>
+        </arguments>
+    </type>
+
+    <type name="MageMasani\PushNotification\Model\Campaign\DataProvider">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">MageMasani\PushNotification\CampaignImageUploader</argument>
+        </arguments>
+    </type>
+
+    <!-- Plugins to handle Customer events globally (REST, GraphQL, Web) -->
+    <type name="Magento\Customer\Api\CustomerRepositoryInterface">
+        <plugin name="magemasani_pushnotification_customer_repo_plugin"
+                type="MageMasani\PushNotification\Plugin\CustomerRepositoryPlugin"
+                sortOrder="10"/>
+    </type>
+
+    <type name="Magento\Integration\Api\CustomerTokenServiceInterface">
+        <plugin name="magemasani_pushnotification_token_service_plugin"
+                type="MageMasani\PushNotification\Plugin\CustomerTokenServicePlugin"
+                sortOrder="10"/>
+    </type>
+
+    <type name="Magento\Framework\GraphQl\Query\Resolver\Argument\FieldEntityAttributesPool">
+        <arguments>
+            <argument name="attributesInstances" xsi:type="array">
+                <item name="PushNotificationHistoryInfo" xsi:type="object">
+                    MageMasani\PushNotification\Model\Resolver\NotificationHistoryFilter\FilterArgument
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="MageMasani\PushNotification\Model\Resolver\NotificationHistoryFilter\FilterArgument">
+        <arguments>
+            <argument name="additionalFields" xsi:type="array">
+                <item name="customer_id" xsi:type="string">customer_id</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

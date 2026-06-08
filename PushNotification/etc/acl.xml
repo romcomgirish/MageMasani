@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Magento_Backend::stores">
+                    <resource id="Magento_Backend::stores_settings">
+                        <resource id="Magento_Config::config">
+                            <resource id="MageMasani_PushNotification::config"
+                                      title="Push Notification"/>
+                        </resource>
+                    </resource>
+                </resource>
+                <resource id="MageMasani_PushNotification::send"
+                          title="Send Push Notification"/>
+                <resource id="MageMasani_PushNotification::campaign"
+                          title="Manage Campaigns"/>
+                <resource id="MageMasani_PushNotification::token"
+                          title="Push Notification Tokens"/>
+                <resource id="MageMasani_PushNotification::history"
+                          title="Notification History"/>
+            </resource>
+        </resources>
+    </acl>
+</config>

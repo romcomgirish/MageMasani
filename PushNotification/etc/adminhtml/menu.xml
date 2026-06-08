@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="MageMasani_PushNotification::send"
+             title="Push - Send Test"
+             module="MageMasani_PushNotification"
+             sortOrder="50"
+             parent="Magento_Backend::marketing_communications"
+             action="magemasani_webpush/send/index"
+             resource="MageMasani_PushNotification::send"/>
+        <add id="MageMasani_PushNotification::campaign"
+             title="Manage Campaigns"
+             module="MageMasani_PushNotification"
+             sortOrder="60"
+             parent="Magento_Backend::marketing_communications"
+             action="magemasani_webpush/campaign/index"
+             resource="MageMasani_PushNotification::campaign"/>
+        <add id="MageMasani_PushNotification::token"
+             title="Push Notification Tokens"
+             module="MageMasani_PushNotification"
+             sortOrder="70"
+             parent="Magento_Backend::marketing_communications"
+             action="magemasani_webpush/token/index"
+             resource="MageMasani_PushNotification::token"/>
+        <add id="MageMasani_PushNotification::history"
+             title="Notification History"
+             module="MageMasani_PushNotification"
+             sortOrder="80"
+             parent="Magento_Backend::marketing_communications"
+             action="magemasani_webpush/history/index"
+             resource="MageMasani_PushNotification::history"/>
+    </menu>
+</config>

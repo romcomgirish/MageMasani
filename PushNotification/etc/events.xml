@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="sales_order_save_after">
+        <observer name="magemasani_pushnotification_order_status"
+                  instance="MageMasani\PushNotification\Observer\OrderStatusObserver"/>
+    </event>
+    <event name="customer_login">
+        <observer name="magemasani_pushnotification_customer_login"
+                  instance="MageMasani\PushNotification\Observer\CustomerLoginObserver"/>
+    </event>
+    <event name="customer_logout">
+        <observer name="magemasani_pushnotification_customer_logout"
+                  instance="MageMasani\PushNotification\Observer\CustomerLogoutObserver"/>
+    </event>
+    <event name="newsletter_subscriber_save_after">
+        <observer name="magemasani_pushnotification_subscriber_save"
+                  instance="MageMasani\PushNotification\Observer\NewsletterSubscriberSaveObserver"/>
+    </event>
+</config>

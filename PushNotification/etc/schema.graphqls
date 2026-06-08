@@ -1,0 +1,61 @@
+type Mutation {
+    savePushNotificationToken(input: SavePushNotificationTokenInput!): SavePushNotificationTokenOutput!
+        @resolver(class: "MageMasani\\PushNotification\\Model\\Resolver\\SavePushNotificationToken")
+        @doc(description: "Register an FCM push token for the current customer or guest. Used by web and mobile clients.")
+}
+
+input SavePushNotificationTokenInput {
+    token: String! @doc(description: "FCM registration token returned by Firebase SDK.")
+    device_type: PushNotificationDeviceTypeEnum! @doc(description: "Type of device the token belongs to.")
+}
+
+enum PushNotificationDeviceTypeEnum {
+    web
+    android
+    ios
+}
+
+type SavePushNotificationTokenOutput {
+    success: Boolean! @doc(description: "True if the token was stored successfully.")
+    message: String @doc(description: "Human-readable status message; null on success.")
+}
+
+type Query {
+    PushNotificationHistoryInfo(
+        filter: PushNotificationHistoryFilterInput @doc(description: "Apply filters by field.")
+        sort: PushNotificationHistorySortInput @doc(description: "Specifies sorting order.")
+        currentPage: Int = 1 @doc(description: "Specifies which page of results to return.")
+        pageSize: Int = 20 @doc(description: "Specifies the maximum number of results to return on a page.")
+    ): PushNotificationHistoryOutput! @resolver(class: "MageMasani\\PushNotification\\Model\\Resolver\\PushNotificationHistory") @doc(description: "Retrieve push notification history for the current customer.")
+}
+
+input PushNotificationHistoryFilterInput {
+    entity_id: FilterTypeInput @doc(description: "Filter by Entity ID.")
+    campaign_id: FilterTypeInput @doc(description: "Filter by Campaign ID.")
+    notification_type: FilterTypeInput @doc(description: "Filter by Notification Type.")
+    status: FilterTypeInput @doc(description: "Filter by Status.")
+    sent_at: FilterTypeInput @doc(description: "Filter by Sent Timestamp.")
+}
+
+input PushNotificationHistorySortInput {
+    entity_id: SortEnum @doc(description: "Sort by Entity ID.")
+    sent_at: SortEnum @doc(description: "Sort by Sent Timestamp.")
+}
+
+type PushNotificationHistoryOutput {
+    items: [PushNotificationHistoryItem!]! @doc(description: "List of push notification history items.")
+    page_info: SearchResultPageInfo! @doc(description: "Pagination information.")
+    total_count: Int! @doc(description: "Total number of notification history items.")
+}
+
+type PushNotificationHistoryItem {
+    entity_id: Int! @doc(description: "Entity ID")
+    campaign_id: Int @doc(description: "Campaign ID")
+    title: String! @doc(description: "Notification Title")
+    body: String! @doc(description: "Notification Body")
+    click_url: String @doc(description: "Click Action URL")
+    image_url: String @doc(description: "Image URL")
+    notification_type: String! @doc(description: "Type of notification (scheduled, event, manual)")
+    status: String! @doc(description: "Status (sent, failed)")
+    sent_at: String! @doc(description: "Sent At")
+}

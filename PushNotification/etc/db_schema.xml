@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="magemasani_webpush_token" resource="default" engine="innodb"
+           comment="Push Notification FCM Tokens">
+        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true"
+                comment="Entity ID"/>
+        <column xsi:type="int" name="customer_id" unsigned="true" nullable="true"
+                comment="Customer ID"/>
+        <column xsi:type="varchar" name="token" length="512" nullable="false"
+                comment="FCM Token"/>
+        <column xsi:type="varchar" name="user_agent" length="512" nullable="true"
+                comment="User Agent"/>
+        <column xsi:type="smallint" name="store_id" unsigned="true" nullable="true"
+                comment="Store ID"/>
+        <column xsi:type="varchar" name="device_type" length="16" nullable="false" default="web"
+                comment="Device Type: web|android|ios"/>
+        <column xsi:type="boolean" name="is_active" nullable="false" default="true"
+                comment="Is Active"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false"
+                default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false"
+                default="CURRENT_TIMESTAMP" comment="Updated At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="MAGEMASANI_WEBPUSH_TOKEN_TOKEN">
+            <column name="token"/>
+        </constraint>
+        <index referenceId="MAGEMASANI_WEBPUSH_TOKEN_CUSTOMER_ID" indexType="btree">
+            <column name="customer_id"/>
+        </index>
+        <index referenceId="MAGEMASANI_WEBPUSH_TOKEN_DEVICE_TYPE" indexType="btree">
+            <column name="device_type"/>
+        </index>
+    </table>
+    <table name="magemasani_pushnotification_campaign" resource="default" engine="innodb"
+           comment="Push Notification Campaigns">
+        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true"
+                comment="Entity ID"/>
+        <column xsi:type="varchar" name="title" length="255" nullable="false" comment="Campaign Title"/>
+        <column xsi:type="text" name="body" nullable="false" comment="Campaign Body"/>
+        <column xsi:type="varchar" name="click_url" length="255" nullable="true" comment="Click Action URL"/>
+        <column xsi:type="varchar" name="image_url" length="255" nullable="true" comment="Image URL"/>
+        <column xsi:type="varchar" name="custom_event" length="255" nullable="true" comment="Custom Event Constant"/>
+        <column xsi:type="varchar" name="notification_type" length="32" nullable="true" comment="Notification Type: scheduled|event"/>
+        <column xsi:type="datetime" name="schedule_to" nullable="true" comment="Scheduled Time"/>
+        <column xsi:type="varchar" name="order_status" length="32" nullable="true" comment="Selected Order Status"/>
+        <column xsi:type="smallint" name="status" padding="2" unsigned="true" nullable="false" default="0"
+                comment="Status: 0=Disabled, 1=Enabled"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false"
+                default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false"
+                default="CURRENT_TIMESTAMP" comment="Updated At"/>
+        <column xsi:type="timestamp" name="sent_at" on_update="false" nullable="true"
+                comment="Sent At - NULL means not yet sent"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+    </table>
+    <table name="magemasani_pushnotification_history" resource="default" engine="innodb"
+           comment="Push Notification History">
+        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true"
+                comment="Entity ID"/>
+        <column xsi:type="int" name="campaign_id" unsigned="true" nullable="true"
+                comment="Campaign ID"/>
+        <column xsi:type="int" name="customer_id" unsigned="true" nullable="true"
+                comment="Customer ID - NULL for global notifications"/>
+        <column xsi:type="varchar" name="title" length="255" nullable="false"
+                comment="Notification Title"/>
+        <column xsi:type="text" name="body" nullable="false"
+                comment="Notification Body"/>
+        <column xsi:type="varchar" name="click_url" length="255" nullable="true"
+                comment="Click Action URL"/>
+        <column xsi:type="varchar" name="image_url" length="255" nullable="true"
+                comment="Image URL"/>
+        <column xsi:type="varchar" name="notification_type" length="32" nullable="false" default="manual"
+                comment="Type: scheduled|event|manual"/>
+        <column xsi:type="boolean" name="is_global" nullable="false" default="true"
+                comment="Is Global Broadcast Notification"/>
+        <column xsi:type="int" name="token_count" unsigned="true" nullable="false" default="0"
+                comment="Number of Tokens Targeted"/>
+        <column xsi:type="int" name="success_count" unsigned="true" nullable="false" default="0"
+                comment="Successful Deliveries"/>
+        <column xsi:type="int" name="failure_count" unsigned="true" nullable="false" default="0"
+                comment="Failed Deliveries"/>
+        <column xsi:type="varchar" name="status" length="16" nullable="false" default="sent"
+                comment="Status: sent|failed"/>
+        <column xsi:type="text" name="error_message" nullable="true"
+                comment="Error Message if Failed"/>
+        <column xsi:type="timestamp" name="sent_at" on_update="false" nullable="false"
+                default="CURRENT_TIMESTAMP" comment="Sent At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+        <index referenceId="MAGEMASANI_PUSHNOTIFICATION_HISTORY_CUSTOMER_ID" indexType="btree">
+            <column name="customer_id"/>
+        </index>
+        <index referenceId="MAGEMASANI_PUSHNOTIFICATION_HISTORY_CAMPAIGN_ID" indexType="btree">
+            <column name="campaign_id"/>
+        </index>
+        <index referenceId="MAGEMASANI_PUSHNOTIFICATION_HISTORY_NOTIFICATION_TYPE" indexType="btree">
+            <column name="notification_type"/>
+        </index>
+    </table>
+</schema>

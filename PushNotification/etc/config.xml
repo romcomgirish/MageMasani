@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <pushnotification>
+            <general>
+                <enabled>0</enabled>
+                <allowed_device_types>both</allowed_device_types>
+            </general>
+            <event_settings>
+                <custom_events>{"_1605b57228511":{"event_name":"Registartion","event_constant":"registartion"},"_1605b57228512":{"event_name":"Login","event_constant":"login"},"_1605b57228513":{"event_name":"Logout","event_constant":"logout"},"_1605b57228514":{"event_name":"Group Changing","event_constant":"group_changing"},"_1605b57228515":{"event_name":"Birthday","event_constant":"birthday"},"_1605b57228516":{"event_name":"SubScripton","event_constant":"sub_scription"},"_1605b57228517":{"event_name":"SubScripton Cancelation","event_constant":"sub_scription_cancelation"},"_1605b57228518":{"event_name":"Order Status","event_constant":"order_status"}}</custom_events>
+            </event_settings>
+        </pushnotification>
+    </default>
+</config>

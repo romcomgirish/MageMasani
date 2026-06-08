@@ -1,0 +1,71 @@
+{
+    "magemasani_webpush_token": {
+        "column": {
+            "entity_id": true,
+            "customer_id": true,
+            "token": true,
+            "user_agent": true,
+            "store_id": true,
+            "device_type": true,
+            "is_active": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "index": {
+            "MAGEMASANI_WEBPUSH_TOKEN_CUSTOMER_ID": true,
+            "MAGEMASANI_WEBPUSH_TOKEN_DEVICE_TYPE": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "MAGEMASANI_WEBPUSH_TOKEN_TOKEN": true
+        }
+    },
+    "magemasani_pushnotification_campaign": {
+        "column": {
+            "entity_id": true,
+            "title": true,
+            "body": true,
+            "click_url": true,
+            "image_url": true,
+            "custom_event": true,
+            "notification_type": true,
+            "schedule_to": true,
+            "order_status": true,
+            "customer_group_ids": true,
+            "status": true,
+            "created_at": true,
+            "updated_at": true,
+            "sent_at": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "magemasani_pushnotification_history": {
+        "column": {
+            "entity_id": true,
+            "campaign_id": true,
+            "customer_id": true,
+            "title": true,
+            "body": true,
+            "click_url": true,
+            "image_url": true,
+            "notification_type": true,
+            "is_global": true,
+            "token_count": true,
+            "success_count": true,
+            "failure_count": true,
+            "status": true,
+            "error_message": true,
+            "sent_at": true
+        },
+        "index": {
+            "MAGEMASANI_PUSHNOTIFICATION_HISTORY_CUSTOMER_ID": true,
+            "MAGEMASANI_PUSHNOTIFICATION_HISTORY_CAMPAIGN_ID": true,
+            "MAGEMASANI_PUSHNOTIFICATION_HISTORY_NOTIFICATION_TYPE": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}

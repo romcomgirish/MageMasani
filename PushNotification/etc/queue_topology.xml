@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework-message-queue:etc/topology.xsd">
+    <exchange name="magento">
+        <binding id="magemasani.pushnotification.send.binding"
+                 topic="magemasani.pushnotification.send"
+                 destination="magemasani.pushnotification.send"/>
+    </exchange>
+</config>

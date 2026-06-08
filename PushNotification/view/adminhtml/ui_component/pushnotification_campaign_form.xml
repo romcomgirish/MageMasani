@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">pushnotification_campaign_form.pushnotification_campaign_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Campaign Information</item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="back" class="MageMasani\PushNotification\Block\Adminhtml\Campaign\Edit\BackButton"/>
+            <button name="delete" class="MageMasani\PushNotification\Block\Adminhtml\Campaign\Edit\DeleteButton"/>
+            <button name="reset" class="MageMasani\PushNotification\Block\Adminhtml\Campaign\Edit\ResetButton"/>
+            <button name="save" class="MageMasani\PushNotification\Block\Adminhtml\Campaign\Edit\SaveButton"/>
+            <button name="save_and_continue"
+                    class="MageMasani\PushNotification\Block\Adminhtml\Campaign\Edit\SaveAndContinueButton"/>
+        </buttons>
+        <namespace>pushnotification_campaign_form</namespace>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>pushnotification_campaign_form.pushnotification_campaign_form_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="pushnotification_campaign_form_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="*/*/save"/>
+        </settings>
+        <dataProvider class="MageMasani\PushNotification\Model\Campaign\DataProvider"
+                      name="pushnotification_campaign_form_data_source">
+            <settings>
+                <requestFieldName>entity_id</requestFieldName>
+                <primaryFieldName>entity_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <fieldset name="general">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true">General Information</item>
+            </item>
+        </argument>
+        <field name="entity_id" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">campaign</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <visible>false</visible>
+                <dataScope>entity_id</dataScope>
+            </settings>
+        </field>
+        <field name="status" sortOrder="10" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <label translate="true">Status</label>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="string">0</map>
+                            <map name="true" xsi:type="string">1</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+        <field name="title" sortOrder="70" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">MageMasani_PushNotification/js/form/element/dynamic-notice-input</item>
+                    <item name="notice" xsi:type="string" translate="true">Enter the title that will be displayed as the notification heading.</item>
+                    <item name="noticeMap" xsi:type="array">
+                        <item name="order_status" xsi:type="string" translate="true">Available variables: {{customer_name}}, {{order_id}}, {{order_increment_id}}, {{order_status}}</item>
+                    </item>
+                    <item name="imports" xsi:type="array">
+                        <item name="onEventChange" xsi:type="string">${ $.provider }:data.custom_event</item>
+                        <item name="onTypeChange" xsi:type="string">${ $.provider }:data.notification_type</item>
+                    </item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>string</dataType>
+                <label translate="true">Campaign Title</label>
+            </settings>
+        </field>
+        <field name="body" sortOrder="80" formElement="textarea">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">MageMasani_PushNotification/js/form/element/dynamic-notice-textarea</item>
+                    <item name="notice" xsi:type="string" translate="true">Enter the message content that will be displayed in the notification body.</item>
+                    <item name="noticeMap" xsi:type="array">
+                        <item name="order_status" xsi:type="string" translate="true">Available variables: {{customer_name}}, {{order_id}}, {{order_increment_id}}, {{order_status}}</item>
+                    </item>
+                    <item name="imports" xsi:type="array">
+                        <item name="onEventChange" xsi:type="string">${ $.provider }:data.custom_event</item>
+                        <item name="onTypeChange" xsi:type="string">${ $.provider }:data.notification_type</item>
+                    </item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>string</dataType>
+                <label translate="true">Campaign Body</label>
+            </settings>
+        </field>
+        <field name="click_url" sortOrder="90" formElement="input">
+            <settings>
+                <dataType>string</dataType>
+                <label translate="true">Click Action URL</label>
+                <notice translate="true">Target URL when user clicks the notification.</notice>
+            </settings>
+        </field>
+        <field name="image_url" sortOrder="60" formElement="imageUploader">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">campaign</item>
+                </item>
+            </argument>
+            <settings>
+                <elementTmpl>ui/form/element/uploader/image</elementTmpl>
+                <dataType>string</dataType>
+                <label translate="true">Notification Image</label>
+                <notice translate="true">Upload rich media image to display in the notification.</notice>
+                <required>false</required>
+            </settings>
+            <formElements>
+                <imageUploader>
+                    <settings>
+                        <required>false</required>
+                        <uploaderConfig>
+                            <param xsi:type="url" name="url" path="magemasani_webpush/campaign_image/upload"/>
+                        </uploaderConfig>
+                        <previewTmpl>Magento_Catalog/image-preview</previewTmpl>
+                        <openDialogTitle>Notification Image</openDialogTitle>
+                        <initialMediaGalleryOpenSubpath>MageMasani/pushnotification</initialMediaGalleryOpenSubpath>
+                        <allowedExtensions>jpg jpeg gif png</allowedExtensions>
+                        <maxFileSize>4194304</maxFileSize>
+                    </settings>
+                </imageUploader>
+            </formElements>
+        </field>
+        <field name="notification_type" sortOrder="20" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">campaign</item>
+                    <item name="default" xsi:type="string">instant</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>string</dataType>
+                <label translate="true">Notification Type</label>
+                <required>true</required>
+                <switcherConfig>
+                    <rules>
+                        <rule name="0">
+                            <value>scheduled</value>
+                            <actions>
+                                <action name="0">
+                                    <target>pushnotification_campaign_form.pushnotification_campaign_form.general.schedule_to</target>
+                                    <callback>show</callback>
+                                </action>
+                                <action name="1">
+                                    <target>pushnotification_campaign_form.pushnotification_campaign_form.general.custom_event</target>
+                                    <callback>hide</callback>
+                                </action>
+                                <action name="2">
+                                    <target>pushnotification_campaign_form.pushnotification_campaign_form.general.order_status</target>
+                                    <callback>hide</callback>
+                                </action>
+                            </actions>
+                        </rule>
+                        <rule name="1">
+                            <value>event</value>
+                            <actions>
+                                <action name="0">
+                                    <target>pushnotification_campaign_form.pushnotification_campaign_form.general.schedule_to</target>
+                                    <callback>hide</callback>
+                                </action>
+                                <action name="1">
+                                    <target>pushnotification_campaign_form.pushnotification_campaign_form.general.custom_event</target>
+                                    <callback>show</callback>
+                                </action>
+                            </actions>
+                        </rule>
+                        <rule name="2">
+                            <value>instant</value>
+                            <actions>
+                                <action name="0">
+                                    <target>pushnotification_campaign_form.pushnotification_campaign_form.general.schedule_to</target>
+                                    <callback>hide</callback>
+                                </action>
+                                <action name="1">
+                                    <target>pushnotification_campaign_form.pushnotification_campaign_form.general.custom_event</target>
+                                    <callback>hide</callback>
+                                </action>
+                                <action name="2">
+                                    <target>pushnotification_campaign_form.pushnotification_campaign_form.general.order_status</target>
+                                    <callback>hide</callback>
+                                </action>
+                            </actions>
+                        </rule>
+                    </rules>
+                    <enabled>true</enabled>
+                </switcherConfig>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options>
+                            <option name="instant" xsi:type="array">
+                                <item name="value" xsi:type="string">instant</item>
+                                <item name="label" xsi:type="string" translate="true">Instant Notification</item>
+                            </option>
+                            <option name="scheduled" xsi:type="array">
+                                <item name="value" xsi:type="string">scheduled</item>
+                                <item name="label" xsi:type="string" translate="true">Scheduled Notification</item>
+                            </option>
+                            <option name="event" xsi:type="array">
+                                <item name="value" xsi:type="string">event</item>
+                                <item name="label" xsi:type="string" translate="true">Event Notification</item>
+                            </option>
+                        </options>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+
+        <field name="schedule_to" sortOrder="50" formElement="date">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">campaign</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>string</dataType>
+                <label translate="true">Schedule to</label>
+                <required>true</required>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+            <formElements>
+                <date>
+                    <settings>
+                        <options>
+                            <option name="showsTime" xsi:type="boolean">true</option>
+                            <option name="timeFormat" xsi:type="string">HH:mm:ss</option>
+                            <option name="dateFormat" xsi:type="string">yyyy-MM-dd</option>
+                        </options>
+                    </settings>
+                </date>
+            </formElements>
+        </field>
+
+        <field name="custom_event" sortOrder="30" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">campaign</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>string</dataType>
+                <label translate="true">Custom Event</label>
+                <notice translate="true">Select associated event for this campaign.</notice>
+                <required>false</required>
+                <switcherConfig>
+                    <rules>
+                        <rule name="0">
+                            <value>order_status</value>
+                            <actions>
+                                <action name="0">
+                                    <target>pushnotification_campaign_form.pushnotification_campaign_form.general.order_status</target>
+                                    <callback>show</callback>
+                                </action>
+                            </actions>
+                        </rule>
+                        <rule name="1">
+                            <value>abandoned_cart</value>
+                            <actions>
+                                <action name="0">
+                                    <target>pushnotification_campaign_form.pushnotification_campaign_form.general.order_status</target>
+                                    <callback>hide</callback>
+                                </action>
+                            </actions>
+                        </rule>
+                    </rules>
+                    <enabled>true</enabled>
+                </switcherConfig>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="MageMasani\PushNotification\Model\Config\Source\CustomEvents"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+
+        <field name="order_status" sortOrder="40" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">campaign</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>string</dataType>
+                <label translate="true">Order Status</label>
+                <required>false</required>
+                <visible>false</visible>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Magento\Sales\Model\Config\Source\Order\Status"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+    </fieldset>
+</form>
