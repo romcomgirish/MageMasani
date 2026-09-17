@@ -1,8 +1,16 @@
 <?php
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * MageMasani BannerSlider Module
+ *
+ * @category  MageMasani
+ * @package   MageMasani_BannerSlider
+ * @author    MageMasani <support@magemasani.com>
+ * @copyright Copyright (c) MageMasani (https://www.magemasani.com/)
+ * @license   GPL-3.0-or-later
  */
+
+declare(strict_types=1);
+
 namespace MageMasani\BannerSlider\Model\Slider;
 
 use MageMasani\BannerSlider\Model\ResourceModel\Slider\Collection;

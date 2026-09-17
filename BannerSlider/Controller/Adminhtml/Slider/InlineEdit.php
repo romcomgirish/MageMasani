@@ -1,17 +1,30 @@
 <?php
+/**
+ * MageMasani BannerSlider Module
+ *
+ * @category  MageMasani
+ * @package   MageMasani_BannerSlider
+ * @author    MageMasani <support@magemasani.com>
+ * @copyright Copyright (c) MageMasani (https://www.magemasani.com/)
+ * @license   GPL-3.0-or-later
+ */
+
 declare(strict_types=1);
 
 namespace MageMasani\BannerSlider\Controller\Adminhtml\Slider;
 
+use Exception;
 use MageMasani\BannerSlider\Api\SliderRepositoryInterface;
 use MageMasani\BannerSlider\Api\Data\SliderInterface;
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\Controller\ResultInterface;
+use Magento\Framework\Exception\NoSuchEntityException;
+use RuntimeException;
 
 /**
- * Slider Inline Class
+ * Slider InlineEdit Class
  */
 class InlineEdit extends Action
 {
@@ -38,7 +51,7 @@ class InlineEdit extends Action
      * @param SliderRepositoryInterface $sliderRepository
      */
     public function __construct(
-        Action\Context $context,
+        Context $context,
         JsonFactory $jsonFactory,
         SliderRepositoryInterface $sliderRepository
     ) {
@@ -60,24 +73,23 @@ class InlineEdit extends Action
 
         if ($this->getRequest()->getParam('isAjax')) {
             $postItems = $this->getRequest()->getParam('items', []);
-            if (!count($postItems)) {
+            if (!is_array($postItems) || !count($postItems)) {
                 $messages[] = __('Please correct the data sent.');
                 $error = true;
             } else {
-                foreach (array_keys($postItems) as $EntityId) {
-                    $model = $this->sliderRepository->getById($EntityId);
+                foreach ($postItems as $entityId => $formData) {
                     try {
-                        $formData = $postItems[$EntityId];
-                        $model->setData($formData);
+                        $model = $this->sliderRepository->getById((int) $entityId);
+                        $model->setData(array_merge($model->getData(), $formData));
                         $this->sliderRepository->save($model);
-                    } catch (\RuntimeException $e) {
-                        $messages[] = $this->getErrorWithCustomFormId($model, $e->getMessage());
+                    } catch (NoSuchEntityException $e) {
+                        $messages[] = sprintf('[Slider ID: %s] %s', $entityId, $e->getMessage());
                         $error = true;
-                    } catch (\Exception $e) {
-                        $messages[] = $this->getErrorWithCustomFormId(
-                            $model,
-                            (string)__('Something went wrong while saving the CustomForm.')
-                        );
+                    } catch (RuntimeException $e) {
+                        $messages[] = sprintf('[Slider ID: %s] %s', $entityId, $e->getMessage());
+                        $error = true;
+                    } catch (Exception $e) {
+                        $messages[] = sprintf('[Slider ID: %s] %s', $entityId, __('Something went wrong while saving the Slider.'));
                         $error = true;
                     }
                 }
@@ -97,8 +109,8 @@ class InlineEdit extends Action
      * @param string $errorText
      * @return string
      */
-    protected function getErrorWithCustomFormId(SliderInterface $model, string $errorText): string
+    protected function getErrorWithSliderId(SliderInterface $model, string $errorText): string
     {
-        return '[CustomForm ID: ' . $model->getId() . '] ' . $errorText;
+        return '[Slider ID: ' . $model->getId() . '] ' . $errorText;
     }
 }

@@ -1,13 +1,27 @@
 <?php
+/**
+ * MageMasani BannerSlider Module
+ *
+ * @category  MageMasani
+ * @package   MageMasani_BannerSlider
+ * @author    MageMasani <support@magemasani.com>
+ * @copyright Copyright (c) MageMasani (https://www.magemasani.com/)
+ * @license   GPL-3.0-or-later
+ */
+
 declare(strict_types=1);
 
 namespace MageMasani\BannerSlider\Controller\Adminhtml\Banner;
 
+use Exception;
 use MageMasani\BannerSlider\Api\BannerRepositoryInterface;
 use MageMasani\BannerSlider\Api\Data\BannerInterface;
 use Magento\Backend\App\Action;
+use Magento\Backend\App\Action\Context;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\Controller\ResultInterface;
+use Magento\Framework\Exception\NoSuchEntityException;
+use RuntimeException;
 
 /**
  * Banner InlineEdit Class
@@ -32,12 +46,12 @@ class InlineEdit extends Action
     private BannerRepositoryInterface $bannerRepository;
 
     /**
-     * @param Action\Context $context
+     * @param Context $context
      * @param JsonFactory $jsonFactory
      * @param BannerRepositoryInterface $bannerRepository
      */
     public function __construct(
-        Action\Context $context,
+        Context $context,
         JsonFactory $jsonFactory,
         BannerRepositoryInterface $bannerRepository
     ) {
@@ -56,26 +70,26 @@ class InlineEdit extends Action
         $resultJson = $this->jsonFactory->create();
         $error = false;
         $messages = [];
+
         if ($this->getRequest()->getParam('isAjax')) {
             $postItems = $this->getRequest()->getParam('items', []);
-            if (!count($postItems)) {
+            if (!is_array($postItems) || !count($postItems)) {
                 $messages[] = __('Please correct the data sent.');
                 $error = true;
             } else {
-                foreach (array_keys($postItems) as $EntityId) {
-                    $model = $this->bannerRepository->getById($EntityId);
+                foreach ($postItems as $entityId => $formData) {
                     try {
-                        $formData = $postItems[$EntityId];
-                        $model->setData($formData);
+                        $model = $this->bannerRepository->getById((int) $entityId);
+                        $model->setData(array_merge($model->getData(), $formData));
                         $this->bannerRepository->save($model);
-                    } catch (\RuntimeException $e) {
-                        $messages[] = $this->getErrorWithBannersId($model, $e->getMessage());
+                    } catch (NoSuchEntityException $e) {
+                        $messages[] = sprintf('[Banner ID: %s] %s', $entityId, $e->getMessage());
                         $error = true;
-                    } catch (\Exception $e) {
-                        $messages[] = $this->getErrorWithBannersId(
-                            $model,
-                            (string)__('Something went wrong while saving the Banner.')
-                        );
+                    } catch (RuntimeException $e) {
+                        $messages[] = sprintf('[Banner ID: %s] %s', $entityId, $e->getMessage());
+                        $error = true;
+                    } catch (Exception $e) {
+                        $messages[] = sprintf('[Banner ID: %s] %s', $entityId, __('Something went wrong while saving the Banner.'));
                         $error = true;
                     }
                 }
@@ -97,6 +111,6 @@ class InlineEdit extends Action
      */
     protected function getErrorWithBannersId(BannerInterface $model, string $errorText): string
     {
-        return '[Banners ID: ' . $model->getId() . '] ' . $errorText;
+        return '[Banner ID: ' . $model->getId() . '] ' . $errorText;
     }
 }

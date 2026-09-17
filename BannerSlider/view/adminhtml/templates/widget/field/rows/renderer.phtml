@@ -34,7 +34,7 @@ $rows = $block->getRows();
             <tfoot>
                 <tr>
                     <td class="col-actions-add" colspan="<?= (int) count($rows) + 1; ?>">
-                        <?= $block->getAddButtonHtml(); ?>
+                        <?= /* @noEscape */ $block->getAddButtonHtml(); ?>
                     </td>
                 </tr>
             </tfoot>

@@ -1,8 +1,18 @@
 <?php
+/**
+ * MageMasani BannerSlider Module
+ *
+ * @category  MageMasani
+ * @package   MageMasani_BannerSlider
+ * @author    MageMasani <support@magemasani.com>
+ * @copyright Copyright (c) MageMasani (https://www.magemasani.com/)
+ * @license   GPL-3.0-or-later
+ */
+
+declare(strict_types=1);
 
 namespace MageMasani\BannerSlider\Ui\DataProvider\Banner\Form\Modifier;
 
-use MageMasani\BannerSlider\BannerImageUploader;
 use MageMasani\BannerSlider\Model\ImageUploader;
 use Magento\Framework\File\Mime;
 use Magento\Framework\Filesystem;
@@ -11,7 +21,6 @@ use Magento\Framework\UrlInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Ui\DataProvider\Modifier\ModifierInterface;
 use Magento\Framework\App\Filesystem\DirectoryList;
-use Magento\Framework\App\ObjectManager;
 
 /**
  * Banner LocalImage Class
@@ -39,7 +48,7 @@ class LocalImage implements ModifierInterface
     private File $file;
 
     /**
-     * @var ImageUploader|BannerImageUploader|mixed
+     * @var ImageUploader
      */
     private ImageUploader $imageUploader;
 
@@ -48,20 +57,20 @@ class LocalImage implements ModifierInterface
      * @param StoreManagerInterface $storeManager
      * @param Mime $mime
      * @param File $file
-     * @param ImageUploader|null $imageUploader
+     * @param ImageUploader $imageUploader
      */
     public function __construct(
         Filesystem $filesystem,
         StoreManagerInterface $storeManager,
         Mime $mime,
         File $file,
-        ?ImageUploader $imageUploader = null
+        ImageUploader $imageUploader
     ) {
         $this->filesystem = $filesystem;
         $this->storeManager = $storeManager;
         $this->mime = $mime;
         $this->file = $file;
-        $this->imageUploader = $imageUploader ?: ObjectManager::getInstance()->get(BannerImageUploader::class);
+        $this->imageUploader = $imageUploader;
     }
 
     /**

@@ -83,7 +83,17 @@
             <argument name="imageUploader" xsi:type="object">MageMasani\BannerSlider\BannerImageUploader</argument>
         </arguments>
     </type>
-    <type name="MageMasani\BannerSlider\Controller\Adminhtml\Banner\Save">
+    <type name="MageMasani\BannerSlider\Block\Widget\Slider">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">MageMasani\BannerSlider\BannerImageUploader</argument>
+        </arguments>
+    </type>
+    <type name="MageMasani\BannerSlider\Ui\DataProvider\Banner\Form\Modifier\LocalImage">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">MageMasani\BannerSlider\BannerImageUploader</argument>
+        </arguments>
+    </type>
+    <type name="MageMasani\BannerSlider\Ui\Component\Listing\Column\Banner\ResourcePath">
         <arguments>
             <argument name="imageUploader" xsi:type="object">MageMasani\BannerSlider\BannerImageUploader</argument>
         </arguments>

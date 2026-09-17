@@ -1,8 +1,18 @@
 <?php
+/**
+ * MageMasani BannerSlider Module
+ *
+ * @category  MageMasani
+ * @package   MageMasani_BannerSlider
+ * @author    MageMasani <support@magemasani.com>
+ * @copyright Copyright (c) MageMasani (https://www.magemasani.com/)
+ * @license   GPL-3.0-or-later
+ */
+
+declare(strict_types=1);
 
 namespace MageMasani\BannerSlider\Ui\Component\Listing\Column\Banner;
 
-use MageMasani\BannerSlider\BannerImageUploader;
 use MageMasani\BannerSlider\Model\ImageUploader;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\UrlInterface;
@@ -11,7 +21,6 @@ use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponentFactory;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Ui\Component\Listing\Columns\Column;
-use Magento\Framework\App\ObjectManager;
 
 /**
  * Banner ResourcePath Class
@@ -29,7 +38,7 @@ class ResourcePath extends Column
     private Repository $assetRepository;
 
     /**
-     * @var ImageUploader|BannerImageUploader|mixed
+     * @var ImageUploader
      */
     private ImageUploader $imageUploader;
 
@@ -38,7 +47,7 @@ class ResourcePath extends Column
      * @param UiComponentFactory $uiComponentFactory
      * @param StoreManagerInterface $storeManager
      * @param Repository $assetRepository
-     * @param ImageUploader|null $imageUploader
+     * @param ImageUploader $imageUploader
      * @param array $components
      * @param array $data
      */
@@ -47,14 +56,14 @@ class ResourcePath extends Column
         UiComponentFactory $uiComponentFactory,
         StoreManagerInterface $storeManager,
         Repository $assetRepository,
-        ?ImageUploader $imageUploader = null,
+        ImageUploader $imageUploader,
         ?array $components = [],
         ?array $data = []
     ) {
         parent::__construct($context, $uiComponentFactory, $components, $data);
         $this->storeManager = $storeManager;
         $this->assetRepository = $assetRepository;
-        $this->imageUploader = $imageUploader ?: ObjectManager::getInstance()->get(BannerImageUploader::class);
+        $this->imageUploader = $imageUploader;
     }
 
     /**

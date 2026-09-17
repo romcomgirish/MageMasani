@@ -1,48 +1,52 @@
 type Query {
     BannerSliderInfo(
-        filter: BannerSliderFilterInput @doc(description: "Apply filters by filed.")
-        pageSize: Int = 5 @doc(description: "The maximum number of banner to return at once. The attribute is optional.")
+        filter: BannerSliderFilterInput @doc(description: "Apply filters by banner attributes.")
+        pageSize: Int = 5 @doc(description: "The maximum number of banners to return at once. The attribute is optional.")
         currentPage: Int = 1 @doc(description: "Specifies which page of results to return. The default value is 1.")
-        sort: BannerSliderSortInput @doc(description: "Specifies which filed to sort on, and whether to return the results in ascending or descending order.")
-    ):BannerSliderOutput @resolver( class: "MageMasani\\BannerSliderGraphQl\\Model\\Resolver\\BannerSlider")
-    @doc(description: "Get list of banner filter based of parameter's")
+        sort: BannerSliderSortInput @doc(description: "Specifies which field to sort on, and whether to return the results in ascending or descending order.")
+    ): BannerSliderOutput @resolver(class: "MageMasani\\BannerSliderGraphQl\\Model\\Resolver\\BannerSlider")
+    @doc(description: "Get list of banners filtered based on query parameters.")
     @cache(cacheIdentity: "MageMasani\\BannerSliderGraphQl\\Model\\Resolver\\BannerSlider\\Identity")
 }
+
 input BannerSliderFilterInput {
-    entity_id: FilterTypeInput   @doc(description: "Filter By unique ID of Entity Id.")
-    slider_id: FilterTypeInput   @doc(description: "Filter By unique ID of Slider Id.")
-    title: FilterTypeInput  @doc(description: "Filter banner by title.")
-    resource_type: FilterTypeInput  @doc(description: "Filter banner based on resource type.")
+    entity_id: FilterTypeInput @doc(description: "Filter by unique Banner Entity ID.")
+    slider_id: FilterTypeInput @doc(description: "Filter by Slider ID.")
+    title: FilterTypeInput @doc(description: "Filter banner by title.")
+    resource_type: FilterTypeInput @doc(description: "Filter banner based on resource type.")
 }
+
 input BannerSliderSortInput @doc(description: "BannerSliderSortInput specifies the attribute to use for sorting search results and indicates whether the results are sorted in ascending or descending order.") {
-    entity_id: SortEnum @doc(description: "Sort By Brand Id")
-    slider_id: SortEnum @doc(description: "Sort By Brand Id")
-    resource_type: SortEnum @doc(description: "Sort By Brand Name.")
-    title: SortEnum @doc(description: "Sort By Brand Name.")
-    sort_order: SortEnum @doc(description: "Sort By Brand Position.")
+    entity_id: SortEnum @doc(description: "Sort by Banner Entity ID.")
+    slider_id: SortEnum @doc(description: "Sort by Slider ID.")
+    resource_type: SortEnum @doc(description: "Sort by Resource Type.")
+    title: SortEnum @doc(description: "Sort by Banner Title.")
+    sort_order: SortEnum @doc(description: "Sort by Banner Position.")
 }
+
 type BannerSliderInfo {
-    entity_id: Int @doc(description: "The unique ID Entity Id.")
-    slider_id: Int @doc(description: "Slider Id.")
-    title: String @doc(description: "Banner Name.")
-    resource_type: String @doc(description: "Resource Type(local_image,youtube_video,external_image,content).")
-    resource_path: String @doc(description: "Resource Path based on Resource Type.")
-    alt_text: String @doc(description: "Alt Text for Seo.")
-    link_type: String @doc(description: "Brand Name")
-    link_type_resource: String @doc(description: "Brand Name")
-    sku: String @doc(description: "if type is Product then you will get the sku")
-    status: String @doc(description: "Banner Status.")
-    sort_order: Int @doc(description: "Sort Order of banner.")
-    start_date: String @doc(description: "Start Date of banner.")
-    end_date: String @doc(description: "End date of banner.")
-    created_at: String @doc(description: "Banner created date.")
-    updated_at: String @doc(description: "Banner updated date.")
+    entity_id: Int @doc(description: "The unique Banner Entity ID.")
+    slider_id: Int @doc(description: "Associated Slider ID.")
+    title: String @doc(description: "Banner Title.")
+    resource_type: String @doc(description: "Resource Type (local_image, youtube_video, external_image, custom_html).")
+    resource_path: String @doc(description: "Resource Path or URL based on Resource Type.")
+    alt_text: String @doc(description: "Alternative text for SEO and accessibility.")
+    link_type: String @doc(description: "Banner Link Type (e.g. product, category, custom_url).")
+    link_type_resource: String @doc(description: "Target resource ID or URL.")
+    sku: String @doc(description: "Product SKU if link_type is product.")
+    status: String @doc(description: "Banner Status (1 for enabled, 0 for disabled).")
+    sort_order: Int @doc(description: "Sort Order position of the banner.")
+    start_date: String @doc(description: "Start Date from which the banner is active.")
+    end_date: String @doc(description: "End Date until which the banner is active.")
+    created_at: String @doc(description: "Banner creation timestamp.")
+    updated_at: String @doc(description: "Banner last updated timestamp.")
 }
+
 type BannerSliderOutput {
-    total_count:  Int @doc(description: "Total Number of record")
-    items: [BannerSliderInfo] @doc(description: "The number of records returned.")
+    total_count: Int @doc(description: "Total number of records matching filter criteria.")
+    items: [BannerSliderInfo] @doc(description: "List of banner objects returned.")
 }
 
 type StoreConfig {
-    banner_slider_module_status : Int @doc(description: "Module Enable. 0 (No) or 1 (Yes).")
+    banner_slider_module_status: Int @doc(description: "Module Enable status. 0 (No) or 1 (Yes).")
 }

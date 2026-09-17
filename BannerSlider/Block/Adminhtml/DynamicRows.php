@@ -1,4 +1,15 @@
 <?php
+/**
+ * MageMasani BannerSlider Module
+ *
+ * @category  MageMasani
+ * @package   MageMasani_BannerSlider
+ * @author    MageMasani <support@magemasani.com>
+ * @copyright Copyright (c) MageMasani (https://www.magemasani.com/)
+ * @license   GPL-3.0-or-later
+ */
+
+declare(strict_types=1);
 
 namespace MageMasani\BannerSlider\Block\Adminhtml;
 
@@ -26,7 +37,7 @@ class DynamicRows extends Widget
      */
     public function prepareElementHtml(AbstractElement $element): AbstractElement
     {
-        $uniqId = $this->mathRandom->getUniqueHash($element->getId());
+        $uniqId = $this->_mathRandom->getUniqueHash($element->getId());
 
         $dynamicRows = $this->getLayout()->createBlock(
             $this->_blockClassName

@@ -10,4 +10,9 @@
             </argument>
         </arguments>
     </type>
+    <type name="MageMasani\BannerSliderGraphQl\Model\Resolver\BannerSlider">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">MageMasani\BannerSlider\BannerImageUploader</argument>
+        </arguments>
+    </type>
 </config>

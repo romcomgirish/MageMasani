@@ -1,7 +1,19 @@
 <?php
+/**
+ * MageMasani BannerSlider Module
+ *
+ * @category  MageMasani
+ * @package   MageMasani_BannerSlider
+ * @author    MageMasani <support@magemasani.com>
+ * @copyright Copyright (c) MageMasani (https://www.magemasani.com/)
+ * @license   GPL-3.0-or-later
+ */
+
+declare(strict_types=1);
 
 namespace MageMasani\BannerSlider\Model;
 
+use Exception;
 use MageMasani\BannerSlider\Api\BannerRepositoryInterface;
 use MageMasani\BannerSlider\Api\Data;
 use MageMasani\BannerSlider\Model\ResourceModel\Banner as ResourceBanner;
@@ -16,7 +28,7 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Reflection\DataObjectProcessor;
 
 /**
- * Banner BannerRepository Class
+ * Banner Repository Class
  */
 class BannerRepository implements BannerRepositoryInterface
 {
@@ -36,9 +48,9 @@ class BannerRepository implements BannerRepositoryInterface
     protected BannerCollectionFactory $bannerCollectionFactory;
 
     /**
-     * @var Data\SliderSearchResultInterfaceFactory
+     * @var Data\BannerSearchResultInterfaceFactory
      */
-    protected Data\SliderSearchResultInterfaceFactory $searchResultsFactory;
+    protected Data\BannerSearchResultInterfaceFactory $searchResultsFactory;
 
     /**
      * @var DataObjectHelper
@@ -64,17 +76,17 @@ class BannerRepository implements BannerRepositoryInterface
      * @param ResourceBanner $resource
      * @param BannerFactory $bannerFactory
      * @param BannerCollectionFactory $bannerCollectionFactory
-     * @param Data\SliderSearchResultInterfaceFactory $searchResultsFactory
+     * @param Data\BannerSearchResultInterfaceFactory $searchResultsFactory
      * @param DataObjectHelper $dataObjectHelper
      * @param DataObjectProcessor $dataObjectProcessor
      * @param JoinProcessorInterface $extensionAttributesJoinProcessor
      * @param CollectionProcessorInterface $collectionProcessor
      */
     public function __construct(
-        ResourceBanner                           $resource,
+        ResourceBanner                          $resource,
         BannerFactory                           $bannerFactory,
         BannerCollectionFactory                 $bannerCollectionFactory,
-        Data\SliderSearchResultInterfaceFactory $searchResultsFactory,
+        Data\BannerSearchResultInterfaceFactory $searchResultsFactory,
         DataObjectHelper                        $dataObjectHelper,
         DataObjectProcessor                     $dataObjectProcessor,
         JoinProcessorInterface                  $extensionAttributesJoinProcessor,
@@ -97,7 +109,7 @@ class BannerRepository implements BannerRepositoryInterface
     {
         try {
             $this->resource->save($banner);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             throw new CouldNotSaveException(__($exception->getMessage()));
         }
         return $banner;
@@ -133,7 +145,7 @@ class BannerRepository implements BannerRepositoryInterface
     {
         try {
             $this->resource->delete($banner);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             throw new CouldNotDeleteException(__($exception->getMessage()));
         }
         return true;
@@ -142,13 +154,13 @@ class BannerRepository implements BannerRepositoryInterface
     /**
      * @inheritdoc
      */
-    public function getById($Id)
+    public function getById($id)
     {
-        $slider = $this->bannerFactory->create();
-        $this->resource->load($slider, $Id);
-        if (!$slider->getId()) {
-            throw new NoSuchEntityException(__('The Slider with the "%1" ID doesn\'t exist.', $Id));
+        $banner = $this->bannerFactory->create();
+        $this->resource->load($banner, $id);
+        if (!$banner->getId()) {
+            throw new NoSuchEntityException(__('The Banner with the "%1" ID doesn\'t exist.', $id));
         }
-        return $slider;
+        return $banner;
     }
 }

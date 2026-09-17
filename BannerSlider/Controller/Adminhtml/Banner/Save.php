@@ -1,4 +1,15 @@
 <?php
+/**
+ * MageMasani BannerSlider Module
+ *
+ * @category  MageMasani
+ * @package   MageMasani_BannerSlider
+ * @author    MageMasani <support@magemasani.com>
+ * @copyright Copyright (c) MageMasani (https://www.magemasani.com/)
+ * @license   GPL-3.0-or-later
+ */
+
+declare(strict_types=1);
 
 namespace MageMasani\BannerSlider\Controller\Adminhtml\Banner;
 
@@ -9,8 +20,6 @@ use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Cms\Helper\Wysiwyg\Images as WysiwygImageHelper;
 use Magento\Framework\App\Action\HttpPostActionInterface;
-use Magento\Framework\App\Filesystem\DirectoryList;
-use Magento\Framework\App\ObjectManager;
 use Magento\Framework\App\Request\DataPersistorInterface;
 use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\DataObject;
@@ -187,9 +196,6 @@ class Save extends Action implements HttpPostActionInterface
                 if (isset($localImage[0]['is_saved'])) {
                     $thumbnail = $localImage[0]['name'];
                 } else {
-                    $this->imageUploader = ObjectManager::getInstance()->get(
-                        \MageMasani\BannerSlider\BannerImageUploader::class
-                    );
                     $thumbnail = $this->imageUploader->moveFileFromTmp($localImage[0]['name']);
                 }
             }

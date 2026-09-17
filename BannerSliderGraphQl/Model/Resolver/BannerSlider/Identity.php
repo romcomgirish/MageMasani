@@ -1,4 +1,14 @@
 <?php
+/**
+ * MageMasani BannerSliderGraphQl Identity Resolver
+ *
+ * @category  MageMasani
+ * @package   MageMasani_BannerSliderGraphQl
+ * @author    MageMasani <support@magemasani.com>
+ * @copyright Copyright (c) MageMasani (https://www.magemasani.com/)
+ * @license   GPL-3.0-or-later
+ */
+
 declare(strict_types=1);
 
 namespace MageMasani\BannerSliderGraphQl\Model\Resolver\BannerSlider;
@@ -6,7 +16,7 @@ namespace MageMasani\BannerSliderGraphQl\Model\Resolver\BannerSlider;
 use Magento\Framework\GraphQl\Query\Resolver\IdentityInterface;
 
 /**
- * Identity for resolved Banner Slider query
+ * Identity resolver for cached Banner Slider GraphQL queries
  */
 class Identity implements IdentityInterface
 {

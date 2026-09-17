@@ -1,16 +1,24 @@
 <?php
+/**
+ * MageMasani BannerSliderGraphQl FilterArgument
+ *
+ * @category  MageMasani
+ * @package   MageMasani_BannerSliderGraphQl
+ * @author    MageMasani <support@magemasani.com>
+ * @copyright Copyright (c) MageMasani (https://www.magemasani.com/)
+ * @license   GPL-3.0-or-later
+ */
 
 declare(strict_types=1);
 
 namespace MageMasani\BannerSliderGraphQl\Model\Resolver\BannerSliderFilter;
 
 use LogicException;
-use Magento\Framework\GraphQl\Config\Element\Type;
 use Magento\Framework\GraphQl\ConfigInterface;
 use Magento\Framework\GraphQl\Query\Resolver\Argument\FieldEntityAttributesInterface;
 
 /**
- * @inheritdoc
+ * Filter argument provider for BannerSlider GraphQL queries
  */
 class FilterArgument implements FieldEntityAttributesInterface
 {
@@ -45,22 +53,22 @@ class FilterArgument implements FieldEntityAttributesInterface
     }
 
     /**
-     * @inheritdoc
+     * Gather attributes for BannerSlider filtering
      *
-     * Gather attributes for Category filtering
-     * Example format ['attributeNameInGraphQl' => ['type' => 'String'. 'fieldName' => 'attributeNameInSearchCriteria']]
+     * Example format: ['attributeNameInGraphQl' => ['type' => 'String', 'fieldName' => 'attributeNameInSearchCriteria']]
      *
      * @return array
+     * @throws LogicException
      */
     public function getEntityAttributes(): array
     {
-        $FilterType = $this->config->getConfigElement('BannerSliderInfo');
+        $filterType = $this->config->getConfigElement('BannerSliderInfo');
 
-        if (!$FilterType) {
-            throw new LogicException((string) __("BannerSlider type not defined in schema."));
+        if (!$filterType) {
+            throw new LogicException((string) __('BannerSlider type not defined in schema.'));
         }
         $fields = [];
-        foreach ($FilterType->getFields() as $field) {
+        foreach ($filterType->getFields() as $field) {
             $fields[$field->getName()] = [
                 'type' => 'String',
                 'fieldName' => $this->fieldMapping[$field->getName()] ?? $field->getName(),

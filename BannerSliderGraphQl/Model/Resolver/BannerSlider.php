@@ -1,34 +1,43 @@
 <?php
+/**
+ * MageMasani BannerSliderGraphQl BannerSlider Resolver
+ *
+ * @category  MageMasani
+ * @package   MageMasani_BannerSliderGraphQl
+ * @author    MageMasani <support@magemasani.com>
+ * @copyright Copyright (c) MageMasani (https://www.magemasani.com/)
+ * @license   GPL-3.0-or-later
+ */
+
+declare(strict_types=1);
 
 namespace MageMasani\BannerSliderGraphQl\Model\Resolver;
 
 use MageMasani\BannerSlider\Api\BannerRepositoryInterface;
-use MageMasani\BannerSlider\BannerImageUploader;
+use MageMasani\BannerSlider\Api\Data\BannerInterface;
+use MageMasani\BannerSlider\Model\ConfigInterface;
 use MageMasani\BannerSlider\Model\ImageUploader;
+use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory as ProductCollectionFactory;
+use Magento\Framework\Api\SortOrderBuilder;
 use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Framework\App\ObjectManager;
+use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Exception\GraphQlInputException;
 use Magento\Framework\GraphQl\Exception\GraphQlNoSuchEntityException;
+use Magento\Framework\GraphQl\Query\Resolver\Argument\SearchCriteria\ArgumentApplier\Filter;
+use Magento\Framework\GraphQl\Query\Resolver\Argument\SearchCriteria\Builder as SearchCriteriaBuilder;
+use Magento\Framework\GraphQl\Query\Resolver\ContextInterface;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
-use Magento\Framework\GraphQl\Query\Resolver\Argument\SearchCriteria\Builder as SearchCriteriaBuilder;
-use Magento\Framework\Api\SortOrderBuilder;
 use Magento\Framework\UrlInterface;
 use Magento\Framework\Webapi\ServiceOutputProcessor;
-use Magento\Framework\GraphQl\Query\Resolver\Argument\SearchCriteria\ArgumentApplier\Filter;
 use Magento\Store\Model\ScopeInterface;
-use MageMasani\BannerSlider\Model\ConfigInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Widget\Model\Template\FilterEmulate;
-use MageMasani\BannerSlider\Api\Data\BannerInterface;
-use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory as ProductCollectionFactory;
-use Magento\Framework\App\ResourceConnection;
 
 /**
- * Resolver fetches the data and formats it according to the GraphQL schema.
- *
+ * Resolver fetches the banner slider data and formats it according to the GraphQL schema.
  */
 class BannerSlider implements ResolverInterface
 {
@@ -68,7 +77,7 @@ class BannerSlider implements ResolverInterface
     private FilterEmulate $filterEmulate;
 
     /**
-     * @var ImageUploader|BannerImageUploader|mixed
+     * @var ImageUploader
      */
     private ImageUploader $imageUploader;
 
@@ -96,8 +105,8 @@ class BannerSlider implements ResolverInterface
      * @param StoreManagerInterface $storeManager
      * @param FilterEmulate $filterEmulate
      * @param ProductCollectionFactory $productCollectionFactory
-     * @param ImageUploader|null $imageUploader
-     * @param ResourceConnection|null $resourceConnection
+     * @param ImageUploader $imageUploader
+     * @param ResourceConnection $resourceConnection
      */
     public function __construct(
         SearchCriteriaBuilder $searchCriteriaBuilder,
@@ -108,8 +117,8 @@ class BannerSlider implements ResolverInterface
         StoreManagerInterface $storeManager,
         FilterEmulate $filterEmulate,
         ProductCollectionFactory $productCollectionFactory,
-        ?ImageUploader $imageUploader = null,
-        ?ResourceConnection $resourceConnection = null
+        ImageUploader $imageUploader,
+        ResourceConnection $resourceConnection
     ) {
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
         $this->bannerRepositoryRepository = $bannerRepositoryRepository;
@@ -119,12 +128,21 @@ class BannerSlider implements ResolverInterface
         $this->storeManager = $storeManager;
         $this->filterEmulate = $filterEmulate;
         $this->productCollectionFactory = $productCollectionFactory;
-        $this->imageUploader = $imageUploader ?: ObjectManager::getInstance()->get(BannerImageUploader::class);
-        $this->resourceConnection = $resourceConnection ?: ObjectManager::getInstance()->get(ResourceConnection::class);
+        $this->imageUploader = $imageUploader;
+        $this->resourceConnection = $resourceConnection;
     }
 
     /**
-     * @inheritdoc
+     * Fetches the banner slider data and formats it for GraphQL output.
+     *
+     * @param Field $field
+     * @param ContextInterface $context
+     * @param ResolveInfo $info
+     * @param array|null $value
+     * @param array|null $args
+     * @return array
+     * @throws GraphQlInputException
+     * @throws GraphQlNoSuchEntityException
      */
     public function resolve(
         Field $field,
@@ -132,17 +150,18 @@ class BannerSlider implements ResolverInterface
         ResolveInfo $info,
         ?array $value = null,
         ?array $args = null
-    ) {
+    ): array {
         try {
             if (!$this->scopeConfig->isSetFlag(ConfigInterface::MODULE_ENABLE, ScopeInterface::SCOPE_STORE)) {
                 return [];
             }
+            $args = $args ?? [];
             $this->validateArgs($args);
             $args[Filter::ARGUMENT_NAME][BannerInterface::STATUS] = ['eq' => 1];
             $searchCriteria = $this->searchCriteriaBuilder->build($field->getName(), $args);
-            $searchCriteria->setCurrentPage($args['currentPage']);
-            $searchCriteria->setPageSize($args['pageSize']);
-            if (isset($args['sort'])) {
+            $searchCriteria->setCurrentPage($args['currentPage'] ?? 1);
+            $searchCriteria->setPageSize($args['pageSize'] ?? 5);
+            if (isset($args['sort']) && is_array($args['sort'])) {
                 $sort = $args['sort'];
                 foreach ($sort as $key => $val) {
                     $sortOrder = $this->sortOrderBuilder->setField($key)->setDirection($val)->create();
@@ -191,8 +210,8 @@ class BannerSlider implements ResolverInterface
             }
 
             $postData = [
-                "items" => [],
-                "total_count" => 0
+                'items' => [],
+                'total_count' => 0
             ];
             foreach ($searchResult->getItems() as $banner) {
                 $customerData = [
@@ -216,11 +235,11 @@ class BannerSlider implements ResolverInterface
                     $customerData['sku'] = $resolvedSkus[$resource] ?? null;
                 }
                 if ($banner->getResourceType() === 'local_image') {
-                    $customerData['resource_path'] = $this->setLocalImage($banner->getResourcePath());
+                    $customerData['resource_path'] = $this->setLocalImage((string) $banner->getResourcePath());
                 } elseif ($banner->getResourceType() === 'custom_html') {
-                    $customerData['resource_path'] = $this->filterEmulate->filter($banner->getResourcePath());
+                    $customerData['resource_path'] = $this->filterEmulate->filter((string) $banner->getResourcePath());
                 }
-                $postData["items"][] = $customerData;
+                $postData['items'][] = $customerData;
             }
             $postData['total_count'] = $searchResult->getTotalCount();
             return $postData;
@@ -233,6 +252,7 @@ class BannerSlider implements ResolverInterface
      * Validate Arguments
      *
      * @param array $args
+     * @return void
      * @throws GraphQlInputException
      */
     private function validateArgs(array $args): void
@@ -247,7 +267,7 @@ class BannerSlider implements ResolverInterface
     }
 
     /**
-     * Set local image.
+     * Set local image URL.
      *
      * @param string $resourcePath
      * @return string
@@ -255,14 +275,14 @@ class BannerSlider implements ResolverInterface
      */
     public function setLocalImage(string $resourcePath): string
     {
-        if ($resourcePath) {
+        if ($resourcePath !== '') {
             if ($this->mediaBaseUrl === null) {
                 $store = $this->storeManager->getStore();
                 $this->mediaBaseUrl = $store->getBaseUrl(UrlInterface::URL_TYPE_MEDIA) . $this->imageUploader->getBasePath() . '/';
             }
             return $this->mediaBaseUrl . $resourcePath;
-        } else {
-            return (string) __('No image found');
         }
+
+        return (string) __('No image found');
     }
 }

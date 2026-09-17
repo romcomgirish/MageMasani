@@ -1,11 +1,21 @@
 <?php
+/**
+ * MageMasani BannerSlider Module
+ *
+ * @category  MageMasani
+ * @package   MageMasani_BannerSlider
+ * @author    MageMasani <support@magemasani.com>
+ * @copyright Copyright (c) MageMasani (https://www.magemasani.com/)
+ * @license   GPL-3.0-or-later
+ */
+
+declare(strict_types=1);
 
 namespace MageMasani\BannerSlider\Model\ResourceModel\Slider\Grid;
 
 use Magento\Framework\Api\Search\SearchResultInterface;
 use Magento\Framework\Api\Search\AggregationInterface;
 use MageMasani\BannerSlider\Model\ResourceModel\Slider\Collection as SliderCollection;
-use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Data\Collection\Db\FetchStrategyInterface;
 use Magento\Framework\Data\Collection\EntityFactoryInterface;
 use Magento\Framework\DB\Adapter\AdapterInterface;
@@ -27,7 +37,7 @@ class Collection extends SliderCollection implements SearchResultInterface
     /**
      * @var TimezoneInterface
      */
-    private mixed $timeZone;
+    private TimezoneInterface $timeZone;
 
     /**
      * @var string
@@ -48,10 +58,10 @@ class Collection extends SliderCollection implements SearchResultInterface
      * @param string $eventPrefix
      * @param string $eventObject
      * @param string $resourceModel
+     * @param TimezoneInterface $timeZone
      * @param string $model
      * @param AdapterInterface|null $connection
      * @param AbstractDb|null $resource
-     * @param TimezoneInterface|null $timeZone
      */
     public function __construct(
         EntityFactoryInterface $entityFactory,
@@ -62,10 +72,10 @@ class Collection extends SliderCollection implements SearchResultInterface
         string $eventPrefix,
         string $eventObject,
         string $resourceModel,
+        TimezoneInterface $timeZone,
         string $model = \Magento\Framework\View\Element\UiComponent\DataProvider\Document::class,
         ?AdapterInterface $connection = null,
-        ?AbstractDb $resource = null,
-        ?TimezoneInterface $timeZone = null
+        ?AbstractDb $resource = null
     ) {
         $this->resourceModel = $resourceModel;
         $this->model = $model;
@@ -74,7 +84,7 @@ class Collection extends SliderCollection implements SearchResultInterface
         $this->_eventObject = $eventObject;
         $this->_init($this->model, $this->resourceModel);
         $this->setMainTable($mainTable);
-        $this->timeZone = $timeZone ?: ObjectManager::getInstance()->get(TimezoneInterface::class);
+        $this->timeZone = $timeZone;
     }
 
     /**

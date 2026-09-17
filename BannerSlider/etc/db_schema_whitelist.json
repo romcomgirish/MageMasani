@@ -1,0 +1,59 @@
+{
+    "magemasani_bannerslider_slider": {
+        "column": {
+            "entity_id": true,
+            "title": true,
+            "is_show_title": true,
+            "status": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "index": {
+            "MAGEMASANI_BANNER_TITLE": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "magemasani_bannerslider_banner": {
+        "column": {
+            "entity_id": true,
+            "slider_id": true,
+            "title": true,
+            "resource_type": true,
+            "resource_path": true,
+            "alt_text": true,
+            "link_type": true,
+            "link_type_resource": true,
+            "status": true,
+            "sort_order": true,
+            "start_date": true,
+            "end_date": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "index": {
+            "MAGEMASANI_SLIDER_TITLE_ALT_TEXT": true,
+            "MAGEMASANI_BANNER_SLIDER_STATUS_SORT": true,
+            "MAGEMASANI_BANNER_STATUS_DATES": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "MAGEMASANI_BANNERSLIDER_BANNER_ID_MAGEMASANI_BANNERSLIDER_SLIDER_ID": true
+        }
+    },
+    "magemasani_bannerslider_customer_group": {
+        "column": {
+            "entity_id": true,
+            "customer_group_id": true
+        },
+        "index": {
+            "MAGEMASANI_BANNER_CUST_GROUP_CUSTOMER_GROUP_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "CSTR_MAGEMASANI_BANNERSLIDER_BANNER_CUSTOMER_GROUP_ENTITY_ID_TO_ENTITY_ID": true,
+            "CSTR_MAGEMASANI_BANNERSLIDER_BANNER_CUSTOMER_GROUP_CUSTOMER_GROUP_TO_CUSTOMER_GROUP_ID": true
+        }
+    }
+}
