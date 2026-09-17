@@ -8,8 +8,16 @@ use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\UrlInterface;
 
+/**
+ * Model Config
+ */
 class Config implements ConfigInterface
 {
+    /**
+     * Required keys in Firebase configuration object
+     *
+     * @var string[]
+     */
     private const FIREBASE_KEYS = [
         'apiKey',
         'authDomain',
@@ -19,11 +27,30 @@ class Config implements ConfigInterface
         'appId'
     ];
 
+    /**
+     * @var ScopeConfigInterface
+     */
     private ScopeConfigInterface $scopeConfig;
+    /**
+     * @var StoreManagerInterface
+     */
     private StoreManagerInterface $storeManager;
+    /**
+     * @var array
+     */
     private array $firebaseConfigCache = [];
+    /**
+     * @var array
+     */
     private array $serviceAccountCache = [];
 
+    /**
+     * Initialize dependencies
+     *
+     * @param ScopeConfigInterface $scopeConfig
+     * @param StoreManagerInterface $storeManager
+     * @return void
+     */
     public function __construct(
         ScopeConfigInterface $scopeConfig,
         StoreManagerInterface $storeManager
@@ -32,6 +59,12 @@ class Config implements ConfigInterface
         $this->storeManager = $storeManager;
     }
 
+    /**
+     * Check if enabled
+     *
+     * @param $storeId 
+     * @return bool
+     */
     public function isEnabled($storeId = null): bool
     {
         return $this->scopeConfig->isSetFlag(
@@ -41,6 +74,12 @@ class Config implements ConfigInterface
         );
     }
 
+    /**
+     * Check if asyncenabled
+     *
+     * @param $storeId 
+     * @return bool
+     */
     public function isAsyncEnabled($storeId = null): bool
     {
         return $this->scopeConfig->isSetFlag(
@@ -50,6 +89,12 @@ class Config implements ConfigInterface
         );
     }
 
+    /**
+     * Get alloweddevicetypes
+     *
+     * @param $storeId 
+     * @return string
+     */
     public function getAllowedDeviceTypes($storeId = null): string
     {
         return (string) $this->scopeConfig->getValue(
@@ -59,6 +104,12 @@ class Config implements ConfigInterface
         );
     }
 
+    /**
+     * Get firebaseconfig
+     *
+     * @param $storeId 
+     * @return array
+     */
     public function getFirebaseConfig($storeId = null): array
     {
         $cacheKey = (string) $storeId;
@@ -92,6 +143,12 @@ class Config implements ConfigInterface
         return $this->firebaseConfigCache[$cacheKey] = $config;
     }
 
+    /**
+     * Tolerantjsondecode
+     *
+     * @param string $raw
+     * @return ?array
+     */
     private function tolerantJsonDecode(string $raw): ?array
     {
         $decoded = json_decode($raw, true);
@@ -116,6 +173,12 @@ class Config implements ConfigInterface
         return is_array($decoded) ? $decoded : null;
     }
 
+    /**
+     * Get vapidkey
+     *
+     * @param $storeId 
+     * @return string
+     */
     public function getVapidKey($storeId = null): string
     {
         return (string) $this->scopeConfig->getValue(
@@ -125,6 +188,12 @@ class Config implements ConfigInterface
         );
     }
 
+    /**
+     * Get defaulticonurl
+     *
+     * @param $storeId 
+     * @return string
+     */
     public function getDefaultIconUrl($storeId = null): string
     {
         $icon = (string) $this->scopeConfig->getValue(
@@ -140,6 +209,12 @@ class Config implements ConfigInterface
         return rtrim($mediaUrl, '/') . '/webpush/' . ltrim($icon, '/');
     }
 
+    /**
+     * Get serviceaccount
+     *
+     * @param $storeId 
+     * @return array
+     */
     public function getServiceAccount($storeId = null): array
     {
         $cacheKey = (string) $storeId;
@@ -169,5 +244,37 @@ class Config implements ConfigInterface
         }
 
         return $this->serviceAccountCache[$cacheKey] = $data;
+    }
+
+    /**
+     * Get abandoned cart inactivity delay in minutes
+     *
+     * @param int|string|null $storeId
+     * @return int
+     */
+    public function getAbandonedCartDelayMinutes($storeId = null): int
+    {
+        $delay = (int) $this->scopeConfig->getValue(
+            self::XML_PATH_ABANDONED_CART_DELAY,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+        return $delay > 0 ? $delay : 60;
+    }
+
+    /**
+     * Get abandoned cart max age in days
+     *
+     * @param int|string|null $storeId
+     * @return int
+     */
+    public function getAbandonedCartMaxAgeDays($storeId = null): int
+    {
+        $days = (int) $this->scopeConfig->getValue(
+            self::XML_PATH_ABANDONED_CART_MAX_AGE,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+        return $days > 0 ? $days : 7;
     }
 }

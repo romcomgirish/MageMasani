@@ -14,6 +14,9 @@ use Magento\MediaStorage\Model\File\UploaderFactory;
 use Magento\Store\Model\StoreManagerInterface;
 use Psr\Log\LoggerInterface;
 
+/**
+ * Model ImageUploader
+ */
 class ImageUploader
 {
     /**

@@ -5,17 +5,58 @@ namespace MageMasani\PushNotification\Model;
 
 use MageMasani\PushNotification\Model\ResourceModel\Token as TokenResource;
 
+/**
+ * Model TokenRegistrar
+ */
 class TokenRegistrar
 {
+    /**
+     * Max token length constant
+     *
+     * @var int
+     */
     public const MAX_TOKEN_LENGTH = 1024;
+    /**
+     * Max user agent length constant
+     *
+     * @var int
+     */
     public const MAX_USER_AGENT_LENGTH = 512;
+    /**
+     * Token pattern constant
+     *
+     * @var string
+     */
     public const TOKEN_PATTERN = '/^[A-Za-z0-9_\-:.]+$/';
+    /**
+     * Allowed device types constant
+     *
+     * @var array
+     */
     public const ALLOWED_DEVICE_TYPES = ['web', 'android', 'ios'];
+    /**
+     * Default device type constant
+     *
+     * @var string
+     */
     public const DEFAULT_DEVICE_TYPE = 'web';
 
+    /**
+     * @var TokenResource
+     */
     private TokenResource $tokenResource;
+    /**
+     * @var ConfigInterface
+     */
     private ConfigInterface $config;
 
+    /**
+     * Initialize dependencies
+     *
+     * @param TokenResource $tokenResource
+     * @param ConfigInterface $config
+     * @return void
+     */
     public function __construct(
         TokenResource $tokenResource,
         ConfigInterface $config

@@ -14,6 +14,9 @@ use Magento\Framework\Filesystem\Io\File;
 use MageMasani\PushNotification\Model\ImageUploader;
 use Magento\Framework\UrlInterface;
 
+/**
+ * Model DataProvider
+ */
 class DataProvider extends AbstractDataProvider
 {
     /**

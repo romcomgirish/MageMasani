@@ -7,6 +7,9 @@ use MageMasani\PushNotification\Model\Sender;
 use Magento\Framework\Serialize\Serializer\Json;
 use Psr\Log\LoggerInterface;
 
+/**
+ * Model Consumer
+ */
 class Consumer
 {
     /**

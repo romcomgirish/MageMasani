@@ -5,6 +5,9 @@ namespace MageMasani\PushNotification\Model\Config\Source;
 
 use Magento\Framework\Data\OptionSourceInterface;
 
+/**
+ * Model DeviceTypes
+ */
 class DeviceTypes implements OptionSourceInterface
 {
     /**

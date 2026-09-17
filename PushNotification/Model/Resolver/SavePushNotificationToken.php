@@ -12,12 +12,32 @@ use Magento\GraphQl\Model\Query\ContextInterface;
 use MageMasani\PushNotification\Model\TokenRegistrar;
 use Psr\Log\LoggerInterface;
 
+/**
+ * Model SavePushNotificationToken
+ */
 class SavePushNotificationToken implements ResolverInterface
 {
+    /**
+     * @var TokenRegistrar
+     */
     private TokenRegistrar $tokenRegistrar;
+    /**
+     * @var RequestInterface
+     */
     private RequestInterface $request;
+    /**
+     * @var LoggerInterface
+     */
     private LoggerInterface $logger;
 
+    /**
+     * Initialize dependencies
+     *
+     * @param TokenRegistrar $tokenRegistrar
+     * @param RequestInterface $request
+     * @param LoggerInterface $logger
+     * @return void
+     */
     public function __construct(
         TokenRegistrar $tokenRegistrar,
         RequestInterface $request,
@@ -28,6 +48,15 @@ class SavePushNotificationToken implements ResolverInterface
         $this->logger = $logger;
     }
 
+    /**
+     * Resolve
+     *
+     * @param Field $field
+     * @param mixed $context
+     * @param ResolveInfo $info
+     * @param array $value
+     * @param array $args
+     */
     public function resolve(
         Field $field,
         $context,

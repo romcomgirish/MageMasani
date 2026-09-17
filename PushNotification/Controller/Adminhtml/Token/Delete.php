@@ -10,6 +10,9 @@ use Magento\Framework\Controller\ResultFactory;
 use MageMasani\PushNotification\Model\ResourceModel\Token as TokenResource;
 use MageMasani\PushNotification\Model\TokenFactory;
 
+/**
+ * Controller Delete
+ */
 class Delete extends Action implements HttpPostActionInterface
 {
     /**

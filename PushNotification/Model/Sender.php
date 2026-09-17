@@ -7,29 +7,107 @@ use Magento\Framework\HTTP\Client\CurlFactory;
 use MageMasani\PushNotification\Model\ConfigInterface;
 use MageMasani\PushNotification\Model\ResourceModel\Token as TokenResource;
 
+/**
+ * Model Sender
+ */
 class Sender
 {
+    /**
+     * Oauth2 token uri constant
+     *
+     * @var string
+     */
     private const OAUTH2_TOKEN_URI = 'https://oauth2.googleapis.com/token';
+    /**
+     * Fcm scope constant
+     *
+     * @var string
+     */
     private const FCM_SCOPE = 'https://www.googleapis.com/auth/firebase.messaging';
+    /**
+     * Fcm v1 endpoint constant
+     *
+     * @var string
+     */
     private const FCM_V1_ENDPOINT = 'https://fcm.googleapis.com/v1/projects/%s/messages:send';
 
+    /**
+     * Http timeout sec constant
+     *
+     * @var int
+     */
     private const HTTP_TIMEOUT_SEC = 15;
+    /**
+     * Http connect timeout sec constant
+     *
+     * @var int
+     */
     private const HTTP_CONNECT_TIMEOUT_SEC = 5;
+    /**
+     * Access token skew sec constant
+     *
+     * @var int
+     */
     private const ACCESS_TOKEN_SKEW_SEC = 60;
 
+    /**
+     * Max title length constant
+     *
+     * @var int
+     */
     private const MAX_TITLE_LENGTH = 240;
+    /**
+     * Max body length constant
+     *
+     * @var int
+     */
     private const MAX_BODY_LENGTH = 4000;
 
+    /**
+     * @var CurlFactory
+     */
     private CurlFactory $curlFactory;
+    /**
+     * @var ConfigInterface
+     */
     private ConfigInterface $config;
+    /**
+     * @var TokenResource
+     */
     private TokenResource $tokenResource;
+    /**
+     * @var HistoryLogger
+     */
     private HistoryLogger $historyLogger;
+    /**
+     * @var \Magento\Framework\MessageQueue\PublisherInterface
+     */
     private \Magento\Framework\MessageQueue\PublisherInterface $publisher;
+    /**
+     * @var \Magento\Framework\Serialize\Serializer\Json
+     */
     private \Magento\Framework\Serialize\Serializer\Json $serializer;
 
+    /**
+     * @var string
+     */
     private ?string $cachedAccessToken = null;
+    /**
+     * @var int
+     */
     private int $cachedAccessTokenExpiry = 0;
 
+    /**
+     * Initialize dependencies
+     *
+     * @param CurlFactory $curlFactory
+     * @param ConfigInterface $config
+     * @param TokenResource $tokenResource
+     * @param HistoryLogger $historyLogger
+     * @param \Magento\Framework\MessageQueue\PublisherInterface $publisher
+     * @param \Magento\Framework\Serialize\Serializer\Json $serializer
+     * @return void
+     */
     public function __construct(
         CurlFactory $curlFactory,
         ConfigInterface $config,
@@ -185,7 +263,7 @@ class Sender
             $success += $singleResult['success'];
             $failure += $singleResult['failure'];
             if (!empty($singleResult['errors'])) {
-                $errors = array_merge($errors, $singleResult['errors']);
+                array_push($errors, ...$singleResult['errors']);
             }
 
             // Determine customer ID for this token
@@ -377,6 +455,12 @@ class Sender
         }
     }
 
+    /**
+     * Get accesstoken
+     *
+     * @param array $serviceAccount
+     * @return string
+     */
     private function getAccessToken(array $serviceAccount): string
     {
         if (
@@ -444,6 +528,13 @@ class Sender
         }
     }
 
+    /**
+     * Signjwt
+     *
+     * @param array $claim
+     * @param string $privateKeyPem
+     * @return string
+     */
     private function signJwt(array $claim, string $privateKeyPem): string
     {
         $header = ['alg' => 'RS256', 'typ' => 'JWT'];
@@ -467,11 +558,23 @@ class Sender
         return implode('.', $segments);
     }
 
+    /**
+     * Base64urlencode
+     *
+     * @param string $data
+     * @return string
+     */
     private function base64UrlEncode(string $data): string
     {
         return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
     }
 
+    /**
+     * Check if unregistered
+     *
+     * @param string $responseBody
+     * @return bool
+     */
     private function isUnregistered(string $responseBody): bool
     {
         $decoded = json_decode($responseBody, true);
@@ -490,6 +593,12 @@ class Sender
         return false;
     }
 
+    /**
+     * Deactivatetoken
+     *
+     * @param string $token
+     * @return void
+     */
     private function deactivateToken(string $token): void
     {
         try {

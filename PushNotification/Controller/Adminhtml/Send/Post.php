@@ -14,21 +14,74 @@ use Magento\Store\Model\StoreManagerInterface;
 use MageMasani\PushNotification\Model\Sender;
 use Psr\Log\LoggerInterface;
 
+/**
+ * Controller Post
+ */
 class Post extends Action
 {
+    /**
+     * Admin resource constant
+     *
+     * @var string
+     */
     public const ADMIN_RESOURCE = 'MageMasani_PushNotification::send';
 
+    /**
+     * Max error body display constant
+     *
+     * @var int
+     */
     private const MAX_ERROR_BODY_DISPLAY = 500;
+    /**
+     * Max error messages shown constant
+     *
+     * @var int
+     */
     private const MAX_ERROR_MESSAGES_SHOWN = 5;
+    /**
+     * Allowed image extensions constant
+     *
+     * @var array
+     */
     private const ALLOWED_IMAGE_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
 
+    /**
+     * @var Sender
+     */
     private Sender $sender;
+    /**
+     * @var UploaderFactory
+     */
     private UploaderFactory $uploaderFactory;
+    /**
+     * @var Filesystem
+     */
     private Filesystem $filesystem;
+    /**
+     * @var StoreManagerInterface
+     */
     private StoreManagerInterface $storeManager;
+    /**
+     * @var Escaper
+     */
     private Escaper $escaper;
+    /**
+     * @var LoggerInterface
+     */
     private LoggerInterface $logger;
 
+    /**
+     * Initialize dependencies
+     *
+     * @param Context $context
+     * @param Sender $sender
+     * @param UploaderFactory $uploaderFactory
+     * @param Filesystem $filesystem
+     * @param StoreManagerInterface $storeManager
+     * @param Escaper $escaper
+     * @param LoggerInterface $logger
+     * @return void
+     */
     public function __construct(
         Context $context,
         Sender $sender,
@@ -47,6 +100,9 @@ class Post extends Action
         $this->logger = $logger;
     }
 
+    /**
+     * Execute action
+     */
     public function execute()
     {
         $title = trim((string) $this->getRequest()->getParam('title'));
@@ -114,13 +170,19 @@ class Post extends Action
         return $this->resultRedirectFactory->create()->setPath('magemasani_webpush/send/index');
     }
 
+    /**
+     * Handleimageupload
+     *
+     * @return string
+     */
     private function handleImageUpload(): string
     {
-        if (empty($_FILES['image']['name'])) {
+        $file = $this->getRequest()->getFiles('image');
+        if (empty($file['name'])) {
             return '';
         }
 
-        $errorCode = (int) ($_FILES['image']['error'] ?? UPLOAD_ERR_NO_FILE);
+        $errorCode = (int) ($file['error'] ?? UPLOAD_ERR_NO_FILE);
         if ($errorCode !== UPLOAD_ERR_OK) {
             throw new \RuntimeException('PHP upload error code ' . $errorCode
                 . ' (check php.ini upload_max_filesize / post_max_size).');

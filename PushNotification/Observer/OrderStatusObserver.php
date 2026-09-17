@@ -11,6 +11,9 @@ use MageMasani\PushNotification\Model\CampaignMatcher;
 use MageMasani\PushNotification\Model\Sender;
 use Psr\Log\LoggerInterface;
 
+/**
+ * Observer OrderStatusObserver
+ */
 class OrderStatusObserver implements ObserverInterface
 {
     /**
@@ -130,16 +133,16 @@ class OrderStatusObserver implements ObserverInterface
      */
     private function parsePlaceholders(string $text, Order $order): string
     {
-        $customerName = trim($order->getCustomerFirstname() . ' ' . $order->getCustomerLastname());
+        $customerName = trim((string) $order->getCustomerFirstname() . ' ' . (string) $order->getCustomerLastname());
         if ($customerName === '') {
-            $customerName = trim($order->getBillingAddress() ? $order->getBillingAddress()->getName() : '');
+            $customerName = trim($order->getBillingAddress() ? (string) $order->getBillingAddress()->getName() : '');
         }
 
         $replacements = [
             '{{customer_name}}' => $customerName,
-            '{{order_id}}' => $order->getEntityId(),
-            '{{order_increment_id}}' => $order->getIncrementId(),
-            '{{order_status}}' => $order->getStatusLabel() ?: $order->getStatus()
+            '{{order_id}}' => (string) $order->getEntityId(),
+            '{{order_increment_id}}' => (string) $order->getIncrementId(),
+            '{{order_status}}' => (string) ($order->getStatusLabel() ?: $order->getStatus())
         ];
 
         return str_replace(array_keys($replacements), array_values($replacements), $text);

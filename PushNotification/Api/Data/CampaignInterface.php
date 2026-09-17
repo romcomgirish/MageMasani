@@ -5,19 +5,84 @@ namespace MageMasani\PushNotification\Api\Data;
 
 use Magento\Framework\Api\ExtensibleDataInterface;
 
+/**
+ * Interface CampaignInterface
+ *
+ * @api
+ */
 interface CampaignInterface extends ExtensibleDataInterface
 {
+    /**
+     * Entity id constant
+     *
+     * @var string
+     */
     public const ENTITY_ID = 'entity_id';
+    /**
+     * Title constant
+     *
+     * @var string
+     */
     public const TITLE = 'title';
+    /**
+     * Body constant
+     *
+     * @var string
+     */
     public const BODY = 'body';
+    /**
+     * Click url constant
+     *
+     * @var string
+     */
     public const CLICK_URL = 'click_url';
+    /**
+     * Image url constant
+     *
+     * @var string
+     */
     public const IMAGE_URL = 'image_url';
+    /**
+     * Custom event constant
+     *
+     * @var string
+     */
     public const CUSTOM_EVENT = 'custom_event';
+    /**
+     * Notification type constant
+     *
+     * @var string
+     */
     public const NOTIFICATION_TYPE = 'notification_type';
+    /**
+     * Schedule to constant
+     *
+     * @var string
+     */
     public const SCHEDULE_TO = 'schedule_to';
+    /**
+     * Order status constant
+     *
+     * @var string
+     */
     public const ORDER_STATUS = 'order_status';
+    /**
+     * Status constant
+     *
+     * @var string
+     */
     public const STATUS = 'status';
+    /**
+     * Created at constant
+     *
+     * @var string
+     */
     public const CREATED_AT = 'created_at';
+    /**
+     * Updated at constant
+     *
+     * @var string
+     */
     public const UPDATED_AT = 'updated_at';
 
     /**

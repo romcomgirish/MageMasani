@@ -3,12 +3,49 @@ declare(strict_types=1);
 
 namespace MageMasani\PushNotification\Model;
 
+/**
+ * Interface ConfigInterface
+ *
+ * @api
+ */
 interface ConfigInterface
 {
+    /**
+     * Xml path enabled constant
+     *
+     * @var string
+     */
     public const XML_PATH_ENABLED = 'pushnotification/general/enabled';
+    /**
+     * Xml path async constant
+     *
+     * @var string
+     */
     public const XML_PATH_ASYNC = 'pushnotification/general/async_enabled';
+    /**
+     * Xml path allowed device types constant
+     *
+     * @var string
+     */
     public const XML_PATH_ALLOWED_DEVICE_TYPES = 'pushnotification/general/allowed_device_types';
+    /**
+     * Xml path firebase constant
+     *
+     * @var string
+     */
     public const XML_PATH_FIREBASE = 'pushnotification/firebase/';
+    /**
+     * Xml path abandoned cart delay constant
+     *
+     * @var string
+     */
+    public const XML_PATH_ABANDONED_CART_DELAY = 'pushnotification/abandoned_cart/delay_minutes';
+    /**
+     * Xml path abandoned cart max age constant
+     *
+     * @var string
+     */
+    public const XML_PATH_ABANDONED_CART_MAX_AGE = 'pushnotification/abandoned_cart/max_age_days';
 
     /**
      * Check if module is enabled
@@ -65,4 +102,20 @@ interface ConfigInterface
      * @return array
      */
     public function getServiceAccount($storeId = null): array;
+
+    /**
+     * Get abandoned cart inactivity delay in minutes
+     *
+     * @param int|string|null $storeId
+     * @return int
+     */
+    public function getAbandonedCartDelayMinutes($storeId = null): int;
+
+    /**
+     * Get abandoned cart max age in days
+     *
+     * @param int|string|null $storeId
+     * @return int
+     */
+    public function getAbandonedCartMaxAgeDays($storeId = null): int;
 }

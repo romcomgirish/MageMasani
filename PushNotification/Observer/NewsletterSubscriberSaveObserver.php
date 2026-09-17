@@ -11,6 +11,9 @@ use MageMasani\PushNotification\Model\CampaignMatcher;
 use MageMasani\PushNotification\Model\Sender;
 use Psr\Log\LoggerInterface;
 
+/**
+ * Observer NewsletterSubscriberSaveObserver
+ */
 class NewsletterSubscriberSaveObserver implements ObserverInterface
 {
     /**

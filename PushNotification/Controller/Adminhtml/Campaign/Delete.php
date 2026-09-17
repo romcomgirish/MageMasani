@@ -10,6 +10,9 @@ use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\NoSuchEntityException;
 
+/**
+ * Controller Delete
+ */
 class Delete extends Action implements HttpPostActionInterface
 {
     /**

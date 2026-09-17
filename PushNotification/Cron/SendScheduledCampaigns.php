@@ -10,6 +10,9 @@ use MageMasani\PushNotification\Model\ResourceModel\Campaign\CollectionFactory a
 use MageMasani\PushNotification\Model\Sender;
 use Psr\Log\LoggerInterface;
 
+/**
+ * Cron job SendScheduledCampaigns
+ */
 class SendScheduledCampaigns
 {
     /**

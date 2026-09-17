@@ -12,5 +12,10 @@
              method="execute">
             <schedule>5 0 * * *</schedule>
         </job>
+        <job name="magemasani_pushnotification_send_abandoned_cart"
+             instance="MageMasani\PushNotification\Cron\SendAbandonedCartCampaigns"
+             method="execute">
+            <schedule>*/15 * * * *</schedule>
+        </job>
     </group>
 </config>

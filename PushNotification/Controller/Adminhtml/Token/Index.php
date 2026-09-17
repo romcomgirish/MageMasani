@@ -9,6 +9,9 @@ use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Controller\ResultInterface;
 
+/**
+ * Controller Index
+ */
 class Index extends Action implements HttpGetActionInterface
 {
     /**

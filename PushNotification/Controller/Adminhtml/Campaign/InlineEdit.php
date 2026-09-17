@@ -9,6 +9,9 @@ use Magento\Backend\App\Action;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\Controller\ResultInterface;
 
+/**
+ * Controller InlineEdit
+ */
 class InlineEdit extends Action
 {
     /**

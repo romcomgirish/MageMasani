@@ -10,6 +10,9 @@ use Magento\Framework\Controller\ResultFactory;
 use Magento\Ui\Component\MassAction\Filter;
 use MageMasani\PushNotification\Model\ResourceModel\Token\CollectionFactory;
 
+/**
+ * Controller MassDelete
+ */
 class MassDelete extends Action implements HttpPostActionInterface
 {
     /**

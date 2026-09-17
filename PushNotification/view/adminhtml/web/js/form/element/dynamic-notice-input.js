@@ -37,7 +37,6 @@ define([
          */
         initObservable: function () {
             this.defaultNotice = this.notice;
-            console.log('this.notice',this.notice);
             this._super()
                 .observe([
                     'currentNotificationType',

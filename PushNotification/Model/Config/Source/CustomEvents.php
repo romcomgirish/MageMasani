@@ -7,6 +7,9 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Data\OptionSourceInterface;
 use Magento\Framework\Serialize\Serializer\Json;
 
+/**
+ * Model CustomEvents
+ */
 class CustomEvents implements OptionSourceInterface
 {
     /**

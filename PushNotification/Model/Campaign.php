@@ -14,14 +14,34 @@ use Magento\Framework\Model\ResourceModel\AbstractResource;
 use Magento\Framework\Registry;
 use Magento\Framework\DataObject\IdentityInterface;
 
+/**
+ * Model Campaign
+ */
 class Campaign extends AbstractExtensibleModel implements CampaignInterface, IdentityInterface
 {
+    /**
+     * Cache tag constant
+     *
+     * @var string
+     */
     public const CACHE_TAG = 'magemasani_pushnotification_campaign';
 
     protected $_eventPrefix = 'magemasani_pushnotification_campaign';
     protected $_eventObject = 'campaign';
     protected $_cacheTag = 'magemasani_pushnotification_campaign';
 
+    /**
+     * Initialize dependencies
+     *
+     * @param Context $context
+     * @param Registry $registry
+     * @param ExtensionAttributesFactory $extensionFactory
+     * @param AttributeValueFactory $customAttributeFactory
+     * @param AbstractResource $resource
+     * @param AbstractDb $resourceCollection
+     * @param array $data
+     * @return void
+     */
     public function __construct(
         Context $context,
         Registry $registry,

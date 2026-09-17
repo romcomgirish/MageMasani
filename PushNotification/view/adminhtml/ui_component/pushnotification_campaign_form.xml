@@ -87,6 +87,7 @@
                     <item name="notice" xsi:type="string" translate="true">Enter the title that will be displayed as the notification heading.</item>
                     <item name="noticeMap" xsi:type="array">
                         <item name="order_status" xsi:type="string" translate="true">Available variables: {{customer_name}}, {{order_id}}, {{order_increment_id}}, {{order_status}}</item>
+                        <item name="abandoned_cart" xsi:type="string" translate="true">Available variables: {{customer_name}}, {{items_count}}, {{grand_total}}, {{cart_url}}</item>
                     </item>
                     <item name="imports" xsi:type="array">
                         <item name="onEventChange" xsi:type="string">${ $.provider }:data.custom_event</item>
@@ -109,6 +110,7 @@
                     <item name="notice" xsi:type="string" translate="true">Enter the message content that will be displayed in the notification body.</item>
                     <item name="noticeMap" xsi:type="array">
                         <item name="order_status" xsi:type="string" translate="true">Available variables: {{customer_name}}, {{order_id}}, {{order_increment_id}}, {{order_status}}</item>
+                        <item name="abandoned_cart" xsi:type="string" translate="true">Available variables: {{customer_name}}, {{items_count}}, {{grand_total}}, {{cart_url}}</item>
                     </item>
                     <item name="imports" xsi:type="array">
                         <item name="onEventChange" xsi:type="string">${ $.provider }:data.custom_event</item>

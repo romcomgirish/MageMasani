@@ -5,6 +5,11 @@ namespace MageMasani\PushNotification\Api\Data;
 
 use Magento\Framework\Api\SearchResultsInterface;
 
+/**
+ * Interface CampaignSearchResultInterface
+ *
+ * @api
+ */
 interface CampaignSearchResultInterface extends SearchResultsInterface
 {
     /**

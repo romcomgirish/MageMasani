@@ -4,7 +4,7 @@ $postUrl = $block->getUrl('magemasani_webpush/send/post');
 ?>
 <form action="<?= $block->escapeUrl($postUrl) ?>" method="post" enctype="multipart/form-data" class="form-inline"
     style="max-width:600px;">
-    <?= $block->getBlockHtml('formkey') ?>
+    <?= /* @noEscape */ $block->getBlockHtml('formkey') ?>
     <fieldset class="admin__fieldset">
         <legend class="admin__legend"><span><?= $block->escapeHtml(__('Send Push Notification')) ?></span></legend>
         <div class="admin__field">

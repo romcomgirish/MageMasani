@@ -3,6 +3,11 @@ declare(strict_types=1);
 
 namespace MageMasani\PushNotification\Api;
 
+/**
+ * Interface CampaignRepositoryInterface
+ *
+ * @api
+ */
 interface CampaignRepositoryInterface
 {
     /**

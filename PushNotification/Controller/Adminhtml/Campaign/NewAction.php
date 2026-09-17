@@ -10,6 +10,9 @@ use Magento\Framework\Controller\Result\Forward;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Controller\ResultInterface;
 
+/**
+ * Controller NewAction
+ */
 class NewAction extends Action implements HttpGetActionInterface
 {
     /**

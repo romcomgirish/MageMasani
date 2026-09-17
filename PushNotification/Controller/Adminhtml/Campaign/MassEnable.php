@@ -14,6 +14,9 @@ use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Ui\Component\MassAction\Filter;
 
+/**
+ * Controller MassEnable
+ */
 class MassEnable extends Action implements HttpPostActionInterface
 {
     /**

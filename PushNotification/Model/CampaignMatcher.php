@@ -6,6 +6,9 @@ namespace MageMasani\PushNotification\Model;
 use MageMasani\PushNotification\Model\ResourceModel\Campaign\CollectionFactory as CampaignCollectionFactory;
 use MageMasani\PushNotification\Api\Data\CampaignInterface;
 
+/**
+ * Model CampaignMatcher
+ */
 class CampaignMatcher
 {
     /**

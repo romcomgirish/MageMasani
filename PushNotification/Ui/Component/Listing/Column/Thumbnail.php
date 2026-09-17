@@ -9,6 +9,9 @@ use Magento\Framework\View\Element\UiComponentFactory;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Ui\Component\Listing\Columns\Column;
 
+/**
+ * UI component Thumbnail
+ */
 class Thumbnail extends Column
 {
     /**

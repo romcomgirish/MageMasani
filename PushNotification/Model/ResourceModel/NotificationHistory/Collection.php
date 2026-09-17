@@ -7,6 +7,9 @@ use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 use MageMasani\PushNotification\Model\NotificationHistory as HistoryModel;
 use MageMasani\PushNotification\Model\ResourceModel\NotificationHistory as HistoryResource;
 
+/**
+ * Collection for  resource model
+ */
 class Collection extends AbstractCollection
 {
     /**
@@ -14,6 +17,11 @@ class Collection extends AbstractCollection
      */
     protected $_idFieldName = 'entity_id';
 
+    /**
+     * Resource model initialization
+     *
+     * @return void
+     */
     protected function _construct()
     {
         $this->_init(HistoryModel::class, HistoryResource::class);

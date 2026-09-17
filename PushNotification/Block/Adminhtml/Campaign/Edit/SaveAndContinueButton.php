@@ -5,6 +5,9 @@ namespace MageMasani\PushNotification\Block\Adminhtml\Campaign\Edit;
 
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
+/**
+ * Block SaveAndContinueButton
+ */
 class SaveAndContinueButton extends GenericButton implements ButtonProviderInterface
 {
     /**

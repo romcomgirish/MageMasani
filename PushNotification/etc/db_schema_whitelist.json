@@ -12,12 +12,14 @@
             "updated_at": true
         },
         "index": {
-            "MAGEMASANI_WEBPUSH_TOKEN_CUSTOMER_ID": true,
+            "MAGEMASANI_WEBPUSH_TOKEN_CUSTOMER_ACTIVE": true,
             "MAGEMASANI_WEBPUSH_TOKEN_DEVICE_TYPE": true
         },
         "constraint": {
             "PRIMARY": true,
-            "MAGEMASANI_WEBPUSH_TOKEN_TOKEN": true
+            "MAGEMASANI_WEBPUSH_TOKEN_TOKEN": true,
+            "MAGEMASANI_WEBPUSH_TOKEN_CUSTOMER_ID_CUSTOMER_ENTITY_ENTITY_ID": true,
+            "MAGEMASANI_WEBPUSH_TOKEN_STORE_ID_STORE_STORE_ID": true
         }
     },
     "magemasani_pushnotification_campaign": {
@@ -31,11 +33,14 @@
             "notification_type": true,
             "schedule_to": true,
             "order_status": true,
-            "customer_group_ids": true,
             "status": true,
             "created_at": true,
             "updated_at": true,
             "sent_at": true
+        },
+        "index": {
+            "MAGEMASANI_PUSH_CAMPAIGN_CRON_SCHEDULE": true,
+            "MAGEMASANI_PUSH_CAMPAIGN_EVENT_LOOKUP": true
         },
         "constraint": {
             "PRIMARY": true
@@ -60,12 +65,14 @@
             "sent_at": true
         },
         "index": {
-            "MAGEMASANI_PUSHNOTIFICATION_HISTORY_CUSTOMER_ID": true,
+            "MAGEMASANI_PUSH_HIST_CUST_DEDUP": true,
             "MAGEMASANI_PUSHNOTIFICATION_HISTORY_CAMPAIGN_ID": true,
-            "MAGEMASANI_PUSHNOTIFICATION_HISTORY_NOTIFICATION_TYPE": true
+            "MAGEMASANI_PUSHNOTIFICATION_HISTORY_SENT_AT": true
         },
         "constraint": {
-            "PRIMARY": true
+            "PRIMARY": true,
+            "MAGEMASANI_PUSH_HIST_CUSTOMER_ID_CUSTOMER_ENTITY_ENTITY_ID": true,
+            "MAGEMASANI_PUSH_HIST_CAMPAIGN_ID_CAMPAIGN_ENTITY_ID": true
         }
     }
 }

@@ -10,6 +10,9 @@ use Magento\Framework\Controller\Result\Json;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Controller\ResultInterface;
 
+/**
+ * Controller Upload
+ */
 class Upload extends Action implements HttpPostActionInterface
 {
     /**
@@ -41,9 +44,10 @@ class Upload extends Action implements HttpPostActionInterface
      */
     public function execute()
     {
-        $imageId = $this->getRequest()->getParam('param_name', 'image_url');
-        if (!isset($_FILES[$imageId]) && !empty($_FILES)) {
-            $imageId = (string) key($_FILES);
+        $imageId = (string)$this->getRequest()->getParam('param_name', 'image_url');
+        $files = $this->getRequest()->getFiles();
+        if (!isset($files[$imageId]) && !empty($files)) {
+            $imageId = (string) key($files);
         }
         try {
             $result = $this->imageUploader->saveFileToTmpDir($imageId);

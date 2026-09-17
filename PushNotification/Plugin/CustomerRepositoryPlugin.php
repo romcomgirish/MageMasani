@@ -10,6 +10,9 @@ use MageMasani\PushNotification\Model\CampaignMatcher;
 use MageMasani\PushNotification\Model\Sender;
 use Psr\Log\LoggerInterface;
 
+/**
+ * Plugin CustomerRepositoryPlugin
+ */
 class CustomerRepositoryPlugin
 {
     /**

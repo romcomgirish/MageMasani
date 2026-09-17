@@ -17,10 +17,28 @@ use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Magento\GraphQl\Model\Query\ContextInterface;
 use MageMasani\PushNotification\Model\ResourceModel\NotificationHistory\CollectionFactory;
 
+/**
+ * Model PushNotificationHistory
+ */
 class PushNotificationHistory implements ResolverInterface
 {
+    /**
+     * Max page size constant
+     *
+     * @var int
+     */
     private const MAX_PAGE_SIZE = 200;
+    /**
+     * Allowed sort fields constant
+     *
+     * @var array
+     */
     private const ALLOWED_SORT_FIELDS = ['entity_id', 'sent_at'];
+    /**
+     * Allowed sort directions constant
+     *
+     * @var array
+     */
     private const ALLOWED_SORT_DIRECTIONS = [SortOrder::SORT_ASC, SortOrder::SORT_DESC];
 
     /**

@@ -5,6 +5,9 @@ namespace MageMasani\PushNotification\Block\Adminhtml\Campaign\Edit;
 
 use Magento\Backend\Block\Widget\Context;
 
+/**
+ * Block GenericButton
+ */
 abstract class GenericButton
 {
     /**

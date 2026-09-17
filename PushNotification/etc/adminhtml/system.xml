@@ -78,6 +78,23 @@
                     <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
                 </field>
             </group>
+
+            <group id="abandoned_cart" translate="label" sortOrder="40"
+                   showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Abandoned Cart Settings</label>
+                <field id="delay_minutes" translate="label" type="text" sortOrder="10"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Inactivity Delay (Minutes)</label>
+                    <comment>Time in minutes of cart inactivity before a push notification is considered (default: 60).</comment>
+                    <validate>validate-digits validate-greater-than-zero</validate>
+                </field>
+                <field id="max_age_days" translate="label" type="text" sortOrder="20"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Maximum Cart Age (Days)</label>
+                    <comment>Upper limit in days to search for abandoned carts (default: 7).</comment>
+                    <validate>validate-digits validate-greater-than-zero</validate>
+                </field>
+            </group>
         </section>
     </system>
 </config>

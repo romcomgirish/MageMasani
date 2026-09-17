@@ -5,6 +5,9 @@ namespace MageMasani\PushNotification\Block\Adminhtml\System\Config\Form\Field;
 
 use Magento\Config\Block\System\Config\Form\Field\FieldArray\AbstractFieldArray;
 
+/**
+ * Block EventRows
+ */
 class EventRows extends AbstractFieldArray
 {
     /**
@@ -53,7 +56,8 @@ class EventRows extends AbstractFieldArray
             'birthday',
             'sub_scription',
             'sub_scription_cancelation',
-            'order_status'
+            'order_status',
+            'abandoned_cart'
         ];
         $jsonDefaultConstants = json_encode($defaultConstants);
 
@@ -77,7 +81,11 @@ class EventRows extends AbstractFieldArray
             '        });' . PHP_EOL .
             '    }' . PHP_EOL .
             '    protectDefaultRows();' . PHP_EOL .
-            '    setInterval(protectDefaultRows, 500);' . PHP_EOL .
+            '    var targetNode = document.querySelector(\'table.admin__control-table tbody\');' . PHP_EOL .
+            '    if (targetNode && window.MutationObserver) {' . PHP_EOL .
+            '        var observer = new MutationObserver(protectDefaultRows);' . PHP_EOL .
+            '        observer.observe(targetNode, { childList: true, subtree: true });' . PHP_EOL .
+            '    }' . PHP_EOL .
             '});' . PHP_EOL .
             '</script>' . PHP_EOL;
     }

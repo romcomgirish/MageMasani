@@ -10,12 +10,32 @@ use Magento\Framework\Filesystem\Driver\File as FileDriver;
 use Magento\Framework\Module\Dir;
 use Magento\Framework\Module\Dir\Reader as ModuleReader;
 
+/**
+ * Controller AbstractAsset
+ */
 abstract class AbstractAsset implements HttpGetActionInterface
 {
+    /**
+     * @var RawFactory
+     */
     private RawFactory $rawFactory;
+    /**
+     * @var ModuleReader
+     */
     private ModuleReader $moduleReader;
+    /**
+     * @var FileDriver
+     */
     private FileDriver $fileDriver;
 
+    /**
+     * Initialize dependencies
+     *
+     * @param RawFactory $rawFactory
+     * @param ModuleReader $moduleReader
+     * @param FileDriver $fileDriver
+     * @return void
+     */
     public function __construct(
         RawFactory $rawFactory,
         ModuleReader $moduleReader,
@@ -28,6 +48,11 @@ abstract class AbstractAsset implements HttpGetActionInterface
 
     abstract protected function getFilename(): string;
 
+    /**
+     * Execute action
+     *
+     * @return ResultInterface
+     */
     public function execute(): ResultInterface
     {
         $viewDir = $this->moduleReader->getModuleDir(

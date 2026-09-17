@@ -12,14 +12,42 @@ use Magento\Framework\Module\Dir\Reader as ModuleReader;
 use Magento\Framework\UrlInterface;
 use MageMasani\PushNotification\Model\ConfigInterface;
 
+/**
+ * Controller Index
+ */
 class Index implements HttpGetActionInterface
 {
+    /**
+     * @var RawFactory
+     */
     private RawFactory $rawFactory;
+    /**
+     * @var ModuleReader
+     */
     private ModuleReader $moduleReader;
+    /**
+     * @var FileDriver
+     */
     private FileDriver $fileDriver;
+    /**
+     * @var UrlInterface
+     */
     private UrlInterface $urlBuilder;
+    /**
+     * @var ConfigInterface
+     */
     private ConfigInterface $config;
 
+    /**
+     * Initialize dependencies
+     *
+     * @param RawFactory $rawFactory
+     * @param ModuleReader $moduleReader
+     * @param FileDriver $fileDriver
+     * @param UrlInterface $urlBuilder
+     * @param ConfigInterface $config
+     * @return void
+     */
     public function __construct(
         RawFactory $rawFactory,
         ModuleReader $moduleReader,
@@ -34,6 +62,11 @@ class Index implements HttpGetActionInterface
         $this->config = $config;
     }
 
+    /**
+     * Execute action
+     *
+     * @return ResultInterface
+     */
     public function execute(): ResultInterface
     {
         $viewDir = $this->moduleReader->getModuleDir(

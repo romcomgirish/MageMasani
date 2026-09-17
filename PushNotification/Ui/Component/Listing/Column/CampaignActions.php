@@ -9,8 +9,16 @@ use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponentFactory;
 use Magento\Ui\Component\Listing\Columns\Column;
 
+/**
+ * UI component CampaignActions
+ */
 class CampaignActions extends Column
 {
+    /**
+     * Entity id constant
+     *
+     * @var string
+     */
     public const ENTITY_ID = 'entity_id';
 
     /**

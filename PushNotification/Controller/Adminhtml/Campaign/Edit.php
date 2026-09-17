@@ -12,6 +12,9 @@ use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\View\Result\Page;
 
+/**
+ * Controller Edit
+ */
 class Edit extends Action implements HttpGetActionInterface
 {
     /**

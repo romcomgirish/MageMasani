@@ -14,15 +14,47 @@ use Magento\Store\Model\StoreManagerInterface;
 use MageMasani\PushNotification\Model\TokenRegistrar;
 use Psr\Log\LoggerInterface;
 
+/**
+ * Controller Save
+ */
 class Save implements HttpPostActionInterface, CsrfAwareActionInterface
 {
+    /**
+     * @var RequestInterface
+     */
     private RequestInterface $request;
+    /**
+     * @var JsonFactory
+     */
     private JsonFactory $jsonFactory;
+    /**
+     * @var CustomerSession
+     */
     private CustomerSession $customerSession;
+    /**
+     * @var StoreManagerInterface
+     */
     private StoreManagerInterface $storeManager;
+    /**
+     * @var TokenRegistrar
+     */
     private TokenRegistrar $tokenRegistrar;
+    /**
+     * @var LoggerInterface
+     */
     private LoggerInterface $logger;
 
+    /**
+     * Initialize dependencies
+     *
+     * @param RequestInterface $request
+     * @param JsonFactory $jsonFactory
+     * @param CustomerSession $customerSession
+     * @param StoreManagerInterface $storeManager
+     * @param TokenRegistrar $tokenRegistrar
+     * @param LoggerInterface $logger
+     * @return void
+     */
     public function __construct(
         RequestInterface $request,
         JsonFactory $jsonFactory,
@@ -39,6 +71,11 @@ class Save implements HttpPostActionInterface, CsrfAwareActionInterface
         $this->logger = $logger;
     }
 
+    /**
+     * Execute action
+     *
+     * @return ResultInterface
+     */
     public function execute(): ResultInterface
     {
         $result = $this->jsonFactory->create();
@@ -65,11 +102,23 @@ class Save implements HttpPostActionInterface, CsrfAwareActionInterface
         }
     }
 
+    /**
+     * Create CSRF validation exception
+     *
+     * @param RequestInterface $request
+     * @return ?InvalidRequestException
+     */
     public function createCsrfValidationException(RequestInterface $request): ?InvalidRequestException
     {
         return null;
     }
 
+    /**
+     * Validate for CSRF
+     *
+     * @param RequestInterface $request
+     * @return ?bool
+     */
     public function validateForCsrf(RequestInterface $request): ?bool
     {
         return true;
